@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walmart LATAM HR Change Management - Case Study | Sergio Inurreta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #0071ce;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 4rem;
+            background: linear-gradient(135deg, #0071ce 0%, #ffc220 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .meta-item h3 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .meta-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section.alt {
+            background: var(--bg-alt);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: var(--border);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-light);
+            margin: 2rem 0;
+            border: 2px dashed var(--text-light);
+        }
+
+        .image-placeholder p {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Process Steps */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .process-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .process-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .process-card p {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        /* Project Navigation */
+        .project-nav {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .project-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .nav-card {
+            background: var(--bg-alt);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .project-nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">El Serch</a>
+            <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Walmart LATAM - HR Change Management</h1>
+            <p class="subtitle">Cross-country discovery and service design for HR transformation across Latin America</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <h3>Role</h3>
+                    <p>Service Designer</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Timeline</h3>
+                    <p>February 2019 - November 2019</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Team</h3>
+                    <p>6 designers across LATAM</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Tools</h3>
+                    <p>InDesign, Mural, Zoom</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="section-content">
+                <p><strong>The Challenge:</strong> Walmart needed to modernize and standardize HR processes across their Latin American operations in Mexico, Brazil, and Argentina. Each country operated with different systems, policies, and cultural approaches to human resources management. The organization sought to understand current pain points, identify opportunities for digital transformation, and design a unified service vision that could accommodate regional variations while improving employee experience.</p>
+                
+                <p><strong>My Role:</strong> As Service Designer, I led discovery research activities across three countries, conducted stakeholder interviews with HR leaders and employees, mapped current-state service journeys, and designed future-state service blueprints. I worked collaboratively with a distributed team of 6 designers to synthesize research findings and create comprehensive design deliverables that would guide the transformation roadmap.</p>
+                
+                <p><strong>Key Responsibilities:</strong></p>
+                <ul>
+                    <li>Conducted 60+ interviews with HR personnel, managers, and employees across Mexico, Brazil, and Argentina to understand current HR processes and pain points</li>
+                    <li>Led virtual workshops with cross-functional stakeholders to validate findings and align on transformation priorities</li>
+                    <li>Created comprehensive current-state service blueprints documenting HR processes including recruitment, onboarding, performance management, and offboarding</li>
+                    <li>Designed future-state service vision incorporating digital touchpoints, self-service capabilities, and process standardization</li>
+                    <li>Developed detailed journey maps for 8 key employee personas across different roles and countries</li>
+                    <li>Produced final design documentation in InDesign including research insights, service blueprints, journey maps, and transformation recommendations</li>
+                    <li>Facilitated knowledge transfer sessions with Walmart leadership presenting research findings and design recommendations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Content -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Service Design Overview</h2>
+            <div class="image-placeholder">
+                <p>🗺️ Cross-Country Service Blueprint</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with service blueprint showing HR processes across three countries</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Design Process & Methodology</h2>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-number">1</div>
+                    <h3>Discovery Research</h3>
+                    <p>Conducted extensive field research across Mexico, Brazil, and Argentina through remote and in-person interviews. Shadowed HR teams to observe daily workflows. Documented pain points, inefficiencies, and cultural differences in HR practices. Created research synthesis identifying patterns and unique regional considerations.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">2</div>
+                    <h3>Stakeholder Alignment</h3>
+                    <p>Facilitated virtual workshops with HR leadership from each country to validate research findings and establish shared vision for transformation. Used Mural for collaborative activities including affinity mapping, priority ranking, and constraint identification. Built consensus on must-have features versus regional customizations.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">3</div>
+                    <h3>Service Mapping</h3>
+                    <p>Created detailed current-state service blueprints documenting end-to-end HR processes across employee lifecycle. Mapped frontstage employee interactions, backstage HR operations, and supporting technology systems. Identified process gaps, redundancies, and opportunities for automation and standardization.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">4</div>
+                    <h3>Future Vision Design</h3>
+                    <p>Designed aspirational future-state service experiences incorporating digital self-service, mobile-first touchpoints, and streamlined approval workflows. Created journey maps showing improved employee experience at key moments including hiring, onboarding, career development, and separation. Prioritized initiatives based on impact and feasibility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Insights -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Research & Key Insights</h2>
+            <div class="image-placeholder">
+                <p>📊 Research Synthesis & Insights</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with research findings, quotes, and insight clusters from three countries</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>Current State Pain Points</h3>
+                    <ul>
+                        <li>Fragmented HR systems required employees to navigate multiple platforms for different HR services</li>
+                        <li>Paper-based processes persisted in many locations causing delays and increasing error rates</li>
+                        <li>Inconsistent policies across countries created confusion for employees transferring between markets</li>
+                        <li>Limited self-service capabilities forced employees to wait for HR support for routine requests</li>
+                        <li>Manual approval chains created bottlenecks, especially for time-sensitive requests like time-off</li>
+                        <li>New hire onboarding varied significantly by country, resulting in inconsistent first impressions</li>
+                        <li>Performance review processes lacked standardization, making cross-country talent comparison difficult</li>
+                        <li>Language barriers in global systems disadvantaged non-English speaking employees</li>
+                    </ul>
+                </div>
+                
+                <div class="column">
+                    <h3>Design Opportunities</h3>
+                    <ul>
+                        <li>Implement unified HR portal providing single access point for all employee services across countries</li>
+                        <li>Design mobile-first experiences enabling employees to complete HR tasks from anywhere</li>
+                        <li>Create standardized core processes while allowing regional customization for local compliance</li>
+                        <li>Build comprehensive self-service capabilities reducing dependency on HR staff for routine tasks</li>
+                        <li>Automate approval workflows with clear visibility and automatic escalation</li>
+                        <li>Develop consistent onboarding experience establishing strong employer brand from day one</li>
+                        <li>Standardize performance management framework enabling fair evaluation across regions</li>
+                        <li>Ensure full multilingual support for Spanish, Portuguese, and English throughout systems</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Solution -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Design Decisions</h2>
+            <div class="section-content">
+                <p>The discovery phase revealed critical insights that shaped our service design recommendations:</p>
+                
+                <p><strong>1. Modular Service Architecture:</strong> Rather than forcing complete standardization, we designed a flexible service model with core processes that remained consistent (onboarding structure, performance cycles) while allowing regional variations for compliance and cultural fit (local benefits, payment schedules, labor laws). This balanced efficiency with regional autonomy.</p>
+                
+                <p><strong>2. Employee-Centric Rather Than System-Centric:</strong> Current processes were organized around backend systems rather than employee needs. We reorganized services around key employee moments (getting hired, getting paid, taking time off, developing skills) rather than departmental silos. This shift made HR services more intuitive and reduced confusion about where to go for help.</p>
+                
+                <p><strong>3. Progressive Digitalization Strategy:</strong> Given varying technology infrastructure and digital literacy across countries, we recommended phased approach starting with highest-impact, lowest-complexity improvements. Quick wins like digital time-off requests and payslip access built confidence before tackling more complex transformations like performance management.</p>
+                
+                <p><strong>4. Manager Enablement Focus:</strong> Research revealed managers were bottlenecks for many HR processes due to lack of training and unclear procedures. We designed manager-specific journeys and support materials, recognizing that enabling managers to handle routine HR tasks independently would improve employee experience while reducing HR workload.</p>
+                
+                <p><strong>5. Cultural Sensitivity in Design:</strong> Each country had distinct workplace cultures affecting HR expectations. Brazilian employees valued personal relationships and warmth in HR interactions, Mexican employees prioritized family-related benefits, Argentine employees expected strong union representation. Our service designs accommodated these preferences while maintaining operational consistency.</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🎯 Future-State Service Vision</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with future-state service blueprint showing improved HR experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Blueprints -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Service Blueprints & Journey Maps</h2>
+            <div class="image-placeholder">
+                <p>📋 Current-State Service Blueprint</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with current-state blueprint documenting existing HR processes</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>👥 Employee Journey Maps</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with journey maps showing employee experience across key HR touchpoints</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🔄 Process Flow Comparisons</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with side-by-side comparison of processes across three countries</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cross-Country Analysis -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Cross-Country Insights</h2>
+            <div class="section-content">
+                <p>Working across Mexico, Brazil, and Argentina revealed both universal pain points and country-specific considerations:</p>
+                
+                <p><strong>Mexico Insights:</strong> Mexican operations showed strongest adherence to corporate processes but struggled with technology adoption among frontline workers. Language preferences varied significantly—many employees preferred Spanish-language systems over English corporate tools. Family-oriented culture meant benefits related to childcare and flexible schedules were highly valued. Union presence in certain locations required careful navigation of labor agreements.</p>
+                
+                <p><strong>Brazil Insights:</strong> Brazilian HR teams operated with highest autonomy and had developed sophisticated workarounds for corporate system limitations. Strong preference for personal relationships meant purely digital solutions met resistance—hybrid approaches combining digital efficiency with human touchpoints performed best. Complex labor laws required extensive local customization. Portuguese language support was non-negotiable for employee-facing tools.</p>
+                
+                <p><strong>Argentina Insights:</strong> Argentine operations faced most significant economic and political instability affecting HR processes, particularly compensation and benefits management. Strong union presence meant change management required extensive stakeholder engagement. Employees were most digitally savvy but also most skeptical of corporate initiatives due to past restructuring experiences. Building trust was prerequisite for adoption.</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🌎 Regional Comparison Matrix</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with comparative analysis showing differences and commonalities across countries</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deliverables -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Key Deliverables</h2>
+            <div class="section-content">
+                <p>The discovery and design phase produced comprehensive documentation supporting Walmart's transformation roadmap:</p>
+                <ul>
+                    <li><strong>Research Insights Report:</strong> 80-page document synthesizing findings from 60+ interviews, highlighting pain points, opportunities, and regional differences. Included verbatim quotes, statistical analysis, and thematic clustering.</li>
+                    <li><strong>Current-State Service Blueprints:</strong> Detailed maps of 8 core HR processes (recruitment, onboarding, time & attendance, performance management, learning & development, compensation, benefits administration, offboarding) showing frontstage, backstage, and support systems.</li>
+                    <li><strong>Employee Journey Maps:</strong> Visual representations of employee experience across career lifecycle for 8 personas including retail associate, store manager, regional director, corporate employee, temporary worker, and others.</li>
+                    <li><strong>Future-State Service Vision:</strong> Aspirational service designs showing transformed HR experience with digital touchpoints, self-service capabilities, and streamlined workflows.</li>
+                    <li><strong>Transformation Roadmap:</strong> Prioritized recommendations organized by impact and complexity, with suggested sequencing for implementation across short-term quick wins, medium-term enhancements, and long-term strategic initiatives.</li>
+                    <li><strong>Regional Implementation Guidelines:</strong> Country-specific considerations for Mexico, Brazil, and Argentina including regulatory requirements, cultural preferences, and technology constraints.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Learnings</h2>
+            <div class="section-content">
+                <p><strong>Discovery Without Implementation Creates Unique Constraints:</strong> Working on discovery and design phases without continuing to implementation meant our recommendations needed to be exceptionally clear and actionable for future teams. We learned to over-document our design rationale, create detailed implementation notes, and build business cases for recommendations. This experience taught me the importance of creating self-explanatory deliverables that could guide decisions months or years later.</p>
+                
+                <p><strong>Remote Research Across Time Zones Requires Structure:</strong> Coordinating research across three countries and multiple time zones demanded rigorous planning. We learned to create detailed research protocols ensuring consistency across team members, establish regular sync points despite time differences, and use asynchronous collaboration tools effectively. Weekly all-team syncs became critical for maintaining shared understanding despite distributed work.</p>
+                
+                <p><strong>Cultural Context Dramatically Affects HR Preferences:</strong> What worked in one country often failed in another due to cultural differences. Brazilian employees' preference for personal relationships meant purely digital solutions felt cold and impersonal. Argentine employees' historical experience with corporate restructuring created skepticism requiring extensive trust-building. Mexican employees' family-oriented values meant work-life balance features resonated strongly. Service design must account for these cultural nuances rather than applying one-size-fits-all solutions.</p>
+                
+                <p><strong>Standardization Versus Localization Is False Choice:</strong> Initially, stakeholders framed the challenge as standardization versus customization. Research revealed the real opportunity was identifying which elements truly needed to be consistent (brand promise, core processes, data standards) versus where flexibility added value (local benefits, communication style, scheduling practices). Clarifying this distinction helped resolve many stakeholder disagreements.</p>
+                
+                <p><strong>Managers Are Underserved HR Stakeholders:</strong> Most HR systems focused on employee self-service or HR administrator tools, neglecting managers who handled most day-to-day HR activities. Managers lacked proper training, tools, and support to fulfill HR responsibilities effectively. Designing dedicated manager experiences—not just giving them access to admin tools—became a key recommendation for improving overall HR effectiveness.</p>
+                
+                <p><strong>Change Management Starts with Design:</strong> For large HR transformations, design deliverables themselves become change management tools. Service blueprints helped stakeholders visualize future state, journey maps built empathy for employee experience, and roadmaps created shared understanding of transformation path. We learned to design deliverables not just for documentation but as artifacts that would inspire and guide organizational change.</p>
+                
+                <p><strong>Language and Localization Cannot Be Afterthoughts:</strong> In multilingual environments, language support must be core design consideration, not translation layer added later. Systems defaulting to English alienated non-English speakers and reinforced perceptions of corporate disconnection from local operations. True localization meant designing for Spanish and Portuguese from the beginning, not translating English designs afterward.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Navigation -->
+    <section class="project-nav">
+        <div class="container">
+            <div class="project-nav-grid">
+                <a href="banorte-case-study.html" class="nav-card">
+                    <div class="nav-label">← Previous Project</div>
+                    <div class="nav-title">Banorte Maya Virtual Assistant</div>
+                </a>
+                <a href="index.html#portfolio" class="nav-card">
+                    <div class="nav-label">Back to</div>
+                    <div class="nav-title">All Projects</div>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

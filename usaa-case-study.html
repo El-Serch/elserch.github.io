@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USAA CFO Treasury Applications - Case Study | Sergio Inurreta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #f5576c;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 4rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .meta-item h3 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .meta-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section.alt {
+            background: var(--bg-alt);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: var(--border);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-light);
+            margin: 2rem 0;
+            border: 2px dashed var(--text-light);
+        }
+
+        .image-placeholder p {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Process Steps */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .process-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .process-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .process-card p {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        /* Project Navigation */
+        .project-nav {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .project-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .nav-card {
+            background: var(--bg-alt);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .project-nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">El Serch</a>
+            <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>USAA CFO Treasury Applications</h1>
+            <p class="subtitle">Redesigning internal treasury management tools across 7 agile squads</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <h3>Role</h3>
+                    <p>Senior UX Designer</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Timeline</h3>
+                    <p>June 2022 - August 2023</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Team</h3>
+                    <p>7 squads (35+ people)</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Tools</h3>
+                    <p>Figma, Axure, Miro, Azure DevOps</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="section-content">
+                <p><strong>The Challenge:</strong> USAA's CFO organization relied on outdated internal treasury management systems that had evolved organically over 15+ years. Treasury analysts spent excessive time navigating between disconnected tools, manually reconciling data, and working around system limitations. The organization needed to modernize these critical financial operations tools while maintaining business continuity.</p>
+                
+                <p><strong>My Role:</strong> As Senior UX Designer embedded across 7 agile squads, I was responsible for creating wireframes, interactive prototypes, and design specifications for treasury applications including wire transfers, cash management, investment tracking, and RPA workflow tools. I worked in two-week sprints, collaborating directly with product owners, treasury analysts, and development teams to rapidly iterate on designs.</p>
+                
+                <p><strong>Key Responsibilities:</strong></p>
+                <ul>
+                    <li>Conducted 25+ contextual inquiry sessions with treasury analysts to understand daily workflows and pain points</li>
+                    <li>Created wireframes and interactive prototypes for 12 different treasury management applications</li>
+                    <li>Designed RPA (Robotic Process Automation) monitoring dashboards to track automated financial processes</li>
+                    <li>Established consistent interaction patterns across squad deliverables to create cohesive user experience</li>
+                    <li>Facilitated design critique sessions with stakeholders to validate designs before development handoff</li>
+                    <li>Collaborated with developers during implementation to ensure design fidelity and address technical constraints</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Content -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Application Overview</h2>
+            <div class="image-placeholder">
+                <p>💼 Treasury Dashboard Interface</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with treasury management dashboard showing key metrics and workflows</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Design Process & Methodology</h2>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-number">1</div>
+                    <h3>User Research</h3>
+                    <p>Shadowed treasury analysts during their daily work to understand workflows, pain points, and workarounds. Documented 8 core user journeys and identified 15+ high-priority usability issues. Created detailed user personas for different treasury roles including cash managers, wire transfer operators, and financial controllers.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">2</div>
+                    <h3>Information Architecture</h3>
+                    <p>Reorganized fragmented tools into coherent task-based workflows. Conducted card sorting exercises with 12 users to validate navigation structures. Developed site maps for each application showing relationships between features and data flows across systems.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">3</div>
+                    <h3>Wireframing & Prototyping</h3>
+                    <p>Created low-fidelity wireframes for rapid concept validation, then progressed to high-fidelity interactive prototypes in Figma. Built clickable prototypes for usability testing with 5-8 users per sprint. Iterated based on feedback before handoff to development teams.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">4</div>
+                    <h3>Agile Integration</h3>
+                    <p>Worked in two-week sprints alongside development teams. Participated in daily standups, sprint planning, and retrospectives. Created design specifications and annotation documents for developers. Conducted design QA during implementation to ensure design intent was preserved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Insights -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Research & Key Insights</h2>
+            <div class="image-placeholder">
+                <p>👥 User Personas & Journey Maps</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with user research artifacts showing personas and workflow documentation</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>User Pain Points</h3>
+                    <ul>
+                        <li>Treasury analysts toggled between 6-8 different systems to complete single wire transfer, increasing error risk</li>
+                        <li>No centralized view of pending approvals created bottlenecks and missed deadlines</li>
+                        <li>Manual data entry required copying information between systems, consuming 30% of daily work time</li>
+                        <li>Inconsistent terminology across applications caused confusion and required tribal knowledge</li>
+                        <li>Limited visibility into RPA automation status meant analysts couldn't troubleshoot failures independently</li>
+                        <li>Outdated interfaces didn't support keyboard shortcuts, slowing down expert users</li>
+                    </ul>
+                </div>
+                
+                <div class="column">
+                    <h3>Design Opportunities</h3>
+                    <ul>
+                        <li>Create unified dashboard consolidating information from multiple systems into single view</li>
+                        <li>Design bulk action capabilities to process multiple transactions simultaneously</li>
+                        <li>Implement smart defaults and auto-population to reduce manual data entry</li>
+                        <li>Establish consistent terminology and interaction patterns across all applications</li>
+                        <li>Build transparent RPA monitoring with clear error states and remediation paths</li>
+                        <li>Add keyboard shortcuts and power user features for efficiency gains</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Solution -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Design Decisions</h2>
+            <div class="section-content">
+                <p>Working across multiple agile squads required strategic design decisions to maintain consistency while delivering value quickly:</p>
+                
+                <p><strong>1. Task-Oriented Information Architecture:</strong> Reorganized applications around user tasks rather than system structure. For wire transfers, we moved from a system-centric flow (accounts → beneficiaries → templates → submit) to a task-centric flow (initiate transfer → verify details → approve). This reduced steps by 40% for common scenarios.</p>
+                
+                <p><strong>2. Progressive Enhancement for Power Users:</strong> Designed dual-mode interfaces that supported both novice and expert users. Basic mode provided guided workflows with helpful hints, while advanced mode offered keyboard shortcuts, bulk operations, and minimal UI chrome. Users could toggle between modes based on their comfort level.</p>
+                
+                <p><strong>3. Transparent Automation Status:</strong> Created comprehensive RPA monitoring dashboards that showed real-time status of automated processes, historical success rates, and clear error diagnostics. Enabled treasury analysts to identify and resolve automation failures without IT involvement, reducing resolution time from hours to minutes.</p>
+                
+                <p><strong>4. Flexible Approval Workflows:</strong> Designed configurable approval chains that adapted to different transaction types, amounts, and organizational hierarchies. Visual representation of approval status helped users understand where transactions were in the pipeline and who needed to take action next.</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🎨 Wire Transfer Workflow Redesign</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with before/after comparison showing workflow improvements</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wireframes/Prototypes -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Wireframes & Prototypes</h2>
+            <div class="image-placeholder">
+                <p>📐 Low-Fidelity Wireframes</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with early sketches and wireframes exploring different layout options</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🖥️ Interactive Prototype Screens</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with high-fidelity prototype screens showing key interactions</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>📊 RPA Monitoring Dashboard</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with dashboard design showing automation status and analytics</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Learnings</h2>
+            <div class="section-content">
+                <p><strong>Designing for Expert Users:</strong> Treasury analysts were domain experts who performed complex financial operations daily. Unlike consumer applications where simplicity is paramount, these users valued efficiency and precision over hand-holding. We learned to respect their expertise by providing power user features, keyboard shortcuts, and information-dense interfaces that reduced cognitive switching costs.</p>
+                
+                <p><strong>Working Across Multiple Agile Teams:</strong> Coordinating design across 7 squads required strong communication and documentation practices. We established weekly cross-squad design syncs, maintained a shared Figma library, and created design decision logs that helped teams understand rationale behind patterns. This prevented divergence while allowing squads to work autonomously.</p>
+                
+                <p><strong>Balancing Speed with Quality in Agile:</strong> Two-week sprints demanded rapid design iteration. We learned to timebox research and design activities, focusing on highest-risk areas first. Quick sketches and low-fidelity prototypes for concept validation, followed by higher-fidelity designs only after direction was confirmed, helped maintain quality without slowing velocity.</p>
+                
+                <p><strong>Internal Tools Deserve Good Design:</strong> Initially, some stakeholders questioned investing design effort in internal tools. However, user research revealed that poor tool design cost USAA thousands of hours annually in lost productivity. Demonstrating ROI through time-on-task measurements and error reduction helped build organizational support for UX investment in internal applications.</p>
+                
+                <p><strong>Legacy System Constraints as Design Drivers:</strong> Many treasury applications relied on mainframe backends with strict data formats and processing windows. Rather than fighting these constraints, we designed interfaces that made system limitations transparent to users, helping them plan work accordingly and reducing frustration from mysterious errors.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Navigation -->
+    <section class="project-nav">
+        <div class="container">
+            <div class="project-nav-grid">
+                <a href="scotiabank-case-study.html" class="nav-card">
+                    <div class="nav-label">← Previous Project</div>
+                    <div class="nav-title">Scotiabank Corporate Banking Platform</div>
+                </a>
+                <a href="nyhealth-case-study.html" class="nav-card">
+                    <div class="nav-label">Next Project →</div>
+                    <div class="nav-title">NY State Health Pass</div>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

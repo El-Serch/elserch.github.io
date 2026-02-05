@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY State Health Pass - Case Study | Sergio Inurreta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #00f2fe;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 4rem;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .meta-item h3 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .meta-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section.alt {
+            background: var(--bg-alt);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: var(--border);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-light);
+            margin: 2rem 0;
+            border: 2px dashed var(--text-light);
+        }
+
+        .image-placeholder p {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Process Steps */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .process-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .process-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .process-card p {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        /* Project Navigation */
+        .project-nav {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .project-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .nav-card {
+            background: var(--bg-alt);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .project-nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">El Serch</a>
+            <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>NY State Department of Health - Health Pass</h1>
+            <p class="subtitle">AI-powered digital health credential platform with conversational assistant</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <h3>Role</h3>
+                    <p>Lead Product Designer</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Timeline</h3>
+                    <p>March 2021 - November 2021</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Team</h3>
+                    <p>8 people (UX, Dev, AI)</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Tools</h3>
+                    <p>Figma, Watson Assistant, Mural</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="section-content">
+                <p><strong>The Challenge:</strong> During the COVID-19 pandemic, New York State needed a secure, privacy-preserving digital health credential system that would allow citizens to prove their vaccination or testing status for access to venues, events, and services. The solution required blockchain technology for security while remaining accessible to all New Yorkers, including those with limited technical literacy or disabilities.</p>
+                
+                <p><strong>My Role:</strong> As Lead Product Designer, I designed the end-to-end user experience for the Health Pass mobile application and created the conversational flows for an AI-powered virtual assistant that would guide users through setup, verification, and troubleshooting. I worked closely with blockchain engineers, accessibility specialists, and state health officials to balance security requirements with usability.</p>
+                
+                <p><strong>Key Responsibilities:</strong></p>
+                <ul>
+                    <li>Designed mobile-first user interface for iOS and Android applications enabling citizens to store and share health credentials</li>
+                    <li>Created conversational AI flows for virtual assistant helping users navigate credential verification, QR code generation, and privacy controls</li>
+                    <li>Conducted accessibility audits and incorporated WCAG 2.1 AA compliance for screen readers, voice control, and high-contrast modes</li>
+                    <li>Developed privacy-first design patterns that minimized data exposure while meeting venue verification requirements</li>
+                    <li>Facilitated user testing sessions with 40+ participants across diverse age groups and technical abilities</li>
+                    <li>Collaborated with state officials to ensure designs met HIPAA compliance and data protection regulations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Content -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Platform Overview</h2>
+            <div class="image-placeholder">
+                <p>📱 Health Pass Mobile Application</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with mobile app screens showing credential display and QR code</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Design Process & Methodology</h2>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-number">1</div>
+                    <h3>Research & Context</h3>
+                    <p>Analyzed existing health credential systems globally, studied digital wallet patterns, and conducted interviews with 30 New York residents across different demographics. Identified critical trust and privacy concerns that would influence adoption. Mapped user journeys for credential acquisition, storage, and presentation scenarios.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">2</div>
+                    <h3>Service Design</h3>
+                    <p>Created comprehensive service blueprints showing interactions between citizens, healthcare providers, venues, and blockchain infrastructure. Designed privacy-preserving verification flows that revealed minimal data to verifiers while maintaining credential authenticity. Established clear mental models for how blockchain security worked without requiring technical understanding.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">3</div>
+                    <h3>Conversational UX</h3>
+                    <p>Designed AI assistant personality, conversational flows, and fallback patterns for 15+ common user scenarios including credential setup, QR code troubleshooting, privacy questions, and accessibility support. Created dialogue trees that balanced efficiency with empathy, particularly for users experiencing technical difficulties or anxiety about health data.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">4</div>
+                    <h3>Accessibility & Testing</h3>
+                    <p>Conducted accessibility reviews with assistive technology users including screen reader users and voice control users. Tested designs with seniors, non-English speakers, and users with visual impairments. Iterated on contrast ratios, touch target sizes, and simplified language based on testing feedback.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Insights -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Research & Key Insights</h2>
+            <div class="image-placeholder">
+                <p>🔬 User Research Synthesis</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with research findings, user quotes, and insight clusters</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>User Pain Points</h3>
+                    <ul>
+                        <li>Confusion about how digital health credentials differ from physical vaccination cards</li>
+                        <li>Privacy concerns about who could access their health information and how it would be used</li>
+                        <li>Skepticism about blockchain technology, often associated with cryptocurrency volatility</li>
+                        <li>Anxiety about technical requirements and fear of being unable to access services if app failed</li>
+                        <li>Accessibility barriers for older adults unfamiliar with smartphone apps and QR codes</li>
+                        <li>Language barriers for non-English speakers needing health credential support</li>
+                    </ul>
+                </div>
+                
+                <div class="column">
+                    <h3>Design Opportunities</h3>
+                    <ul>
+                        <li>Create clear onboarding that explains benefits without technical jargon about blockchain</li>
+                        <li>Design transparent privacy controls showing exactly what information is shared during verification</li>
+                        <li>Provide AI assistant to guide users through setup and answer common concerns in natural language</li>
+                        <li>Ensure offline capability so credentials remain accessible without internet connection</li>
+                        <li>Build comprehensive accessibility features including voice navigation and high contrast modes</li>
+                        <li>Support multiple languages and reading levels to serve diverse New York population</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Solution -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Design Decisions</h2>
+            <div class="section-content">
+                <p>Designing a government health credential system during a pandemic required careful balance between security, privacy, and accessibility:</p>
+                
+                <p><strong>1. Privacy-First Verification:</strong> Designed a selective disclosure system where users controlled exactly what information was shared during verification. QR code scanning revealed only necessary data (e.g., vaccination status: yes/no) rather than full medical records. Visual indicators clearly showed what information would be revealed before sharing, building user trust in the system.</p>
+                
+                <p><strong>2. Conversational Assistant as Primary Help:</strong> Rather than traditional help documentation, we embedded an AI assistant accessible throughout the app. The assistant could answer questions in natural language, guide users through multi-step processes, and provide contextual help based on where users were in the app. This reduced support burden on state helplines while providing immediate assistance.</p>
+                
+                <p><strong>3. Offline-First Architecture:</strong> Designed the credential display to work without internet connectivity, ensuring users could present their health pass even in areas with poor reception. Blockchain verification occurred during credential issuance, allowing subsequent presentations to work offline. This eliminated anxiety about connectivity failures at venue entrances.</p>
+                
+                <p><strong>4. Accessibility as Core Requirement:</strong> Built accessibility into every design decision rather than treating it as an add-on. Implemented screen reader optimization, voice control navigation, adjustable text sizes, high contrast modes, and alternative text for all visual elements. Tested with assistive technology users throughout development to ensure practical usability, not just compliance.</p>
+                
+                <p><strong>5. Simplified Blockchain Explanation:</strong> Avoided technical jargon about blockchain technology, instead focusing on user benefits: "Your health credential is secured with bank-level encryption and cannot be forged." Used familiar mental models (digital wallet, secure lock) to explain complex technical concepts without overwhelming users.</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🔒 Privacy Controls Interface</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with screens showing privacy settings and selective disclosure options</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wireframes/Prototypes -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Wireframes & Prototypes</h2>
+            <div class="image-placeholder">
+                <p>✏️ Initial Sketches & Wireframes</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with early design explorations and wireframe iterations</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🤖 Conversational Assistant Flows</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with conversation design diagrams and chatbot flow charts</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>📲 High-Fidelity Prototypes</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with final mobile app designs showing key screens and interactions</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Learnings</h2>
+            <div class="section-content">
+                <p><strong>Designing for Trust in Crisis:</strong> Launching a health credential system during a pandemic meant users were already anxious and overwhelmed. We learned that transparency and clear communication were more important than feature richness. Every design element needed to build trust—from explicit privacy indicators to plain-language explanations. Overexplaining functionality was better than assuming users understood technical concepts.</p>
+                
+                <p><strong>Accessibility Cannot Be an Afterthought:</strong> Initially, we planned to add accessibility features after core functionality was complete. User testing revealed this approach would exclude significant portions of the population. Rebuilding accessibility into the foundation required more time upfront but resulted in a better product for everyone. Features like larger touch targets and simplified language benefited all users, not just those with disabilities.</p>
+                
+                <p><strong>Conversational AI Reduces Support Burden:</strong> The virtual assistant handled 60% of user questions without requiring human intervention. However, designing effective conversational flows required understanding common user mental models and misconceptions. We learned to anticipate confusion points and proactively address them in the assistant's dialogue, reducing frustration and support escalations.</p>
+                
+                <p><strong>Blockchain Complexity Must Stay Hidden:</strong> Users didn't care about blockchain technology—they cared about having secure, verifiable health credentials. Early designs that tried to explain blockchain concepts confused users and reduced trust. We learned to focus messaging on outcomes (security, privacy, universal acceptance) rather than technical implementation details.</p>
+                
+                <p><strong>Government Design Requires Stakeholder Balance:</strong> Working with state health officials, privacy advocates, accessibility experts, and diverse user groups meant navigating competing priorities. Success required building consensus through user research evidence rather than relying on authority or assumptions. Showing stakeholders actual user struggles helped align everyone around user-centered solutions.</p>
+                
+                <p><strong>Offline Capability as Critical Feature:</strong> In early testing, several users experienced anxiety about internet connectivity requirements. Designing for offline scenarios from the beginning—not as a nice-to-have—was crucial for user confidence. Users needed to know their health credentials would work regardless of technical circumstances, especially in high-stress situations like venue entry.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Navigation -->
+    <section class="project-nav">
+        <div class="container">
+            <div class="project-nav-grid">
+                <a href="usaa-case-study.html" class="nav-card">
+                    <div class="nav-label">← Previous Project</div>
+                    <div class="nav-title">USAA CFO Treasury Applications</div>
+                </a>
+                <a href="banorte-case-study.html" class="nav-card">
+                    <div class="nav-label">Next Project →</div>
+                    <div class="nav-title">Banorte Maya Virtual Assistant</div>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

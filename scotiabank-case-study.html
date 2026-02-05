@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scotiabank Corporate Banking Platform - Case Study | Sergio Inurreta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #3b82f6;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .meta-item h3 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .meta-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section.alt {
+            background: var(--bg-alt);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: var(--border);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-light);
+            margin: 2rem 0;
+            border: 2px dashed var(--text-light);
+        }
+
+        .image-placeholder p {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Process Steps */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .process-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .process-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .process-card p {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        /* Project Navigation */
+        .project-nav {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .project-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .nav-card {
+            background: var(--bg-alt);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .project-nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">El Serch</a>
+            <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Scotiabank Corporate & Commercial Banking Platform</h1>
+            <p class="subtitle">Multi-country enterprise banking platform standardization across 6 countries</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <h3>Role</h3>
+                    <p>Lead Product Designer</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Timeline</h3>
+                    <p>March 2022 - Present</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Team</h3>
+                    <p>15 people (Design, Dev, BA)</p>
+                </div>
+                <div class="meta-item">
+                    <h3>Tools</h3>
+                    <p>Figma, Mural, Jira, Confluence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="section-content">
+                <p><strong>The Challenge:</strong> Scotiabank needed to unify their corporate and commercial banking platforms across six countries (Canada, USA, Mexico, Colombia, Chile, and Peru). Each market had different systems, creating inconsistent user experiences, increased maintenance costs, and slower feature deployment.</p>
+                
+                <p><strong>My Role:</strong> As Lead Product Designer, I was responsible for conducting cross-country user research, defining service blueprints, creating interaction patterns, and establishing a scalable design system that could accommodate regional variations while maintaining consistency. I worked closely with product managers, developers, and regional stakeholders to balance global standardization with local market needs.</p>
+                
+                <p><strong>Key Responsibilities:</strong></p>
+                <ul>
+                    <li>Led user research sessions with corporate banking clients across 6 countries to understand workflows and pain points</li>
+                    <li>Designed end-to-end experiences for file-based services including Host-to-Host (H2H), Host-to-Web (H2W), and File Transfer capabilities</li>
+                    <li>Created comprehensive service blueprints mapping front-end interactions with back-end systems and third-party integrations</li>
+                    <li>Established design patterns and component library in Figma used by 8+ designers across different squads</li>
+                    <li>Facilitated workshops with regional teams to validate designs and gather feedback on local requirements</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Content -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Platform Overview</h2>
+            <div class="image-placeholder">
+                <p>📊 Platform Dashboard Screenshot</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with actual dashboard interface showing key features</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Design Process & Methodology</h2>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-number">1</div>
+                    <h3>Discovery & Research</h3>
+                    <p>Conducted 45+ interviews with corporate banking clients across 6 markets. Analyzed existing systems, workflows, and pain points. Created journey maps for 12 different user personas including treasury managers, financial controllers, and payment operators.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">2</div>
+                    <h3>Service Design</h3>
+                    <p>Developed comprehensive service blueprints mapping customer touchpoints with internal systems, APIs, and regulatory requirements. Identified opportunities for automation and process optimization across file-based payment services.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">3</div>
+                    <h3>Prototyping</h3>
+                    <p>Created high-fidelity interactive prototypes in Figma for core workflows including payment file uploads, approval chains, transaction monitoring, and reporting. Tested with 30+ users across different markets to validate design decisions.</p>
+                </div>
+                
+                <div class="process-card">
+                    <div class="process-number">4</div>
+                    <h3>Design System</h3>
+                    <p>Established a scalable design system with 150+ components, interaction patterns, and guidelines. Enabled consistent experiences across markets while allowing for regional customization of features, languages, and regulatory requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Insights -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Research & Key Insights</h2>
+            <div class="image-placeholder">
+                <p>🔍 User Research Findings</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with research artifacts: journey maps, user personas, or insight synthesis</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h3>User Pain Points</h3>
+                    <ul>
+                        <li>Inconsistent file upload processes across different banking services required users to learn multiple systems</li>
+                        <li>Limited visibility into file processing status created uncertainty and increased support calls</li>
+                        <li>Complex approval workflows varied by country, causing confusion for multi-national corporations</li>
+                        <li>Lack of standardized error messages made troubleshooting difficult</li>
+                        <li>No unified reporting across different payment types hindered financial reconciliation</li>
+                    </ul>
+                </div>
+                
+                <div class="column">
+                    <h3>Design Opportunities</h3>
+                    <ul>
+                        <li>Create unified file upload experience with real-time validation and clear status tracking</li>
+                        <li>Standardize approval workflows while accommodating regional compliance requirements</li>
+                        <li>Implement progressive disclosure to simplify complex forms without removing necessary functionality</li>
+                        <li>Design comprehensive notification system to keep users informed of file processing stages</li>
+                        <li>Build centralized dashboard for monitoring all file-based transactions across services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Solution -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Design Decisions</h2>
+            <div class="section-content">
+                <p>Throughout the project, we made several critical design decisions that shaped the final platform:</p>
+                
+                <p><strong>1. Modular Architecture:</strong> Designed a component-based system that allowed regional teams to configure features based on local regulations without requiring custom code. This reduced development time by 40% for market-specific implementations.</p>
+                
+                <p><strong>2. Progressive Disclosure:</strong> Implemented a layered information architecture that presented core functionality upfront while allowing power users to access advanced features. This reduced cognitive load for occasional users while maintaining efficiency for daily users.</p>
+                
+                <p><strong>3. Status-Driven Navigation:</strong> Reorganized the information hierarchy around transaction status rather than service type, enabling users to quickly identify files requiring attention regardless of payment method.</p>
+                
+                <p><strong>4. Context-Aware Help:</strong> Integrated contextual guidance and tooltips throughout the interface, reducing the need for separate training materials and decreasing support tickets related to feature discovery.</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🎨 Design System Components</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with component library screenshots showing buttons, forms, navigation patterns</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wireframes/Prototypes -->
+    <section class="content-section alt">
+        <div class="container">
+            <h2 class="section-title">Wireframes & Prototypes</h2>
+            <div class="image-placeholder">
+                <p>📱 Low-Fidelity Wireframes</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with early wireframes showing information architecture</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>💻 High-Fidelity Prototype</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with polished UI screens showing final designs</p>
+            </div>
+            
+            <div class="image-placeholder">
+                <p>🔄 User Flow Diagrams</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Replace with flow diagrams showing key user journeys</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Learnings</h2>
+            <div class="section-content">
+                <p><strong>Balancing Global Consistency with Local Needs:</strong> One of the biggest challenges was creating a unified experience while respecting regional banking regulations and user expectations. We learned that successful standardization requires flexibility—defining core patterns that must remain consistent while clearly documenting where regional customization is acceptable.</p>
+                
+                <p><strong>Stakeholder Alignment Across Markets:</strong> With teams spread across 6 countries and multiple time zones, maintaining design consistency required robust documentation and regular alignment sessions. We implemented weekly design reviews and created a comprehensive design decision log that helped teams understand the rationale behind design choices.</p>
+                
+                <p><strong>Iterative Validation:</strong> Early user testing revealed that corporate banking users had much higher tolerance for information density than consumer banking users. This insight allowed us to optimize screen real estate for efficiency rather than oversimplifying interfaces, which would have frustrated expert users.</p>
+                
+                <p><strong>Technical Constraints as Design Drivers:</strong> Working within legacy banking systems taught us to design with technical constraints in mind from day one. Involving developers early in the design process helped us create solutions that were both user-friendly and technically feasible, avoiding costly redesigns during implementation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Navigation -->
+    <section class="project-nav">
+        <div class="container">
+            <div class="project-nav-grid">
+                <a href="index.html#portfolio" class="nav-card">
+                    <div class="nav-label">← Back to</div>
+                    <div class="nav-title">All Projects</div>
+                </a>
+                <a href="usaa-case-study.html" class="nav-card">
+                    <div class="nav-label">Next Project →</div>
+                    <div class="nav-title">USAA CFO Treasury Applications</div>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

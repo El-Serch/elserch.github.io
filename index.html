@@ -1008,24 +1008,57 @@
             });
         });
 
-        // Highlight the rail link for whichever section holds the viewport centre
+        // Highlight the rail link for whichever section holds the viewport centre.
         (function () {
             var links = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
-            if (!links.length || !('IntersectionObserver' in window)) return;
+            if (!links.length) return;
             var map = {}, targets = [];
             links.forEach(function (a) {
                 var el = document.querySelector(a.getAttribute('href'));
                 if (el) { map[el.id] = a; targets.push(el); }
             });
+            if (!targets.length) return;
+
+            var last = targets[targets.length - 1];
             var visible = {};
-            var obs = new IntersectionObserver(function (entries) {
-                entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
-                var current = null;
-                targets.forEach(function (t) { if (!current && visible[t.id]) current = t.id; });
-                links.forEach(function (a) { a.classList.remove('is-active'); });
-                if (current && map[current]) map[current].classList.add('is-active');
-            }, { rootMargin: '-45% 0px -45% 0px' });
-            targets.forEach(function (t) { obs.observe(t); });
+            var atFoot = false;
+
+            function paint() {
+                var id = null;
+                if (atFoot) {
+                    // Once the page bottoms out, the final section sits below the
+                    // centre line and can never reach it however far you scroll,
+                    // so the section before it would stay lit. Pin it instead.
+                    id = last.id;
+                } else {
+                    targets.forEach(function (t) { if (!id && visible[t.id]) id = t.id; });
+                }
+                links.forEach(function (a) { a.classList.toggle('is-active', map[id] === a); });
+            }
+
+            var ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    ticking = false;
+                    var d = document.documentElement;
+                    var next = window.pageYOffset + window.innerHeight >= d.scrollHeight - 2;
+                    if (next !== atFoot) { atFoot = next; paint(); }
+                });
+            }
+
+            if ('IntersectionObserver' in window) {
+                var obs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+                    paint();
+                }, { rootMargin: '-45% 0px -45% 0px' });
+                targets.forEach(function (t) { obs.observe(t); });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            onScroll();
         })();
     </script>
 </body>

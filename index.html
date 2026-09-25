@@ -57,16 +57,12 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
             text-decoration: none;
         }
 
         .logo-mark {
-            width: 36px;
-            height: 36px;
+            width: 42px;
+            height: 42px;
             display: block;
             flex-shrink: 0;
         }
@@ -94,6 +90,13 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
+        }
+
+        .hero-logo {
+            width: 104px;
+            height: 104px;
+            display: block;
+            margin: 0 auto 1.75rem;
         }
 
         .hero h1 {
@@ -444,6 +447,11 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .hero-logo {
+                width: 80px;
+                height: 80px;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -476,7 +484,7 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <a href="index.html" class="logo"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"><span>El Serch</span></a>
+            <a href="index.html" class="logo" aria-label="El Serch — home"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"></a>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
@@ -489,6 +497,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
+            <img src="assets/elserch-logo.svg" alt="" class="hero-logo">
             <h1>Sergio "El Serch" Inurreta</h1>
             <div class="subtitle">Product & Service Designer</div>
             <p class="tagline">Enterprise UX • Financial Platforms • AI & Conversational Design</p>

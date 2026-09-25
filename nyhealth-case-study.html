@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NY State Health Pass - Case Study | Sergio Inurreta</title>
+    <link rel="icon" type="image/svg+xml" href="assets/elserch-logo.svg">
     <style>
         * {
             margin: 0;
@@ -54,10 +55,20 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            display: block;
+            flex-shrink: 0;
         }
 
         .back-link {
@@ -279,7 +290,7 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <a href="index.html" class="logo">El Serch</a>
+            <a href="index.html" class="logo"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"><span>El Serch</span></a>
             <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
         </div>
     </nav>

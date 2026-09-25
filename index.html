@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sergio "El Serch" Inurreta - Product & Service Designer</title>
+    <link rel="icon" type="image/svg+xml" href="assets/elserch-logo.svg">
     <style>
         * {
             margin: 0;
@@ -54,9 +55,20 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            display: block;
+            flex-shrink: 0;
         }
 
         .nav-links {
@@ -464,7 +476,7 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">El Serch</div>
+            <a href="index.html" class="logo"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"><span>El Serch</span></a>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>

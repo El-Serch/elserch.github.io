@@ -130,10 +130,6 @@
             transition: color 0.3s;
         }
 
-        .back-link:hover {
-            color: var(--accent);
-        }
-
         .back-link::after {
             content: '';
             position: absolute;
@@ -143,10 +139,6 @@
             height: 0;
             background: var(--accent);
             transition: height 0.3s ease;
-        }
-
-        .back-link:hover::after {
-            height: 100%;
         }
 
         /* Hero Section */
@@ -312,12 +304,6 @@
             transition: all 0.3s;
         }
 
-        .nav-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-color: var(--accent);
-        }
-
         .nav-label {
             font-size: 0.9rem;
             color: var(--text-light);
@@ -411,11 +397,6 @@
                 height: 2px;
             }
 
-            .nav-links a:hover::after,
-            .back-link:hover::after {
-                height: 2px;
-            }
-
             .theme-toggle {
                 width: 32px;
                 height: 32px;
@@ -460,11 +441,6 @@
             transition: border-color 0.3s, color 0.3s;
         }
 
-        .theme-toggle:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
         .theme-toggle svg {
             width: 18px;
             height: 18px;
@@ -477,6 +453,30 @@
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
             :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        /* Pointer devices only — a tapped element keeps :hover on
+           touch until something else is tapped, which left nav icons
+           and cards stuck in their hover state. */
+        @media (hover: hover) {
+            .back-link:hover {
+                color: var(--accent);
+            }
+
+            .back-link:hover::after {
+                height: 100%;
+            }
+
+            .nav-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                border-color: var(--accent);
+            }
+
+            .theme-toggle:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
         }
     </style>
     <script>

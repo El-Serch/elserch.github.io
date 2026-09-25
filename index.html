@@ -13,6 +13,7 @@
         }
 
         :root {
+            --rail: 84px;
             --primary: #0f172a;
             --secondary: #334155;
             --accent: #3b82f6;
@@ -65,6 +66,7 @@
         }
 
         body {
+            padding-right: var(--rail);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
             color: var(--text);
@@ -77,28 +79,31 @@
             padding: 0 2rem;
         }
 
-        /* Navigation */
-        nav {
+        /* Navigation — vertical rail pinned to the right edge */
+        .side-nav {
             position: fixed;
             top: 0;
-            width: 100%;
+            right: 0;
+            width: var(--rail);
+            height: 100vh;
+            height: 100dvh;
             background: var(--nav-bg);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+            border-left: 1px solid var(--border);
             z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        nav .container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: 1.75rem 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .logo-mark {
@@ -109,25 +114,50 @@
         }
 
         .nav-links {
-            display: flex;
-            gap: 2rem;
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.25rem;
         }
 
         .nav-links a {
+            position: relative;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
             color: var(--text);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.is-active {
             color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 2px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.is-active::after {
+            height: 100%;
         }
 
         /* Hero Section */
         .hero {
-            padding: 10rem 0 6rem;
+            padding: 7rem 0 6rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
@@ -488,17 +518,52 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav .container {
-                padding: 0 1rem;
+            body {
+                padding-right: 0;
+                padding-bottom: 60px;
             }
 
-            .nav-actions {
+            .side-nav {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-left: none;
+                border-top: 1px solid var(--border);
                 gap: 0.75rem;
+                padding: 0.7rem 1rem;
             }
 
-            .logo-mark {
-                width: 34px;
-                height: 34px;
+            .side-nav .logo {
+                display: none;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .nav-links a,
+            .back-link {
+                writing-mode: horizontal-tb;
+                font-size: 0.72rem;
+                letter-spacing: 0.02em;
+                text-transform: none;
+            }
+
+            .nav-links a::after,
+            .back-link::after {
+                display: none;
+            }
+
+            .back-link::before {
+                content: '← ';
             }
 
             .theme-toggle {
@@ -528,11 +593,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .nav-links {
-                gap: 0.7rem;
-                font-size: 0.78rem;
-            }
-
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -544,12 +604,6 @@
         }
 
         /* Theme toggle */
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
         .theme-toggle {
             background: none;
             border: 1px solid var(--border);
@@ -584,17 +638,6 @@
             :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
             :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
         }
-
-        @media (max-width: 360px) {
-            .nav-links {
-                gap: 0.5rem;
-                font-size: 0.68rem;
-            }
-
-            .nav-actions {
-                gap: 0.5rem;
-            }
-        }
     </style>
     <script>
         // Applied before first paint so the correct theme never flashes.
@@ -612,22 +655,18 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <a href="index.html" class="logo" aria-label="El Serch — home"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"></a>
-            <div class="nav-actions">
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch between light and dark theme">
-                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                </button>
-            </div>
-        </div>
+    <nav class="side-nav">
+        <a href="index.html" class="logo" aria-label="El Serch — home"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"></a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch between light and dark theme">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
     </nav>
 
     <!-- Hero Section -->
@@ -912,20 +951,25 @@
             });
         });
 
-        // Add scroll effect to navigation
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            } else {
-                nav.style.boxShadow = 'none';
-            }
-            
-            lastScroll = currentScroll;
-        });
+        // Highlight the rail link for whichever section holds the viewport centre
+        (function () {
+            var links = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+            if (!links.length || !('IntersectionObserver' in window)) return;
+            var map = {}, targets = [];
+            links.forEach(function (a) {
+                var el = document.querySelector(a.getAttribute('href'));
+                if (el) { map[el.id] = a; targets.push(el); }
+            });
+            var visible = {};
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+                var current = null;
+                targets.forEach(function (t) { if (!current && visible[t.id]) current = t.id; });
+                links.forEach(function (a) { a.classList.remove('is-active'); });
+                if (current && map[current]) map[current].classList.add('is-active');
+            }, { rootMargin: '-45% 0px -45% 0px' });
+            targets.forEach(function (t) { obs.observe(t); });
+        })();
     </script>
 </body>
 </html>

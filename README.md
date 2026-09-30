@@ -9,7 +9,7 @@ Static HTML and CSS, served by GitHub Pages. No build step, no framework, no pac
 ## Structure
 
 ```
-index.html                    Homepage: hero, about, skills, project grid, experience, pricing teaser, contact
+index.html                    Homepage: hero, about, skills, project grid, experience, pricing (locked in place), contact
 scotiabank-case-study.html    Corporate & commercial banking platform (2022–present)
 nyhealth-case-study.html      Health Pass + virtual assistant (2021)
 walmart-case-study.html       LATAM HR change management (2019)
@@ -48,7 +48,9 @@ One CSS rule hides whichever language isn't active, so **any new text needs both
 
 **Locked pages are generated — edit them elsewhere.** `pricing.html`, `confidential-a.html` and `confidential-b.html` hold only encrypted content. Their readable sources, and the script that locks them, live in a separate private repo. To change one: edit its source there, run the lock script, then commit the regenerated file here. Editing the generated file here does nothing useful; it's overwritten on the next lock.
 
-Visitors unlock with a shared password (AES-GCM, key derived with PBKDF2-SHA256). One unlock opens all three pages for the rest of that browser tab. Private images are embedded inside the encrypted page, never stored in this repo.
+The homepage's pricing section is locked the same way: the table is encrypted into the `<!-- lock:pricing -->` slot in `index.html` and appears in place when the password is entered. The lock script rewrites that slot, so leave it alone; everything else in `index.html` is edited here as normal.
+
+Visitors unlock with a shared password (AES-GCM, key derived with PBKDF2-SHA256). Capitals, spacing and accents don't matter. One unlock opens the homepage pricing and all three locked pages for the rest of that browser tab. Private images are embedded inside the encrypted content, never stored in this repo.
 
 **Colors are variables.** Each page declares a `:root` palette and a dark-mode override. To restyle, change the variables rather than hunting hex codes. Each case study sets its own `--accent` to match its hero gradient, with a lighter value for dark mode.
 

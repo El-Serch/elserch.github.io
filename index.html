@@ -27,6 +27,7 @@
             --nav-bg: rgba(255, 255, 255, 0.95);
             --footer-bg: #0f172a;
             --footer-text: #ffffff;
+            --danger: #b91c1c;
         }
 
         /* Dark palette — shared by the explicit toggle and the OS preference */
@@ -44,6 +45,7 @@
             --nav-bg: rgba(15, 23, 42, 0.95);
             --footer-bg: #020617;
             --footer-text: #e2e8f0;
+            --danger: #fca5a5;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -62,6 +64,7 @@
                 --nav-bg: rgba(15, 23, 42, 0.95);
                 --footer-bg: #020617;
                 --footer-text: #e2e8f0;
+                --danger: #fca5a5;
             }
         }
 
@@ -465,16 +468,278 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Pricing teaser — the table itself is encrypted in pricing.html */
-        .pricing-teaser {
+        /* Pricing */
+        .pricing {
             padding: 6rem 0;
             background: var(--bg);
+        }
+
+        .pricing-table-wrap {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-bg);
+            overflow-x: auto;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            color: var(--secondary);
+        }
+
+        .pricing-table .col-recommended {
+            background: color-mix(in srgb, var(--accent) 7%, transparent);
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            padding: 0.9rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .pricing-table tbody tr:last-child th,
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table thead th {
+            vertical-align: bottom;
+            padding-top: 1.75rem;
+            padding-bottom: 1.25rem;
+            color: var(--primary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .pricing-table thead th:first-child {
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .pricing-table thead th.recommended {
+            box-shadow: inset 0 3px 0 var(--accent);
+        }
+
+        .pricing-table tbody th {
+            width: 28%;
+            text-align: left;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .pricing-table tr[data-key="price"] td {
+            font-size: 1.1rem;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .plan-name {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-bottom: 0.6rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            background: var(--primary);
+            color: var(--bg);
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .pricing .is-yes {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .pricing .is-no {
+            color: var(--text-light);
+        }
+
+        .out-of-scope {
+            margin-top: 2rem;
+            padding: 1.5rem 1.75rem;
+            border: 1px dashed var(--text-light);
+            border-radius: 12px;
+            color: var(--secondary);
+        }
+
+        .out-of-scope strong {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .out-of-scope ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.75rem;
+        }
+
+        .out-of-scope li::before {
+            content: '×';
+            margin-right: 0.5rem;
+            color: var(--text-light);
+        }
+
+        /* One card per plan — built from the table on narrow screens */
+        .pricing-cards {
+            display: none;
+        }
+
+        .pricing-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-bg);
+        }
+
+        .pricing-card.is-recommended {
+            border: 2px solid var(--accent);
+        }
+
+        .pricing-card .plan-name {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .pricing-card .plan-ideal {
+            margin-top: 0.35rem;
+            color: var(--text-light);
+        }
+
+        .pricing-card .plan-price {
+            margin-top: 1rem;
+            font-size: 1.35rem;
+            color: var(--primary);
+        }
+
+        .pricing-card .plan-time {
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+
+        .plan-features {
+            margin-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .plan-features .feature {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .plan-features .feature:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features dt {
+            color: var(--text);
+        }
+
+        .plan-features dd {
+            flex-shrink: 0;
+            text-align: right;
+            color: var(--secondary);
+        }
+
+        .plan-features .is-excluded dt {
+            color: var(--text-light);
+        }
+
+        /* Pricing, locked: the table is encrypted into #lock-pricing and
+           unlocks in place (see the script at the end of the page). */
+        .pricing.is-locked {
             text-align: center;
         }
 
-        .pricing-teaser .section-subtitle {
+        .pricing.is-locked .section-subtitle {
             max-width: 36rem;
             margin: 0 auto 2rem;
+        }
+
+        .pricing-gate {
+            max-width: 26rem;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .pricing-gate label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .pricing-gate-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pricing-gate-row input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.75rem 0.9rem;
+            border: 1px solid var(--text-light);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font: inherit;
+            font-size: 1rem; /* 16px: stops iOS zooming into the field */
+        }
+
+        .pricing-gate-row .btn {
+            flex-shrink: 0;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            padding: 0.75rem 1.1rem;
+        }
+
+        .pricing-gate-row .btn:disabled {
+            cursor: progress;
+            opacity: 0.75;
+        }
+
+        .pricing-gate .when-busy,
+        .pricing-gate.is-busy .when-idle {
+            display: none;
+        }
+
+        .pricing-gate.is-busy .when-busy {
+            display: inline;
+        }
+
+        .pricing-gate-error {
+            margin-top: 0.6rem;
+            color: var(--danger);
+            font-size: 0.95rem;
+        }
+
+        .pricing-gate-help {
+            margin-top: 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .pricing-gate-help a {
+            color: var(--primary);
         }
 
         .btn-solid {
@@ -558,6 +823,10 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .out-of-scope ul {
+                flex-direction: column;
+            }
+
             .side-nav .nav-tools {
                 flex-direction: row;
             }
@@ -748,6 +1017,41 @@
             :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
         }
 
+        /* The comparison table needs ~800px of content width. Below that,
+           show one card per plan instead (built from the table by script). */
+        @media (max-width: 960px) {
+            .pricing.has-cards .pricing-table-wrap {
+                display: none;
+            }
+
+            .pricing.has-cards .pricing-cards {
+                display: grid;
+                gap: 1.25rem;
+                max-width: 36rem;
+                margin: 0 auto;
+            }
+
+            .pricing.has-cards .out-of-scope {
+                max-width: 36rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* Fallback if the cards never build: scroll the table sideways
+               with the row labels pinned. */
+            .pricing-table {
+                min-width: 640px;
+            }
+
+            .pricing-table tbody th,
+            .pricing-table thead th:first-child {
+                position: sticky;
+                left: 0;
+                z-index: 1;
+                background: var(--card-bg);
+            }
+        }
+
         /* Short desktop viewports: tighten the rail so the toggle stays on screen */
         @media (min-width: 769px) and (max-height: 800px) {
             .side-nav {
@@ -797,6 +1101,10 @@
 
         /* Narrowest phones: five links plus two tool buttons */
         @media (max-width: 360px) {
+            .pricing-gate-row {
+                flex-direction: column;
+            }
+
             .side-nav {
                 padding: 0.6rem 0.5rem;
                 gap: 0.5rem;
@@ -1135,12 +1443,24 @@
         </div>
     </section>
 
-    <!-- Pricing Section: a teaser. The table itself is encrypted in pricing.html. -->
-    <section id="pricing" class="pricing-teaser">
+    <!-- Pricing Section: locked. The table is encrypted into the lock:pricing slot
+         below by tools/lock.mjs in the private repo, and unlocks in place. -->
+    <section id="pricing" class="pricing is-locked" aria-labelledby="pricing-title">
         <div class="container">
-            <h2 class="section-title"><span lang="en">Scope options</span><span lang="es">Opciones de alcance</span></h2>
+            <h2 class="section-title" id="pricing-title"><span lang="en">Scope options</span><span lang="es">Opciones de alcance</span></h2>
             <p class="section-subtitle"><span lang="en">Three packages, from a quick concept to a full product experience. Pricing is shared privately.</span><span lang="es">Tres paquetes, desde un concepto rápido hasta una experiencia de producto completa. Los precios se comparten en privado.</span></p>
-            <a href="pricing.html" class="btn btn-solid"><svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">See pricing</span><span lang="es">Ver precios</span></a>
+
+            <form class="pricing-gate" id="pricingGate" novalidate>
+                <label for="pricingPassword"><span lang="en">Say the word</span><span lang="es">Dime la palabra</span></label>
+                <div class="pricing-gate-row">
+                    <input id="pricingPassword" name="password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false">
+                    <button type="submit" class="btn btn-solid" id="pricingUnlock"><svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span class="when-idle"><span lang="en">Unlock</span><span lang="es">Desbloquear</span></span><span class="when-busy"><span lang="en">Unlocking…</span><span lang="es">Desbloqueando…</span></span></button>
+                </div>
+                <p class="pricing-gate-error" id="pricingError" role="alert" hidden><span lang="en">That's not the word. Try again.</span><span lang="es">Esa no es la palabra. Intenta de nuevo.</span></p>
+                <p class="pricing-gate-error" id="pricingUnsupported" hidden><span lang="en">This browser can't unlock pricing. Try a recent Chrome, Safari, Firefox or Edge.</span><span lang="es">Este navegador no puede desbloquear los precios. Prueba una versión reciente de Chrome, Safari, Firefox o Edge.</span></p>
+                <p class="pricing-gate-help"><span lang="en">Don't have the password? <a href="mailto:soy@elserch.com?subject=Password%20for%20elserch.com">Ask me for it</a>.</span><span lang="es">¿No tienes la contraseña? <a href="mailto:soy@elserch.com?subject=Contrase%C3%B1a%20para%20elserch.com">Pídemela</a>.</span></p>
+            </form>
+            <!-- lock:pricing --><script type="application/json" id="lock-pricing">{"salt":"bkim0i2mvLr2irbLfFLQNw==","iterations":600000,"data":"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"}</script><!-- /lock:pricing -->
         </div>
     </section>
 
@@ -1307,6 +1627,174 @@
                         history.replaceState(null, '', url);
                     }
                 } catch (e) {}
+            });
+        })();
+
+        // Pricing: rebuild the comparison table as one card per plan for narrow
+        // screens. Runs once the table has been decrypted into the section.
+        function buildPricingCards(section) {
+            var table = section.querySelector('.pricing-table');
+            if (!table || section.classList.contains('has-cards')) return;
+            var plans = [].slice.call(table.querySelectorAll('thead th')).slice(1);
+            var rows = [].slice.call(table.querySelectorAll('tbody tr'));
+
+            function mark(cell) {
+                var t = cell.textContent.trim();
+                if (t !== '✓' && t !== '—') return;
+                var yes = t === '✓';
+                cell.classList.add(yes ? 'is-yes' : 'is-no');
+                cell.textContent = '';
+                var glyph = document.createElement('span');
+                glyph.setAttribute('aria-hidden', 'true');
+                glyph.textContent = t;
+                cell.appendChild(glyph);
+                [['en', yes ? 'Included' : 'Not included'],
+                 ['es', yes ? 'Incluido' : 'No incluido']].forEach(function (l) {
+                    var said = document.createElement('span');
+                    said.className = 'sr-only';
+                    said.setAttribute('lang', l[0]);
+                    said.textContent = l[1];
+                    cell.appendChild(said);
+                });
+            }
+            rows.forEach(function (tr) { [].forEach.call(tr.querySelectorAll('td'), mark); });
+
+            function copyInto(target, cell) {
+                [].forEach.call(cell.childNodes, function (n) { target.appendChild(n.cloneNode(true)); });
+            }
+
+            var deck = document.createElement('div');
+            deck.className = 'pricing-cards';
+            plans.forEach(function (th, i) {
+                var card = document.createElement('article');
+                card.className = 'pricing-card' + (th.classList.contains('recommended') ? ' is-recommended' : '');
+                var badge = th.querySelector('.badge');
+                if (badge) card.appendChild(badge.cloneNode(true));
+                var name = document.createElement('h3');
+                name.className = 'plan-name';
+                copyInto(name, th.querySelector('.plan-name'));
+                card.appendChild(name);
+
+                var lead = {};
+                var list = document.createElement('dl');
+                list.className = 'plan-features';
+                rows.forEach(function (tr) {
+                    var cell = tr.querySelectorAll('td')[i];
+                    var key = tr.getAttribute('data-key');
+                    if (key) { lead[key] = cell; return; }
+                    var item = document.createElement('div');
+                    item.className = 'feature' + (cell.classList.contains('is-no') ? ' is-excluded' : '');
+                    var dt = document.createElement('dt');
+                    copyInto(dt, tr.querySelector('th'));
+                    var dd = document.createElement('dd');
+                    dd.className = cell.className;
+                    copyInto(dd, cell);
+                    item.appendChild(dt);
+                    item.appendChild(dd);
+                    list.appendChild(item);
+                });
+                [['ideal', 'plan-ideal'], ['price', 'plan-price'], ['time', 'plan-time']].forEach(function (pair) {
+                    if (!lead[pair[0]]) return;
+                    var line = document.createElement('p');
+                    line.className = pair[1];
+                    copyInto(line, lead[pair[0]]);
+                    card.appendChild(line);
+                });
+                card.appendChild(list);
+                deck.appendChild(card);
+            });
+            var wrap = section.querySelector('.pricing-table-wrap');
+            wrap.parentNode.insertBefore(deck, wrap.nextSibling);
+            section.classList.add('has-cards');
+        }
+
+        // Pricing: unlock in place. The same key opens pricing.html and the
+        // confidential projects, and a key remembered from any of them opens this.
+        (function () {
+            var section = document.getElementById('pricing');
+            var holder = document.getElementById('lock-pricing');
+            if (!section || !holder) return;
+            var lock;
+            try { lock = JSON.parse(holder.textContent); } catch (e) { return; }
+            var STORE = 'elserch-private';
+            var form = document.getElementById('pricingGate');
+            var input = document.getElementById('pricingPassword');
+            var button = document.getElementById('pricingUnlock');
+            var error = document.getElementById('pricingError');
+            var subtle = window.crypto && window.crypto.subtle;
+
+            if (!subtle) {
+                document.getElementById('pricingUnsupported').hidden = false;
+                button.disabled = true;
+                return;
+            }
+
+            // Must match normalise() in the private repo's gate and lock script:
+            // capitals, spacing and accents (á → a, ñ → n) are ignored.
+            function normalise(p) {
+                return p.normalize('NFD').replace(/[̀-ͯ]/g, '').trim().replace(/\s+/g, ' ').toLowerCase();
+            }
+            function fromB64(s) {
+                var bin = atob(s), out = new Uint8Array(bin.length);
+                for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+                return out;
+            }
+            function toB64(bytes) {
+                var bin = '';
+                for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+                return btoa(bin);
+            }
+            function deriveKey(password) {
+                return subtle.importKey('raw', new TextEncoder().encode(normalise(password)), 'PBKDF2', false, ['deriveBits'])
+                    .then(function (base) {
+                        return subtle.deriveBits({ name: 'PBKDF2', salt: fromB64(lock.salt), iterations: lock.iterations, hash: 'SHA-256' }, base, 256);
+                    })
+                    .then(function (bits) { return new Uint8Array(bits); });
+            }
+            function decrypt(raw) {
+                var blob = fromB64(lock.data);
+                return subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt'])
+                    .then(function (key) { return subtle.decrypt({ name: 'AES-GCM', iv: blob.slice(0, 12) }, key, blob.slice(12)); })
+                    .then(function (plain) { return new TextDecoder().decode(plain); });
+            }
+            // Swap the section's contents rather than the section itself, so the
+            // nav's scroll tracking keeps watching the same element.
+            function reveal(html) {
+                section.classList.remove('is-locked');
+                section.innerHTML = html;
+                buildPricingCards(section);
+            }
+
+            var saved = null;
+            try { saved = JSON.parse(sessionStorage.getItem(STORE) || 'null'); } catch (e) {}
+            if (saved && saved.salt === lock.salt && saved.key) {
+                decrypt(fromB64(saved.key)).then(reveal, function () {
+                    try { sessionStorage.removeItem(STORE); } catch (e) {}
+                });
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                if (!input.value) { input.focus(); return; }
+                form.classList.add('is-busy');
+                button.disabled = true;
+                error.hidden = true;
+                var raw;
+                deriveKey(input.value)
+                    .then(function (k) { raw = k; return decrypt(k); })
+                    .then(function (html) {
+                        try { sessionStorage.setItem(STORE, JSON.stringify({ salt: lock.salt, key: toB64(raw) })); } catch (e) {}
+                        reveal(html);
+                        var title = section.querySelector('.section-title');
+                        if (title) { title.setAttribute('tabindex', '-1'); title.focus({ preventScroll: true }); }
+                    })
+                    .catch(function () {
+                        form.classList.remove('is-busy');
+                        button.disabled = false;
+                        error.hidden = false;
+                        input.select();
+                        input.focus();
+                    });
             });
         })();
     </script>

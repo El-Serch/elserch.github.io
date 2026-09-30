@@ -9,7 +9,7 @@ Static HTML and CSS, served by GitHub Pages. No build step, no framework, no pac
 ## Structure
 
 ```
-index.html                    Homepage: hero, about, skills, project grid, experience, contact
+index.html                    Homepage: hero, about, skills, project grid, experience, pricing, contact
 scotiabank-case-study.html    Corporate & commercial banking platform (2022–present)
 usaa-case-study.html          CFO treasury applications (2022–2023)
 nyhealth-case-study.html      Health Pass + virtual assistant (2021)
@@ -36,6 +36,8 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 **The case studies are placeholder copy.** Every case study was drafted with plausible but invented detail — team sizes, interview counts, timelines, quotes. Replace before sharing the links widely. The homepage cards and the one-pager content are real.
 
 **Image slots are marked.** Each case study has `<div class="image-placeholder">` blocks with a caption saying what belongs there. Swap the whole div for an `<img>` when you have the asset.
+
+**Pricing lives in the table only.** On screens up to 960px the pricing table is hidden and a script rebuilds it as one card per plan. Edit the `<table>` in `index.html` and the cards follow — don't hand-write cards. Type `✓` and `—` in cells; the script styles them and adds spoken labels. Rows marked `data-key="price"`, `"time"` or `"ideal"` are promoted to the top of each card.
 
 **Colors are variables.** Each page declares a `:root` palette and a dark-mode override. To restyle, change the variables rather than hunting hex codes. Each case study sets its own `--accent` to match its hero gradient, with a lighter value for dark mode.
 

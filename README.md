@@ -9,12 +9,13 @@ Static HTML and CSS, served by GitHub Pages. No build step, no framework, no pac
 ## Structure
 
 ```
-index.html                    Homepage: hero, about, skills, project grid, experience, pricing, contact
+index.html                    Homepage: hero, about, skills, project grid, experience, pricing teaser, contact
 scotiabank-case-study.html    Corporate & commercial banking platform (2022–present)
-usaa-case-study.html          CFO treasury applications (2022–2023)
 nyhealth-case-study.html      Health Pass + virtual assistant (2021)
-banorte-case-study.html       "Maya" virtual banking assistant (2017–2019)
 walmart-case-study.html       LATAM HR change management (2019)
+pricing.html                  Password-protected: scope options and pricing   (generated, do not edit)
+confidential-a.html           Password-protected: project under NDA           (generated, do not edit)
+confidential-b.html           Password-protected: project under NDA           (generated, do not edit)
 assets/elserch-logo.svg       Logo mark — also the favicon
 CNAME                         Custom domain for GitHub Pages
 ```
@@ -45,7 +46,9 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 
 One CSS rule hides whichever language isn't active, so **any new text needs both spans** or it will show in both languages. Text that reads the same in both (names, numbers, client names) needs no spans. Attributes can't hold spans, so aria-labels use `data-label-en` / `data-label-es` and the page title uses `data-title-en` / `data-title-es` on `<html>`.
 
-**Pricing lives in the table only.** On screens up to 960px the pricing table is hidden and a script rebuilds it as one card per plan. Edit the `<table>` in `index.html` and the cards follow — don't hand-write cards. Type `✓` and `—` in cells; the script styles them and adds spoken labels. Rows marked `data-key="price"`, `"time"` or `"ideal"` are promoted to the top of each card.
+**Locked pages are generated — edit them elsewhere.** `pricing.html`, `confidential-a.html` and `confidential-b.html` hold only encrypted content. Their readable sources, and the script that locks them, live in a separate private repo. To change one: edit its source there, run the lock script, then commit the regenerated file here. Editing the generated file here does nothing useful; it's overwritten on the next lock.
+
+Visitors unlock with a shared password (AES-GCM, key derived with PBKDF2-SHA256). One unlock opens all three pages for the rest of that browser tab. Private images are embedded inside the encrypted page, never stored in this repo.
 
 **Colors are variables.** Each page declares a `:root` palette and a dark-mode override. To restyle, change the variables rather than hunting hex codes. Each case study sets its own `--accent` to match its hero gradient, with a lighter value for dark mode.
 

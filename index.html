@@ -465,198 +465,40 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Pricing */
-        .pricing {
+        /* Pricing teaser — the table itself is encrypted in pricing.html */
+        .pricing-teaser {
             padding: 6rem 0;
             background: var(--bg);
-        }
-
-        .pricing-table-wrap {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--card-bg);
-            overflow-x: auto;
-        }
-
-        .pricing-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-            color: var(--secondary);
-        }
-
-        .pricing-table .col-recommended {
-            background: color-mix(in srgb, var(--accent) 7%, transparent);
-        }
-
-        .pricing-table th,
-        .pricing-table td {
-            padding: 0.9rem 1.25rem;
-            border-bottom: 1px solid var(--border);
             text-align: center;
-            vertical-align: middle;
         }
 
-        .pricing-table tbody tr:last-child th,
-        .pricing-table tbody tr:last-child td {
-            border-bottom: none;
+        .pricing-teaser .section-subtitle {
+            max-width: 36rem;
+            margin: 0 auto 2rem;
         }
 
-        .pricing-table thead th {
-            vertical-align: bottom;
-            padding-top: 1.75rem;
-            padding-bottom: 1.25rem;
-            color: var(--primary);
-            font-size: 1.05rem;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .pricing-table thead th:first-child {
-            text-align: left;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-light);
-        }
-
-        .pricing-table thead th.recommended {
-            box-shadow: inset 0 3px 0 var(--accent);
-        }
-
-        .pricing-table tbody th {
-            width: 28%;
-            text-align: left;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .pricing-table tr[data-key="price"] td {
-            font-size: 1.1rem;
-            color: var(--primary);
-            white-space: nowrap;
-        }
-
-        .plan-name {
-            display: block;
-        }
-
-        .badge {
-            display: inline-block;
-            margin-bottom: 0.6rem;
-            padding: 0.2rem 0.7rem;
-            border-radius: 999px;
+        .btn-solid {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             background: var(--primary);
             color: var(--bg);
-            font-size: 0.78rem;
-            font-weight: 600;
-            line-height: 1.5;
         }
 
-        .pricing .is-yes {
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 1.05rem;
+        .btn-icon {
+            width: 18px;
+            height: 18px;
         }
 
-        .pricing .is-no {
-            color: var(--text-light);
+        /* Locked (NDA) project cards */
+        .project-image--locked {
+            background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .out-of-scope {
-            margin-top: 2rem;
-            padding: 1.5rem 1.75rem;
-            border: 1px dashed var(--text-light);
-            border-radius: 12px;
-            color: var(--secondary);
-        }
-
-        .out-of-scope strong {
-            display: block;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-        }
-
-        .out-of-scope ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem 1.75rem;
-        }
-
-        .out-of-scope li::before {
-            content: '×';
-            margin-right: 0.5rem;
-            color: var(--text-light);
-        }
-
-        /* One card per plan — built from the table on narrow screens */
-        .pricing-cards {
-            display: none;
-        }
-
-        .pricing-card {
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--card-bg);
-        }
-
-        .pricing-card.is-recommended {
-            border: 2px solid var(--accent);
-        }
-
-        .pricing-card .plan-name {
-            font-size: 1.25rem;
-            color: var(--primary);
-        }
-
-        .pricing-card .plan-ideal {
-            margin-top: 0.35rem;
-            color: var(--text-light);
-        }
-
-        .pricing-card .plan-price {
-            margin-top: 1rem;
-            font-size: 1.35rem;
-            color: var(--primary);
-        }
-
-        .pricing-card .plan-time {
-            color: var(--secondary);
-            font-size: 0.95rem;
-        }
-
-        .plan-features {
-            margin-top: 1.25rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .plan-features .feature {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 1rem;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
-
-        .plan-features .feature:last-child {
-            border-bottom: none;
-        }
-
-        .plan-features dt {
-            color: var(--text);
-        }
-
-        .plan-features dd {
-            flex-shrink: 0;
-            text-align: right;
-            color: var(--secondary);
-        }
-
-        .plan-features .is-excluded dt {
-            color: var(--text-light);
+        .lock-icon {
+            width: 52px;
+            height: 52px;
         }
 
         .sr-only {
@@ -724,10 +566,6 @@
                 width: 32px;
                 height: 32px;
                 font-size: 0.7rem;
-            }
-
-            .out-of-scope ul {
-                flex-direction: column;
             }
 
             body {
@@ -910,41 +748,6 @@
             :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
         }
 
-        /* The comparison table needs ~800px of content width. Below that,
-           show one card per plan instead (built from the table by script). */
-        @media (max-width: 960px) {
-            .pricing.has-cards .pricing-table-wrap {
-                display: none;
-            }
-
-            .pricing.has-cards .pricing-cards {
-                display: grid;
-                gap: 1.25rem;
-                max-width: 36rem;
-                margin: 0 auto;
-            }
-
-            .pricing.has-cards .out-of-scope {
-                max-width: 36rem;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            /* Fallback if the cards never build: scroll the table sideways
-               with the row labels pinned. */
-            .pricing-table {
-                min-width: 640px;
-            }
-
-            .pricing-table tbody th,
-            .pricing-table thead th:first-child {
-                position: sticky;
-                left: 0;
-                z-index: 1;
-                background: var(--card-bg);
-            }
-        }
-
         /* Short desktop viewports: tighten the rail so the toggle stays on screen */
         @media (min-width: 769px) and (max-height: 800px) {
             .side-nav {
@@ -1012,6 +815,10 @@
            touch until something else is tapped, which left nav icons
            and cards stuck in their hover state. */
         @media (hover: hover) {
+            .btn-solid:hover {
+                transform: translateY(-2px);
+            }
+
             .lang-toggle:hover {
                 border-color: var(--accent);
                 color: var(--accent);
@@ -1196,20 +1003,19 @@
                     </div>
                 </a>
 
-                <!-- Project 2: USAA -->
-                <a href="usaa-case-study.html" class="project-card">
-                    <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">US</div>
+                <!-- Project 2: confidential, under NDA — full case study is encrypted in confidential-a.html -->
+                <a href="confidential-a.html" class="project-card is-locked">
+                    <div class="project-image project-image--locked"><svg class="lock-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
                     <div class="project-content">
                         <div class="project-header">
-                            <h3 class="project-title">USAA</h3>
+                            <h3 class="project-title"><span lang="en">Confidential project</span><span lang="es">Proyecto confidencial</span></h3>
                             <span class="project-year">2022–2023</span>
                         </div>
-                        <span class="project-type"><span lang="en">CFO Treasury Applications</span><span lang="es">Aplicaciones de tesorería para el CFO</span></span>
-                        <p class="project-description"><span lang="en">Wireframes and interactive prototypes across 7 agile squads. Improved usability of internal treasury, wire transfer, and RPA workflows for financial operations.</span><span lang="es">Wireframes y prototipos interactivos para 7 squads ágiles. Mejoré la usabilidad de los flujos internos de tesorería, transferencias y RPA para operaciones financieras.</span></p>
+                        <span class="project-type"><span lang="en">Internal treasury tools</span><span lang="es">Herramientas internas de tesorería</span></span>
+                        <p class="project-description"><span lang="en">Treasury, payments and automation tools for a US financial institution. Under NDA, so it's password-protected.</span><span lang="es">Herramientas de tesorería, pagos y automatización para una institución financiera de EE. UU. Está bajo NDA, así que requiere contraseña.</span></p>
                         <div class="project-tags">
+                            <span class="tag"><span lang="en">Financial services</span><span lang="es">Servicios financieros</span></span>
                             <span class="tag"><span lang="en">Internal Tools</span><span lang="es">Herramientas internas</span></span>
-                            <span class="tag"><span lang="en">Treasury</span><span lang="es">Tesorería</span></span>
-                            <span class="tag"><span lang="en">Agile</span><span lang="es">Ágil</span></span>
                             <span class="tag"><span lang="en">Prototyping</span><span lang="es">Prototipado</span></span>
                         </div>
                     </div>
@@ -1234,20 +1040,19 @@
                     </div>
                 </a>
 
-                <!-- Project 4: Banorte -->
-                <a href="banorte-case-study.html" class="project-card">
-                    <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">BN</div>
+                <!-- Project 4: confidential, under NDA — full case study is encrypted in confidential-b.html -->
+                <a href="confidential-b.html" class="project-card is-locked">
+                    <div class="project-image project-image--locked"><svg class="lock-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
                     <div class="project-content">
                         <div class="project-header">
-                            <h3 class="project-title">Banorte - Maya</h3>
+                            <h3 class="project-title"><span lang="en">Confidential project</span><span lang="es">Proyecto confidencial</span></h3>
                             <span class="project-year">2017–2019</span>
                         </div>
-                        <span class="project-type"><span lang="en">Virtual Banking Assistant</span><span lang="es">Asistente bancario virtual</span></span>
-                        <p class="project-description"><span lang="en">Built 12 conversational banking use cases across 9 sprints. Designed voice and text interaction flows using grammar and SSML standards for banking services.</span><span lang="es">Construí 12 casos de uso de banca conversacional a lo largo de 9 sprints. Diseñé flujos de interacción por voz y texto con gramáticas y estándares SSML para servicios bancarios.</span></p>
+                        <span class="project-type"><span lang="en">Virtual banking assistant</span><span lang="es">Asistente bancario virtual</span></span>
+                        <p class="project-description"><span lang="en">Conversational banking over voice and text for a bank in Mexico. Under NDA, so it's password-protected.</span><span lang="es">Banca conversacional por voz y texto para un banco en México. Está bajo NDA, así que requiere contraseña.</span></p>
                         <div class="project-tags">
                             <span class="tag"><span lang="en">Conversational UX</span><span lang="es">UX conversacional</span></span>
                             <span class="tag"><span lang="en">Voice Design</span><span lang="es">Diseño de voz</span></span>
-                            <span class="tag"><span lang="en">Banking</span><span lang="es">Banca</span></span>
                             <span class="tag"><span lang="en">AI</span><span lang="es">IA</span></span>
                         </div>
                     </div>
@@ -1330,130 +1135,12 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+    <!-- Pricing Section: a teaser. The table itself is encrypted in pricing.html. -->
+    <section id="pricing" class="pricing-teaser">
         <div class="container">
-            <h2 class="section-title" id="pricing-title"><span lang="en">Scope options</span><span lang="es">Opciones de alcance</span></h2>
-            <p class="section-subtitle">Product design</p>
-
-            <div class="pricing-table-wrap">
-                <table class="pricing-table">
-                    <colgroup>
-                        <col>
-                        <col>
-                        <col class="col-recommended">
-                        <col>
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th scope="col"><span lang="en">Scope</span><span lang="es">Alcance</span></th>
-                            <th scope="col"><span class="plan-name">UX/UI Concept</span></th>
-                            <th scope="col" class="recommended">
-                                <span class="badge"><span lang="en">Recommended</span><span lang="es">Recomendado</span></span>
-                                <span class="plan-name">Product Design Sprint</span>
-                            </th>
-                            <th scope="col"><span class="plan-name">Product Experience &amp; Visual System</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-key="price">
-                            <th scope="row"><span lang="en">Investment</span><span lang="es">Inversión</span></th>
-                            <td><strong><span lang="en">$20,000 MXN + VAT</span><span lang="es">$20,000 MXN + IVA</span></strong></td>
-                            <td><strong><span lang="en">$28,000 MXN + VAT</span><span lang="es">$28,000 MXN + IVA</span></strong></td>
-                            <td><strong><span lang="en">$38,000 MXN + VAT</span><span lang="es">$38,000 MXN + IVA</span></strong></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Stakeholder discovery</span><span lang="es">Discovery con stakeholders</span></th>
-                            <td><span lang="en">Up to 2 h</span><span lang="es">Hasta 2 h</span></td>
-                            <td><span lang="en">Up to 4 h</span><span lang="es">Hasta 4 h</span></td>
-                            <td><span lang="en">Up to 4 h</span><span lang="es">Hasta 4 h</span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Requirements synthesis</span><span lang="es">Síntesis de requerimientos</span></th>
-                            <td>—</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Information architecture</span><span lang="es">Arquitectura de información</span></th>
-                            <td>✓</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Core user flows</span><span lang="es">User flows principales</span></th>
-                            <td>—</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Key screens</span><span lang="es">Pantallas principales</span></th>
-                            <td><span lang="en">Up to 6</span><span lang="es">Hasta 6</span></td>
-                            <td><span lang="en">Up to 10</span><span lang="es">Hasta 10</span></td>
-                            <td><span lang="en">Up to 15</span><span lang="es">Hasta 15</span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Clickable Figma prototype</span><span lang="es">Prototipo navegable en Figma</span></th>
-                            <td>✓</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Basic visual identity</span><span lang="es">Identidad gráfica básica</span></th>
-                            <td>—</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Visual system / components</span><span lang="es">Sistema visual / componentes</span></th>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Error and edge-case states</span><span lang="es">Estados de error y excepción</span></th>
-                            <td>—</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Basic developer handoff</span><span lang="es">Handoff básico para desarrollo</span></th>
-                            <td>—</td>
-                            <td>✓</td>
-                            <td>✓</td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><span lang="en">Revision rounds</span><span lang="es">Rondas de ajustes</span></th>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>2</td>
-                        </tr>
-                        <tr data-key="time">
-                            <th scope="row"><span lang="en">Estimated timeline</span><span lang="es">Tiempo estimado</span></th>
-                            <td><span lang="en">3–5 business days</span><span lang="es">3–5 días hábiles</span></td>
-                            <td><span lang="en">5–8 business days</span><span lang="es">5–8 días hábiles</span></td>
-                            <td><span lang="en">8–12 business days</span><span lang="es">8–12 días hábiles</span></td>
-                        </tr>
-                        <tr data-key="ideal">
-                            <th scope="row"><span lang="en">Best for</span><span lang="es">Ideal para</span></th>
-                            <td><span lang="en">Validating an idea quickly</span><span lang="es">Validar rápidamente la idea</span></td>
-                            <td><span lang="en">Laying a solid foundation for an MVP</span><span lang="es">Definir una base sólida para MVP</span></td>
-                            <td><span lang="en">Building a more complete experience</span><span lang="es">Preparar una experiencia más completa</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <aside class="out-of-scope">
-                <strong><span lang="en">Out of scope</span><span lang="es">Fuera de alcance</span></strong>
-                <ul>
-                    <li><span lang="en">Frontend and backend development</span><span lang="es">Desarrollo frontend/backend</span></li>
-                    <li><span lang="en">AI implementation</span><span lang="es">Implementación de IA</span></li>
-                    <li><span lang="en">Banking integrations</span><span lang="es">Integraciones bancarias</span></li>
-                    <li><span lang="en">Legal and regulatory research</span><span lang="es">Investigación legal/regulatoria</span></li>
-                    <li><span lang="en">External user testing</span><span lang="es">User testing externo</span></li>
-                </ul>
-            </aside>
+            <h2 class="section-title"><span lang="en">Scope options</span><span lang="es">Opciones de alcance</span></h2>
+            <p class="section-subtitle"><span lang="en">Three packages, from a quick concept to a full product experience. Pricing is shared privately.</span><span lang="es">Tres paquetes, desde un concepto rápido hasta una experiencia de producto completa. Los precios se comparten en privado.</span></p>
+            <a href="pricing.html" class="btn btn-solid"><svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">See pricing</span><span lang="es">Ver precios</span></a>
         </div>
     </section>
 
@@ -1532,10 +1219,13 @@
             var last = targets[targets.length - 1];
             var visible = {};
             var atFoot = false;
+            var chosen = null;
 
             function paint() {
                 var id = null;
-                if (atFoot) {
+                if (chosen) {
+                    id = chosen;
+                } else if (atFoot) {
                     // Once the page bottoms out, the final section sits below the
                     // centre line and can never reach it however far you scroll,
                     // so the section before it would stay lit. Pin it instead.
@@ -1566,97 +1256,29 @@
                 targets.forEach(function (t) { obs.observe(t); });
             }
 
+            // A click says exactly where the reader went. Near the foot of the page
+            // several short sections share one scroll position, so position alone
+            // can't tell them apart. Honour the click until the reader scrolls.
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href^="#"]');
+                if (!a) return;
+                var id = a.getAttribute('href').slice(1);
+                if (!map[id]) return;
+                chosen = id;
+                paint();
+            });
+            function release() { if (chosen) { chosen = null; paint(); } }
+            window.addEventListener('wheel', release, { passive: true });
+            window.addEventListener('touchmove', release, { passive: true });
+            window.addEventListener('keydown', function (e) {
+                if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].indexOf(e.key) > -1) release();
+            });
+
             window.addEventListener('scroll', onScroll, { passive: true });
             window.addEventListener('resize', onScroll);
             onScroll();
         })();
 
-        // Pricing: give ✓ and — cells a class and a spoken label, then build
-        // one card per plan from the table for narrow screens. The table stays
-        // the single source of truth — edit prices there only.
-        (function () {
-            var section = document.querySelector('.pricing');
-            if (!section) return;
-            var table = section.querySelector('.pricing-table');
-            var plans = [].slice.call(table.querySelectorAll('thead th')).slice(1);
-            var rows = [].slice.call(table.querySelectorAll('tbody tr'));
-
-            function mark(cell) {
-                var t = cell.textContent.trim();
-                if (t !== '✓' && t !== '—') return;
-                var yes = t === '✓';
-                cell.classList.add(yes ? 'is-yes' : 'is-no');
-                cell.textContent = '';
-                var glyph = document.createElement('span');
-                glyph.setAttribute('aria-hidden', 'true');
-                glyph.textContent = t;
-                cell.appendChild(glyph);
-                [['en', yes ? 'Included' : 'Not included'],
-                 ['es', yes ? 'Incluido' : 'No incluido']].forEach(function (l) {
-                    var said = document.createElement('span');
-                    said.className = 'sr-only';
-                    said.setAttribute('lang', l[0]);
-                    said.textContent = l[1];
-                    cell.appendChild(said);
-                });
-            }
-            rows.forEach(function (tr) { [].forEach.call(tr.querySelectorAll('td'), mark); });
-
-            function copyInto(target, cell) {
-                [].forEach.call(cell.childNodes, function (n) { target.appendChild(n.cloneNode(true)); });
-            }
-
-            var deck = document.createElement('div');
-            deck.className = 'pricing-cards';
-
-            plans.forEach(function (th, i) {
-                var card = document.createElement('article');
-                card.className = 'pricing-card' + (th.classList.contains('recommended') ? ' is-recommended' : '');
-
-                var badge = th.querySelector('.badge');
-                if (badge) card.appendChild(badge.cloneNode(true));
-
-                var name = document.createElement('h3');
-                name.className = 'plan-name';
-                copyInto(name, th.querySelector('.plan-name'));
-                card.appendChild(name);
-
-                var lead = {};
-                var list = document.createElement('dl');
-                list.className = 'plan-features';
-
-                rows.forEach(function (tr) {
-                    var cell = tr.querySelectorAll('td')[i];
-                    var key = tr.getAttribute('data-key');
-                    if (key) { lead[key] = cell; return; }
-                    var item = document.createElement('div');
-                    item.className = 'feature' + (cell.classList.contains('is-no') ? ' is-excluded' : '');
-                    var dt = document.createElement('dt');
-                    copyInto(dt, tr.querySelector('th'));
-                    var dd = document.createElement('dd');
-                    dd.className = cell.className;
-                    copyInto(dd, cell);
-                    item.appendChild(dt);
-                    item.appendChild(dd);
-                    list.appendChild(item);
-                });
-
-                [['ideal', 'plan-ideal'], ['price', 'plan-price'], ['time', 'plan-time']].forEach(function (pair) {
-                    if (!lead[pair[0]]) return;
-                    var line = document.createElement('p');
-                    line.className = pair[1];
-                    copyInto(line, lead[pair[0]]);
-                    card.appendChild(line);
-                });
-
-                card.appendChild(list);
-                deck.appendChild(card);
-            });
-
-            var wrap = section.querySelector('.pricing-table-wrap');
-            wrap.parentNode.insertBefore(deck, wrap.nextSibling);
-            section.classList.add('has-cards');
-        })();
 
         // Language toggle
         (function () {

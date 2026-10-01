@@ -1826,6 +1826,371 @@
             }
         }
 
+        /* ============================================================ System view
+           The same page drawn as a blueprint: tokens swap to a blueprint
+           palette, decoration turns into wireframe, and every component gets a
+           label (added by the script). html:root beats the dark-mode selectors. */
+        html:root[data-view="system"] {
+            --bg: #0c2a4d;
+            --bg-alt: #0c2a4d;
+            --card-bg: rgba(10, 34, 64, 0.72);
+            --chip-bg: transparent;
+            --primary: #eaf4ff;
+            --secondary: #b9d6f2;
+            --text: #cfe2f6;
+            --text-light: #86afd6;
+            --border: rgba(160, 205, 255, 0.35);
+            --accent: #6fe3ff;
+            --nav-bg: rgba(10, 34, 64, 0.96);
+            --footer-bg: transparent;
+            --footer-text: #b9d6f2;
+            --danger: #ff9b9b;
+            --sys-line: rgba(140, 200, 255, 0.7);
+            --sys-ink: #06203b;
+            color-scheme: dark;
+        }
+
+        html[data-view="system"] body {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(rgba(140, 200, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(140, 200, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(rgba(140, 200, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(140, 200, 255, 0.035) 1px, transparent 1px);
+            background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+        }
+
+        /* Labels near the right edge must never widen the page. */
+        html[data-view="system"],
+        html[data-view="system"] body {
+            overflow-x: clip;
+        }
+
+        /* Wide screens: make room on the left for the page map. */
+        @media (min-width: 1280px) {
+            html[data-view="system"] body {
+                padding-left: 19rem;
+            }
+        }
+
+        html[data-view="system"] .cf-reason > .sys-tag {
+            left: auto;
+            right: -5px;
+        }
+
+        html[data-view="system"] .hero,
+        html[data-view="system"] section,
+        html[data-view="system"] .footer {
+            background: transparent !important;
+        }
+
+        html[data-view="system"] *,
+        html[data-view="system"] *::before,
+        html[data-view="system"] *::after {
+            box-shadow: none !important;
+        }
+
+        /* Imagery becomes the classic wireframe placeholder: a crossed box. */
+        html[data-view="system"] .project-image,
+        html[data-view="system"] .panel-cover {
+            background:
+                linear-gradient(to top right, transparent calc(50% - 0.6px), var(--sys-line) 50%, transparent calc(50% + 0.6px)),
+                linear-gradient(to bottom right, transparent calc(50% - 0.6px), var(--sys-line) 50%, transparent calc(50% + 0.6px)) !important;
+            border: 1px dashed var(--sys-line);
+            color: var(--accent) !important;
+            text-shadow: 0 0 0 transparent;
+        }
+
+        html[data-view="system"] .project-image > *,
+        html[data-view="system"] .panel-cover > * {
+            background: var(--bg);
+            padding: 0 0.4em;
+        }
+
+        html[data-view="system"] .hero-logo,
+        html[data-view="system"] .logo img {
+            filter: grayscale(1) brightness(1.6);
+            opacity: 0.75;
+        }
+
+        html[data-view="system"] .btn,
+        html[data-view="system"] .btn-solid,
+        html[data-view="system"] .cf-send {
+            background: transparent !important;
+            border: 1px dashed var(--accent) !important;
+            color: var(--accent) !important;
+        }
+
+        html[data-view="system"] .project-card,
+        html[data-view="system"] .stat-card,
+        html[data-view="system"] .tease-plan,
+        html[data-view="system"] .contact-form,
+        html[data-view="system"] .cf-done,
+        html[data-view="system"] .contact-link,
+        html[data-view="system"] .pricing-gate--card,
+        html[data-view="system"] .panel-flow > ol {
+            border-style: dashed;
+            background: var(--card-bg);
+        }
+
+        html[data-view="system"] .project-type,
+        html[data-view="system"] .tag,
+        html[data-view="system"] .tease-badge {
+            border: 1px dashed var(--border);
+            background: transparent;
+            color: var(--text-light);
+        }
+
+        html[data-view="system"] .cf-field input,
+        html[data-view="system"] .cf-field textarea,
+        html[data-view="system"] .pricing-gate-row input,
+        html[data-view="system"] .cf-money,
+        html[data-view="system"] .cf-range {
+            background: transparent;
+            border-style: dashed;
+        }
+
+        /* Components and their labels */
+        html[data-view="system"] .sys-rel {
+            position: relative;
+        }
+
+        html[data-view="system"] .sys-node {
+            outline: 1px dashed var(--sys-line);
+            outline-offset: 5px;
+        }
+
+        html[data-view="system"] .sys-section {
+            outline: 1px solid rgba(140, 200, 255, 0.45);
+            outline-offset: -14px;
+        }
+
+        .sys-tag {
+            display: none;
+        }
+
+        html[data-view="system"] .sys-tag {
+            display: block;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            z-index: 30;
+            max-width: min(32rem, calc(100vw - 2rem));
+            padding: 3px 7px;
+            border-radius: 2px;
+            background: var(--accent);
+            color: var(--sys-ink);
+            font: 600 11px/1.35 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            letter-spacing: 0.01em;
+            text-align: left;
+            text-transform: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transform: translateY(-100%);
+            pointer-events: none;
+            writing-mode: horizontal-tb;
+        }
+
+        html[data-view="system"] .sys-section > .sys-tag {
+            top: 14px;
+            left: 14px;
+            transform: none;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            font-size: 12px;
+        }
+
+        html[data-view="system"] .side-nav > .sys-tag {
+            top: 10px;
+            left: auto;
+            right: calc(100% + 8px);
+            transform: none;
+        }
+
+        html[data-view="system"] .side-nav {
+            border-left: 1px dashed var(--sys-line);
+        }
+
+        html[data-view="system"] .side-nav.sys-node {
+            outline: none;
+        }
+
+        /* Page map */
+        .sys-map {
+            display: none;
+        }
+
+        html[data-view="system"] .sys-map {
+            display: block;
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 900;
+            width: 17rem;
+            max-height: calc(100vh - 32px);
+            overflow: auto;
+            padding: 1rem 1.1rem;
+            border: 1px solid var(--accent);
+            background: rgba(6, 26, 50, 0.94);
+            color: var(--text);
+            font: 12px/1.45 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        }
+
+        .sys-map-title {
+            margin-bottom: 0.6rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .sys-map-title > span:last-child {
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .sys-map ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sys-map ol ol {
+            margin: 0.2rem 0 0.2rem 0.4rem;
+            padding-left: 0.8rem;
+            border-left: 1px dashed var(--sys-line);
+        }
+
+        .sys-map li {
+            margin: 0.15rem 0;
+        }
+
+        .sys-map > ol > li {
+            padding-left: 0.8rem;
+            border-left: 1px solid var(--sys-line);
+        }
+
+        .sys-map button {
+            padding: 0;
+            border: 0;
+            background: none;
+            color: var(--primary);
+            font: inherit;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .sys-map ol ol button {
+            font-weight: 400;
+            color: var(--secondary);
+        }
+
+        .sys-map i {
+            font-style: normal;
+        }
+
+        .sys-map small {
+            display: block;
+            color: var(--text-light);
+            font-size: 11px;
+        }
+
+        .sys-map-key {
+            margin-top: 0.75rem;
+            padding-top: 0.6rem;
+            border-top: 1px dashed var(--sys-line);
+            color: var(--text-light);
+        }
+
+        @media (hover: hover) {
+            .sys-map button:hover {
+                color: var(--accent);
+                text-decoration: underline;
+            }
+        }
+
+        @media (max-width: 1279px) {
+            html[data-view="system"] .sys-map {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html[data-view="system"] .side-nav > .sys-tag {
+                display: none;
+            }
+
+            html[data-view="system"] .side-nav {
+                border-left: 0;
+                border-top: 1px dashed var(--sys-line);
+            }
+        }
+
+        /* The view switch reveals as one image, so cards and panels must not
+           animate separately during it. */
+        .vt-view .project-card,
+        .vt-view .project-panel {
+            view-transition-name: none !important;
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.45s;
+        }
+
+        .vt-view::view-transition-old(root),
+        .vt-view::view-transition-new(root) {
+            animation: none;
+            mix-blend-mode: normal;
+        }
+
+        /* View switch button */
+        .view-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text);
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .view-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .view-toggle[aria-pressed="true"] {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--sys-ink, #06203b);
+        }
+
+        @media (max-width: 768px) {
+            .side-nav .view-toggle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .side-nav .view-toggle svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        @media (hover: hover) {
+            .view-toggle:hover {
+                border-color: var(--accent);
+            }
+        }
+
         /* Language: show only the active language's copy */
         html[lang="en"] [lang="es"],
         html[lang="es"] [lang="en"] {
@@ -2087,6 +2452,9 @@
             <li><a href="#contact"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></span></a></li>
         </ul>
         <div class="nav-tools">
+        <button class="view-toggle" type="button" id="viewToggle" aria-pressed="false" aria-label="Switch to system view" data-label-en="Switch to system view" data-label-es="Cambiar a vista de sistema" title="System view">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7zM7 9H4V5h3v4zm10 6h3v4h-3v-4zm0-10h3v4h-3V5z"/></svg>
+        </button>
         <button class="lang-toggle" type="button" id="langToggle" aria-label="Switch to Spanish" data-label-en="Switch to Spanish" data-label-es="Cambiar a inglés"><span lang="en">ES</span><span lang="es">EN</span></button>
         <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch between light and dark theme" data-label-en="Switch between light and dark theme" data-label-es="Cambiar entre tema claro y oscuro">
             <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
@@ -2921,6 +3289,137 @@
                         button.disabled = false;
                     });
             });
+        })();
+
+        /* ---------------------------------------------------------- system view
+           A second way to read the page: the same layout drawn as a blueprint,
+           with every component labelled (what it is, what it does, where it
+           leads) and a page map. Toggled from the nav; ?view=system opens it. */
+        (function () {
+            var root = document.documentElement;
+            var btn = document.getElementById('viewToggle');
+            if (!btn) return;
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // The page's components. Edit labels here; selectors match the markup.
+            var NODES = [
+                { sel: '.side-nav', kind: 'nav', en: 'Nav · 4 anchors + language, theme, view', es: 'Nav · 4 anclas + idioma, tema, vista' },
+                { sel: '.hero', kind: 'section', en: 'Section · Hero — positioning', es: 'Sección · Hero — posicionamiento' },
+                { sel: '.hero-title', kind: 'part', en: 'H1 · Value proposition', es: 'H1 · Propuesta de valor' },
+                { sel: '.hero-call', kind: 'part', en: 'Claim · when to call me', es: 'Claim · cuándo llamarme' },
+                { sel: '.cta-buttons', kind: 'part', en: 'CTA ×2 → Work · Contact', es: 'CTA ×2 → Trabajo · Contacto' },
+                { sel: '#about', kind: 'section', en: 'Section · About', es: 'Sección · Sobre mí' },
+                { sel: '.about-text', kind: 'part', en: 'Bio · 2 paragraphs', es: 'Bio · 2 párrafos' },
+                { sel: '.stats', kind: 'part', en: 'Proof · 3 figures', es: 'Prueba · 3 cifras' },
+                { sel: '.credentials', kind: 'part', en: 'Credentials · experience, certs, publications', es: 'Credenciales · experiencia, certificaciones, publicaciones' },
+                { sel: '#portfolio', kind: 'section', en: 'Section · Work — 5 projects, one open at a time', es: 'Sección · Trabajo — 5 proyectos, uno abierto a la vez' },
+                { sel: '.project-card:not(.is-locked)', kind: 'part', en: 'Card → opens its panel', es: 'Tarjeta → abre su panel' },
+                { sel: '.project-card.is-locked', kind: 'part', en: 'Card · NDA → teaser + password', es: 'Tarjeta · NDA → adelanto + contraseña' },
+                { sel: '.project-panel', kind: 'part', en: 'Panel · expanded project, replaces its card', es: 'Panel · proyecto abierto, reemplaza su tarjeta' },
+                { sel: '.panel-flow', kind: 'part', en: 'Diagram · the project as a flow', es: 'Diagrama · el proyecto como flujo' },
+                { sel: '.panel-decisions', kind: 'part', en: 'Decisions · 3, one line each', es: 'Decisiones · 3, una línea cada una' },
+                { sel: '.panel-gate', kind: 'part', en: 'Lock · AES-GCM, opens in place', es: 'Candado · AES-GCM, abre aquí mismo' },
+                { sel: '#pricing', kind: 'section', en: 'Section · Pricing — 3 tiers, locked', es: 'Sección · Precios — 3 niveles, bajo llave' },
+                { sel: '.pricing-tease', kind: 'part', en: 'Teaser · dummy prices, real scope', es: 'Adelanto · precios ficticios, alcance real' },
+                { sel: '#pricingGate', kind: 'part', en: 'Lock · one password: pricing + 2 NDA projects', es: 'Candado · una contraseña: precios + 2 proyectos NDA' },
+                { sel: '#contact', kind: 'section', en: 'Section · Contact', es: 'Sección · Contacto' },
+                { sel: '.cf-reason', kind: 'part', en: 'Switch · role / project / other — changes the fields', es: 'Selector · puesto / proyecto / otro — cambia los campos' },
+                { sel: '.cf-project', kind: 'part', en: 'Project only · budget + timeline', es: 'Solo proyecto · presupuesto + fechas' },
+                { sel: '.cf-captcha', kind: 'part', en: 'hCaptcha · spam gate', es: 'hCaptcha · filtro de spam' },
+                { sel: '.contact-form', kind: 'part', en: 'Form → Web3Forms → soy@elserch.com', es: 'Formulario → Web3Forms → soy@elserch.com' },
+                { sel: '.contact-links', kind: 'part', en: 'Fallback · email, copy, LinkedIn, Credly', es: 'Respaldo · correo, copiar, LinkedIn, Credly' },
+                { sel: '.footer', kind: 'section', en: 'Footer', es: 'Pie' }
+            ];
+
+            function pair(en, es) {
+                return '<span lang="en">' + en + '</span><span lang="es">' + es + '</span>';
+            }
+            // Label every component. Re-run on each switch, since unlocking
+            // replaces some markup (pricing) after the first pass.
+            function tagAll() {
+                NODES.forEach(function (n) {
+                    [].forEach.call(document.querySelectorAll(n.sel), function (el) {
+                        if (el.querySelector(':scope > .sys-tag')) return;
+                        el.classList.add('sys-node', 'sys-' + n.kind);
+                        if (getComputedStyle(el).position === 'static') el.classList.add('sys-rel');
+                        var tag = document.createElement('span');
+                        tag.className = 'sys-tag';
+                        tag.setAttribute('aria-hidden', 'true');
+                        tag.innerHTML = pair(n.en, n.es);
+                        el.appendChild(tag); // appended: a fieldset's legend must stay first
+                    });
+                });
+            }
+            var built = false;
+            function build() {
+                tagAll();
+                if (built) return;
+                built = true;
+
+                // Page map: the information architecture as a tree.
+                var map = document.createElement('aside');
+                map.className = 'sys-map';
+                map.setAttribute('aria-label', 'Page map');
+                var cards = [].slice.call(document.querySelectorAll('.project-card[data-project]'));
+                var projects = cards.map(function (c) {
+                    var locked = c.classList.contains('is-locked');
+                    var name = c.querySelector('.project-title').innerHTML;
+                    return '<li><button type="button" data-go="' + c.getAttribute('data-project') + '">' + name + (locked ? ' <i>🔒</i>' : '') + '</button></li>';
+                }).join('');
+                map.innerHTML =
+                    '<p class="sys-map-title">' + pair('Page map', 'Mapa de la página') + ' <span>elserch.com /</span></p>' +
+                    '<ol>' +
+                    '<li><button type="button" data-go="top">Hero</button><small>' + pair('positioning → Work, Contact', 'posicionamiento → Trabajo, Contacto') + '</small></li>' +
+                    '<li><button type="button" data-go="about">' + pair('About', 'Sobre mí') + '</button><small>' + pair('bio · 3 figures · credentials', 'bio · 3 cifras · credenciales') + '</small></li>' +
+                    '<li><button type="button" data-go="portfolio">' + pair('Work', 'Trabajo') + '</button><small>' + pair('5 projects · 1 open at a time', '5 proyectos · 1 abierto a la vez') + '</small><ol>' + projects + '</ol></li>' +
+                    '<li><button type="button" data-go="pricing">' + pair('Pricing', 'Precios') + ' <i>🔒</i></button><small>' + pair('3 tiers · teaser until unlocked', '3 niveles · adelanto hasta desbloquear') + '</small></li>' +
+                    '<li><button type="button" data-go="contact">' + pair('Contact', 'Contacto') + '</button><small>' + pair('form → Web3Forms → email', 'formulario → Web3Forms → correo') + '</small></li>' +
+                    '</ol>' +
+                    '<p class="sys-map-key">🔑 ' + pair('One password opens pricing and both NDA projects.', 'Una contraseña abre precios y ambos proyectos NDA.') + '</p>';
+                document.body.appendChild(map);
+                map.addEventListener('click', function (e) {
+                    var b = e.target.closest('[data-go]');
+                    if (!b) return;
+                    var go = b.getAttribute('data-go');
+                    if (go === 'top') { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); return; }
+                    var target = document.getElementById(go);
+                    if (target && target.classList.contains('project-panel')) {
+                        var card = document.querySelector('[data-project="' + go + '"]');
+                        if (card && !card.classList.contains('is-open')) card.click();
+                        target = document.getElementById(go);
+                    }
+                    if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+                });
+            }
+
+            function apply(on) {
+                if (on) build();
+                if (on) root.setAttribute('data-view', 'system'); else root.removeAttribute('data-view');
+                btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                try {
+                    var url = new URL(location.href);
+                    if (on) url.searchParams.set('view', 'system'); else url.searchParams.delete('view');
+                    history.replaceState(null, '', url);
+                } catch (e) {}
+            }
+
+            btn.addEventListener('click', function () {
+                var on = root.getAttribute('data-view') !== 'system';
+                if (reduce || !document.startViewTransition) { apply(on); return; }
+                // Reveal the new view as a circle growing from the button.
+                var r = btn.getBoundingClientRect();
+                var x = r.left + r.width / 2, y = r.top + r.height / 2;
+                var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+                root.classList.add('vt-view');
+                var vt = document.startViewTransition(function () { apply(on); });
+                vt.ready.then(function () {
+                    root.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
+                        { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' });
+                });
+                vt.finished.then(function () { root.classList.remove('vt-view'); }, function () { root.classList.remove('vt-view'); });
+            });
+
+            try { if (new URLSearchParams(location.search).get('view') === 'system') apply(true); } catch (e) {}
         })();
 
         /* -------------------------------------------------------- copy email

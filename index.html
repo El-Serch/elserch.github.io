@@ -2004,7 +2004,8 @@
         }
 
         html[data-view="system"] .side-nav > .sys-tag {
-            top: 96px;
+            top: auto;
+            bottom: 170px;
             left: auto;
             right: calc(100% + 8px);
             transform: none;
@@ -2198,6 +2199,312 @@
                 top: auto;
                 bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
                 max-width: calc(100vw - 16px);
+            }
+        }
+
+        /* ---- System view colour coding, after a code editor's syntax colours.
+           Blue: sections · green: components · yellow: actions · purple: locks
+           and guards · orange: data in · grey: comments · magenta (El Serch,
+           reserved): whatever you can change. */
+        html:root[data-view="system"] {
+            --k-sec: #66d9ef;
+            --k-comp: #a6e22e;
+            --k-str: #e6db74;
+            --k-const: #ae81ff;
+            --k-data: #fd971f;
+            --k-comment: #8fa3b8;
+            --k-serch: #e456ad;
+            --accent: #66d9ef;
+        }
+
+        html[data-view="system"] .sys-c-sec { --k: var(--k-sec); }
+        html[data-view="system"] .sys-c-comp { --k: var(--k-comp); }
+        html[data-view="system"] .sys-c-str { --k: var(--k-str); }
+        html[data-view="system"] .sys-c-const { --k: var(--k-const); }
+        html[data-view="system"] .sys-c-data { --k: var(--k-data); }
+        html[data-view="system"] .sys-c-serch { --k: var(--k-serch); }
+
+        html[data-view="system"] .sys-node.sys-part {
+            outline-color: color-mix(in srgb, var(--k) 70%, transparent);
+        }
+
+        html[data-view="system"] .sys-tag {
+            background: var(--k, var(--k-comp));
+        }
+
+        html[data-view="system"] .sys-section > .sys-tag {
+            background: transparent;
+            color: var(--k-sec);
+            border-color: var(--k-sec);
+        }
+
+        html[data-view="system"] .has-sys-alt > .sys-alt {
+            color: var(--k-str);
+        }
+
+        html[data-view="system"] .has-sys-alt > .sys-alt::before {
+            color: var(--k-comment);
+            opacity: 1;
+        }
+
+        html[data-view="system"] .project-image,
+        html[data-view="system"] .panel-cover {
+            color: var(--k-const) !important;
+        }
+
+        html[data-view="system"] .panel-kicker,
+        html[data-view="system"] .flow-count,
+        html[data-view="system"] .panel-num,
+        html[data-view="system"] .stat-number {
+            color: var(--k-const);
+        }
+
+        html[data-view="system"] .panel-label,
+        html[data-view="system"] .cred h3,
+        html[data-view="system"] .panel-meta dt,
+        html[data-view="system"] figcaption,
+        html[data-view="system"] .cf-note {
+            color: var(--k-comment);
+            font-style: italic;
+        }
+
+        /* magenta: the things you can change */
+        html[data-view="system"] .sys-ctl button,
+        html[data-view="system"] .sys-bar-reset,
+        html[data-view="system"] .sys-bar-help {
+            border-color: var(--k-serch);
+            color: var(--k-serch);
+        }
+
+        html[data-view="system"] .sys-ctl button[aria-pressed="true"] {
+            background: var(--k-serch);
+            color: #2a0a1c;
+        }
+
+        html[data-view="system"] .sys-bar {
+            border-color: var(--k-serch);
+        }
+
+        html[data-view="system"] .sys-bar strong,
+        html[data-view="system"] .sys-bar-count {
+            color: var(--k-serch);
+        }
+
+        html[data-view="system"] .sys-editable[contenteditable] {
+            caret-color: var(--k-serch);
+            text-decoration: underline dashed color-mix(in srgb, var(--k-serch) 70%, transparent);
+            text-underline-offset: 0.18em;
+            text-decoration-thickness: 2px;
+        }
+
+        html[data-view="system"] .sys-editable[contenteditable]:focus {
+            outline: 1px solid var(--k-serch);
+            background: color-mix(in srgb, var(--k-serch) 12%, transparent);
+            text-decoration: none;
+        }
+
+        html[data-view="system"] .view-toggle[aria-pressed="true"] {
+            border-color: var(--k-serch);
+            background: var(--k-serch);
+            color: #2a0a1c;
+        }
+
+        html[data-view="system"] .sys-map button { color: var(--k-sec); }
+        html[data-view="system"] .sys-map ol ol button { color: var(--k-comp); }
+        html[data-view="system"] .sys-map small { color: var(--k-comment); font-style: italic; }
+        html[data-view="system"] .sys-map i { color: var(--k-const); }
+        html[data-view="system"] .sys-map .sys-map-key { color: var(--k-const); }
+        html[data-view="system"] .sys-map .sys-map-title { color: var(--k-serch); }
+        html[data-view="system"] .sys-map { border-color: var(--k-sec); }
+
+        /* eye: open = visible, closed = hidden */
+        .sys-ctl button svg,
+        .sys-chip svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+        }
+
+        .sys-ctl [data-sys-act="hide"] .eye-closed,
+        .sys-ctl [data-sys-act="hide"][aria-pressed="true"] .eye-open {
+            display: none;
+        }
+
+        .sys-ctl [data-sys-act="hide"][aria-pressed="true"] .eye-closed {
+            display: inline;
+        }
+
+        /* cards clip their overflow, so their label sits inside, left of the controls */
+        html[data-view="system"] .project-card > .sys-tag {
+            top: 8px;
+            left: 8px;
+            transform: none;
+            max-width: calc(100% - 150px);
+        }
+
+        /* the ? button in the bar */
+        .sys-bar-help {
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            border: 1px dashed;
+            border-radius: 4px;
+            background: transparent;
+            font: 700 12px/1 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            cursor: pointer;
+        }
+
+        /* hint: a control lit up from the intro card */
+        @keyframes sys-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(228, 86, 173, 0.0); }
+            50% { box-shadow: 0 0 0 6px rgba(228, 86, 173, 0.45); }
+        }
+
+        html[data-view="system"] .sys-hint {
+            animation: sys-pulse 1s ease-in-out infinite;
+            box-shadow: 0 0 0 4px rgba(228, 86, 173, 0.35) !important;
+            background: var(--k-serch) !important;
+            color: #2a0a1c !important;
+        }
+
+        html[data-view="system"] .sys-editable.sys-hint {
+            background: color-mix(in srgb, var(--k-serch) 25%, transparent) !important;
+            color: inherit !important;
+            box-shadow: none !important;
+        }
+
+        /* the intro card */
+        .sys-intro {
+            display: none;
+        }
+
+        html[data-view="system"] .sys-intro {
+            display: block;
+            position: relative;
+            z-index: 40;
+            max-width: 60rem;
+            margin: 4.5rem auto 0;
+            padding: 1.75rem 1.75rem 1.5rem;
+            border: 1px solid var(--k-serch);
+            border-radius: 8px;
+            background: rgba(6, 26, 50, 0.92);
+            color: var(--text);
+        }
+
+        html[data-view="system"] .sys-intro.is-closed {
+            display: none;
+        }
+
+        .sys-intro-kicker {
+            color: var(--k-comment);
+            font: italic 12px/1.4 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        }
+
+        .sys-intro h2 {
+            margin-top: 0.35rem;
+            color: var(--k-serch);
+            font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .sys-intro-lede {
+            margin-top: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .sys-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+            gap: 0.6rem;
+            margin: 1.25rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .sys-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            width: 100%;
+            height: 100%;
+            padding: 0.75rem;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .sys-step strong {
+            display: block;
+            color: var(--k-comp);
+            font: 600 13px/1.3 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        }
+
+        .sys-step small {
+            display: block;
+            margin-top: 0.2rem;
+            color: var(--secondary);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .sys-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            min-width: 26px;
+            height: 26px;
+            margin-right: 2px;
+            border: 1px dashed var(--k-serch);
+            border-radius: 4px;
+            color: var(--k-serch);
+            font: 700 13px/1 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        }
+
+        .sys-chip--eye svg + svg {
+            margin-left: 2px;
+        }
+
+        .sys-intro-foot {
+            margin-top: 1rem;
+            color: var(--k-comment);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .sys-intro-close {
+            margin-top: 1rem;
+            padding: 0.55rem 1rem;
+            border: 1px solid var(--k-serch);
+            border-radius: 6px;
+            background: var(--k-serch);
+            color: #2a0a1c;
+            font: 700 13px/1 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            cursor: pointer;
+        }
+
+        @media (hover: hover) {
+            .sys-step:hover {
+                border-color: var(--k-serch);
+                background: color-mix(in srgb, var(--k-serch) 8%, transparent);
+            }
+        }
+
+        @media (max-width: 768px) {
+            html[data-view="system"] .sys-intro {
+                margin: 1rem 1rem 0;
+                padding: 1.25rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html[data-view="system"] .sys-hint {
+                animation: none;
             }
         }
 
@@ -3505,32 +3812,32 @@
 
             // The page's components. Edit labels here; selectors match the markup.
             var NODES = [
-                { sel: '.side-nav', kind: 'nav', en: 'Nav · 4 anchors + language, theme, view', es: 'Nav · 4 anclas + idioma, tema, vista' },
-                { sel: '.hero', kind: 'section', en: 'Section · Hero — positioning', es: 'Sección · Hero — posicionamiento' },
-                { sel: '.hero-title', kind: 'part', en: 'H1 · Value proposition — click to edit', es: 'H1 · Propuesta de valor — clic para editar' },
-                { sel: '.hero-call', kind: 'part', en: 'Claim · when to call me — click to edit', es: 'Claim · cuándo llamarme — clic para editar' },
-                { sel: '.cta-buttons', kind: 'part', en: 'CTA ×2 → Work · Contact', es: 'CTA ×2 → Trabajo · Contacto' },
-                { sel: '#about', kind: 'section', en: 'Section · About', es: 'Sección · Sobre mí' },
-                { sel: '.about-text', kind: 'part', en: 'Bio · 2 paragraphs', es: 'Bio · 2 párrafos' },
-                { sel: '.stats', kind: 'part', en: 'Proof · 3 figures', es: 'Prueba · 3 cifras' },
-                { sel: '.credentials', kind: 'part', en: 'Credentials · experience, certs, publications', es: 'Credenciales · experiencia, certificaciones, publicaciones' },
-                { sel: '#portfolio', kind: 'section', en: 'Section · Work — projects, one open at a time', es: 'Sección · Trabajo — proyectos, uno abierto a la vez' },
-                { sel: '.project-card:not(.is-locked)', kind: 'part', en: 'Card → opens its panel', es: 'Tarjeta → abre su panel' },
-                { sel: '.project-card.is-locked', kind: 'part', en: 'Card · NDA → teaser + password', es: 'Tarjeta · NDA → adelanto + contraseña' },
-                { sel: '.project-panel', kind: 'part', en: 'Panel · expanded project, replaces its card', es: 'Panel · proyecto abierto, reemplaza su tarjeta' },
-                { sel: '.panel-flow', kind: 'part', en: 'Diagram · the project as a flow', es: 'Diagrama · el proyecto como flujo' },
-                { sel: '.panel-decisions', kind: 'part', en: 'Decisions · 3, one line each', es: 'Decisiones · 3, una línea cada una' },
-                { sel: '.panel-gate', kind: 'part', en: 'Lock · AES-GCM, opens in place', es: 'Candado · AES-GCM, abre aquí mismo' },
-                { sel: '#pricing', kind: 'section', en: 'Section · Pricing — 3 tiers, locked', es: 'Sección · Precios — 3 niveles, bajo llave' },
-                { sel: '.pricing-tease', kind: 'part', en: 'Teaser · dummy prices, real scope', es: 'Adelanto · precios ficticios, alcance real' },
-                { sel: '#pricingGate', kind: 'part', en: 'Lock · one password: pricing + 2 NDA projects', es: 'Candado · una contraseña: precios + 2 proyectos NDA' },
-                { sel: '#contact', kind: 'section', en: 'Section · Contact', es: 'Sección · Contacto' },
-                { sel: '.cf-reason', kind: 'part', en: 'Switch · role / project / other — changes the fields', es: 'Selector · puesto / proyecto / otro — cambia los campos' },
-                { sel: '.cf-project', kind: 'part', en: 'Project only · budget + timeline', es: 'Solo proyecto · presupuesto + fechas' },
-                { sel: '.cf-captcha', kind: 'part', en: 'hCaptcha · spam gate', es: 'hCaptcha · filtro de spam' },
-                { sel: '.contact-form', kind: 'part', en: 'Form → Web3Forms → soy@elserch.com', es: 'Formulario → Web3Forms → soy@elserch.com' },
-                { sel: '.contact-links', kind: 'part', en: 'Fallback · email, copy, LinkedIn, Credly', es: 'Respaldo · correo, copiar, LinkedIn, Credly' },
-                { sel: '.footer', kind: 'section', en: 'Footer', es: 'Pie' }
+                { sel: '.side-nav', kind: 'nav', c: 'sec', en: 'Nav · 4 anchors + language, theme, view', es: 'Nav · 4 anclas + idioma, tema, vista' },
+                { sel: '.hero', kind: 'section', c: 'sec', en: 'Section · Hero — positioning', es: 'Sección · Hero — posicionamiento' },
+                { sel: '.hero-title', kind: 'part', c: 'serch', en: 'H1 · Value proposition — click to edit', es: 'H1 · Propuesta de valor — clic para editar' },
+                { sel: '.hero-call', kind: 'part', c: 'serch', en: 'Claim · when to call me — click to edit', es: 'Claim · cuándo llamarme — clic para editar' },
+                { sel: '.cta-buttons', kind: 'part', c: 'str', en: 'CTA ×2 → Work · Contact', es: 'CTA ×2 → Trabajo · Contacto' },
+                { sel: '#about', kind: 'section', c: 'sec', en: 'Section · About', es: 'Sección · Sobre mí' },
+                { sel: '.about-text', kind: 'part', c: 'comp', en: 'Bio · 2 paragraphs', es: 'Bio · 2 párrafos' },
+                { sel: '.stats', kind: 'part', c: 'comp', en: 'Proof · 3 figures', es: 'Prueba · 3 cifras' },
+                { sel: '.credentials', kind: 'part', c: 'comp', en: 'Credentials · experience, certs, publications', es: 'Credenciales · experiencia, certificaciones, publicaciones' },
+                { sel: '#portfolio', kind: 'section', c: 'sec', en: 'Section · Work — projects, one open at a time', es: 'Sección · Trabajo — proyectos, uno abierto a la vez' },
+                { sel: '.project-card:not(.is-locked)', kind: 'part', c: 'comp', en: 'Card → opens its panel', es: 'Tarjeta → abre su panel' },
+                { sel: '.project-card.is-locked', kind: 'part', c: 'const', en: 'Card · NDA → teaser + password', es: 'Tarjeta · NDA → adelanto + contraseña' },
+                { sel: '.project-panel', kind: 'part', c: 'comp', en: 'Panel · expanded project, replaces its card', es: 'Panel · proyecto abierto, reemplaza su tarjeta' },
+                { sel: '.panel-flow', kind: 'part', c: 'comp', en: 'Diagram · the project as a flow', es: 'Diagrama · el proyecto como flujo' },
+                { sel: '.panel-decisions', kind: 'part', c: 'comp', en: 'Decisions · 3, one line each', es: 'Decisiones · 3, una línea cada una' },
+                { sel: '.panel-gate', kind: 'part', c: 'const', en: 'Lock · AES-GCM, opens in place', es: 'Candado · AES-GCM, abre aquí mismo' },
+                { sel: '#pricing', kind: 'section', c: 'sec', en: 'Section · Pricing — 3 tiers, locked', es: 'Sección · Precios — 3 niveles, bajo llave' },
+                { sel: '.pricing-tease', kind: 'part', c: 'comp', en: 'Teaser · dummy prices, real scope', es: 'Adelanto · precios ficticios, alcance real' },
+                { sel: '#pricingGate', kind: 'part', c: 'const', en: 'Lock · one password: pricing + 2 NDA projects', es: 'Candado · una contraseña: precios + 2 proyectos NDA' },
+                { sel: '#contact', kind: 'section', c: 'sec', en: 'Section · Contact', es: 'Sección · Contacto' },
+                { sel: '.cf-reason', kind: 'part', c: 'data', en: 'Switch · role / project / other — changes the fields', es: 'Selector · puesto / proyecto / otro — cambia los campos' },
+                { sel: '.cf-project', kind: 'part', c: 'data', en: 'Project only · budget + timeline', es: 'Solo proyecto · presupuesto + fechas' },
+                { sel: '.cf-captcha', kind: 'part', c: 'const', en: 'hCaptcha · spam gate', es: 'hCaptcha · filtro de spam' },
+                { sel: '.contact-form', kind: 'part', c: 'data', en: 'Form → Web3Forms → soy@elserch.com', es: 'Formulario → Web3Forms → soy@elserch.com' },
+                { sel: '.contact-links', kind: 'part', c: 'str', en: 'Fallback · email, copy, LinkedIn, Credly', es: 'Respaldo · correo, copiar, LinkedIn, Credly' },
+                { sel: '.footer', kind: 'section', c: 'sec', en: 'Footer', es: 'Pie' }
             ];
 
             function pair(en, es) {
@@ -3542,10 +3849,10 @@
                 NODES.forEach(function (n) {
                     [].forEach.call(document.querySelectorAll(n.sel), function (el) {
                         if (el.querySelector(':scope > .sys-tag')) return;
-                        el.classList.add('sys-node', 'sys-' + n.kind);
+                        el.classList.add('sys-node', 'sys-' + n.kind, 'sys-c-' + (n.c || 'comp'));
                         if (getComputedStyle(el).position === 'static') el.classList.add('sys-rel');
                         var tag = document.createElement('span');
-                        tag.className = 'sys-tag';
+                        tag.className = 'sys-tag sys-c-' + (n.c || 'comp');
                         tag.setAttribute('aria-hidden', 'true');
                         tag.innerHTML = pair(n.en, n.es);
                         el.appendChild(tag); // appended: a fieldset's legend must stay first
@@ -3709,21 +4016,13 @@
             state.hidden = (state.hidden || []).filter(function (id) { return ORIGINAL.projects.indexOf(id) > -1; });
             state.open = state.open && ORIGINAL.projects.indexOf(state.open) > -1 ? state.open : ORIGINAL.open;
             state.copy = state.copy || {};
+            state.count = typeof state.count === 'number' ? state.count : 0;
 
             function save() {
                 try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
             }
-            function changes() {
-                var n = 0;
-                if (state.sections.join() !== ORIGINAL.sections.join()) n++;
-                if (state.projects.join() !== ORIGINAL.projects.join()) n++;
-                n += state.hidden.length;
-                if (state.open !== ORIGINAL.open) n++;
-                Object.keys(state.copy).forEach(function (k) {
-                    if (COPY[k] && state.copy[k] !== COPY[k].text) n++;
-                });
-                return n;
-            }
+            // Every edit counts, including one that undoes another: a change is a change.
+            function changes() { return state.count; }
 
             // ---- apply the state to the page
             function apply() {
@@ -3785,7 +4084,7 @@
                 box.className = 'sys-ctl sys-ctl--card';
                 box.setAttribute('data-sys-for', card.getAttribute('data-project'));
                 box.innerHTML = ctl('left', 'Move project earlier', '←') + ctl('right', 'Move project later', '→') +
-                    ctl('star', 'Open this project first', '★') + ctl('hide', 'Hide or show in the human view', '◐');
+                    ctl('star', 'Open this project first', '★') + ctl('hide', 'Hide or show in the human view', '<svg class="eye-open" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><svg class="eye-closed" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>');
                 card.appendChild(box);
             });
 
@@ -3804,6 +4103,7 @@
                 e.stopPropagation();
                 var id = b.parentNode.getAttribute('data-sys-for');
                 var act = b.getAttribute('data-sys-act');
+                state.count++;
                 if (act === 'up' || act === 'down') move(state.sections, id, act === 'up' ? -1 : 1);
                 if (act === 'left' || act === 'right') move(state.projects, id, act === 'left' ? -1 : 1);
                 if (act === 'star') {
@@ -3863,10 +4163,12 @@
                     var text = (e.clipboardData || window.clipboardData).getData('text').replace(/\s+/g, ' ');
                     document.execCommand('insertText', false, text);
                 });
+                el.addEventListener('focus', function () { el.setAttribute('data-was', el.textContent); });
                 el.addEventListener('blur', function () {
                     var text = el.textContent.replace(/\s+/g, ' ').trim().slice(0, 160);
                     if (!text) text = COPY[k].text; // never leave the hero empty
                     el.textContent = text;
+                    if (text !== (el.getAttribute('data-was') || '').replace(/\s+/g, ' ').trim()) state.count++;
                     if (text === COPY[k].text) delete state.copy[k]; else state.copy[k] = text;
                     save();
                     updateControls();
@@ -3879,6 +4181,68 @@
                 });
             }
 
+
+            // ---- the intro card: the challenge and how to play it
+            var CTRL = {
+                up: '<span class="sys-chip">↑</span><span class="sys-chip">↓</span>',
+                left: '<span class="sys-chip">←</span><span class="sys-chip">→</span>',
+                star: '<span class="sys-chip">★</span>',
+                hide: '<span class="sys-chip sys-chip--eye">' + '<svg class="eye-open" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><svg class="eye-closed" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>' + '</span>',
+                edit: '<span class="sys-chip">✎</span>'
+            };
+            var STEPS = [
+                ['up', 'Reorder sections', 'Move a whole section up or down the page.', 'Reordena secciones', 'Sube o baja una sección completa.'],
+                ['left', 'Reorder projects', 'Change the order of the project cards.', 'Reordena proyectos', 'Cambia el orden de las tarjetas.'],
+                ['star', 'Pick the opener', 'Choose which project is open when the page loads.', 'Elige el que abre', 'Decide qué proyecto aparece abierto al cargar.'],
+                ['hide', 'Show or hide', 'Open eye: visible. Closed eye: hidden in the human view.', 'Muestra u oculta', 'Ojo abierto: visible. Ojo cerrado: oculto en la vista humana.'],
+                ['edit', 'Rewrite the pitch', 'Click the headline or the line under it and type.', 'Reescribe el pitch', 'Haz clic en el titular o la línea de abajo y escribe.']
+            ];
+            var intro = document.createElement('aside');
+            intro.className = 'sys-intro';
+            intro.setAttribute('aria-labelledby', 'sysIntroTitle');
+            intro.innerHTML =
+                '<p class="sys-intro-kicker">// ' + pair('challenge', 'reto') + '</p>' +
+                '<h2 id="sysIntroTitle">' + pair('So you think you can do a better design?', '¿Crees que puedes hacer un mejor diseño?') + '</h2>' +
+                '<p class="sys-intro-lede">' + pair('Go ahead. Everything you change here carries over to the human view.', 'Adelante. Todo lo que cambies aquí pasa a la vista humana.') + '</p>' +
+                '<ol class="sys-steps">' + STEPS.map(function (st) {
+                    return '<li><button type="button" class="sys-step" data-hint="' + st[0] + '">' + CTRL[st[0]] +
+                        '<span><strong>' + pair(st[1], st[3]) + '</strong><small>' + pair(st[2], st[4]) + '</small></span></button></li>';
+                }).join('') + '</ol>' +
+                '<p class="sys-intro-foot">' + pair('Hover a step to light up its controls; click it to jump there. Switch the view back to see your version. Reset puts mine back. It all lasts until you close this tab.',
+                    'Pasa el cursor por un paso para iluminar sus controles; haz clic para ir ahí. Regresa a la vista humana para ver tu versión. Restablecer devuelve la mía. Dura hasta que cierres esta pestaña.') + '</p>' +
+                '<button type="button" class="sys-intro-close">' + pair("Let's see", 'A ver') + '</button>';
+            document.body.insertBefore(intro, document.body.firstChild);
+
+            function hintSel(h) {
+                return h === 'edit' ? '.sys-editable[contenteditable]' : '[data-sys-act="' + h + '"]' + (h === 'up' ? ', [data-sys-act="down"]' : h === 'left' ? ', [data-sys-act="right"]' : '');
+            }
+            function hint(h) {
+                [].forEach.call(document.querySelectorAll('.sys-hint'), function (el) { el.classList.remove('sys-hint'); });
+                if (h) [].forEach.call(document.querySelectorAll(hintSel(h)), function (el) { el.classList.add('sys-hint'); });
+            }
+            intro.addEventListener('mouseover', function (e) { var st = e.target.closest('.sys-step'); hint(st && st.getAttribute('data-hint')); });
+            intro.addEventListener('mouseleave', function () { hint(null); });
+            intro.addEventListener('focusin', function (e) { var st = e.target.closest('.sys-step'); hint(st && st.getAttribute('data-hint')); });
+            intro.addEventListener('focusout', function () { hint(null); });
+            intro.addEventListener('click', function (e) {
+                if (e.target.closest('.sys-intro-close')) {
+                    intro.classList.add('is-closed');
+                    state.introClosed = true;
+                    save();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                var st = e.target.closest('.sys-step');
+                if (!st) return;
+                var h = st.getAttribute('data-hint');
+                var first = [].filter.call(document.querySelectorAll(hintSel(h)), function (el) { return el.offsetParent !== null; })[0];
+                if (!first) return;
+                hint(h);
+                first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(function () { hint(null); }, 2600);
+            });
+            if (state.introClosed) intro.classList.add('is-closed');
+
             // ---- the bar: what this mode does, how many changes, reset
             var bar = document.createElement('div');
             bar.className = 'sys-bar';
@@ -3886,8 +4250,15 @@
             bar.innerHTML = '<strong>' + pair('System view', 'Vista de sistema') + '</strong>' +
                 '<span class="sys-bar-hint">' + pair('Edits here change the human view', 'Lo que cambies aquí cambia la vista humana') + '</span>' +
                 '<span class="sys-bar-count"></span>' +
+                '<button type="button" class="sys-bar-help" aria-label="How it works" title="How it works">?</button>' +
                 '<button type="button" class="sys-bar-reset">' + pair('Reset', 'Restablecer') + '</button>';
             document.body.appendChild(bar);
+            bar.querySelector('.sys-bar-help').addEventListener('click', function () {
+                intro.classList.remove('is-closed');
+                state.introClosed = false;
+                save();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
             bar.querySelector('.sys-bar-reset').addEventListener('click', function () {
                 try { sessionStorage.removeItem(KEY); } catch (e) {}
                 location.reload();

@@ -1614,6 +1614,80 @@
             color-scheme: light dark;
         }
 
+        /* Our own calendar icon: iOS shows none, and a squeezed field can hide
+           the native one. The native indicator stays, invisible, over the whole
+           field so a click anywhere opens the picker in Chromium browsers. */
+        .cf-date {
+            position: relative;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .cf-field .cf-date input {
+            width: 100%;
+            min-height: 2.9rem;
+            padding-right: 2.1rem;
+            -webkit-appearance: none;
+            appearance: none;
+            text-align: left;
+        }
+
+        .cf-date input::-webkit-date-and-time-value {
+            text-align: left;
+        }
+
+        .cf-date input::-webkit-calendar-picker-indicator {
+            position: absolute;
+            inset: 0;
+            width: auto;
+            height: auto;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .cf-cal {
+            position: absolute;
+            right: 0.6rem;
+            width: 18px;
+            height: 18px;
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .cf-date input[aria-invalid="true"] + .cf-cal {
+            color: var(--danger);
+        }
+
+        .cf-inline-error {
+            margin-top: 0.4rem;
+            color: var(--danger);
+            font-size: 0.88rem;
+        }
+
+        .cf-inline-error [data-msg][hidden] {
+            display: none;
+        }
+
+        @media (max-width: 420px) {
+            .cf-field > .cf-range {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cf-date {
+                width: 100%;
+            }
+
+            .cf-arrow {
+                align-self: flex-start;
+                margin-left: 0.9rem;
+                line-height: 1;
+                transform: rotate(90deg);
+            }
+        }
+
         .cf-arrow {
             color: var(--text-light);
         }
@@ -2328,10 +2402,14 @@
                         <div class="cf-field cf-dates" role="group" aria-labelledby="cfTimelineLabel">
                             <span id="cfTimelineLabel"><span lang="en">Timeline</span><span lang="es">Fechas</span> <small><span lang="en">(optional)</span><span lang="es">(opcional)</span></small></span>
                             <span class="cf-range">
-                                <input type="date" name="start" aria-label="Start date" data-label-en="Start date" data-label-es="Fecha de inicio">
+                                <span class="cf-date"><input type="date" name="start" aria-label="Start date" data-label-en="Start date" data-label-es="Fecha de inicio" aria-describedby="cfDatesError"><svg class="cf-cal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM7 12h5v5H7z"/></svg></span>
                                 <span class="cf-arrow" aria-hidden="true">→</span>
-                                <input type="date" name="end" aria-label="End date" data-label-en="End date" data-label-es="Fecha de fin">
+                                <span class="cf-date"><input type="date" name="end" aria-label="End date" data-label-en="End date" data-label-es="Fecha de fin" aria-describedby="cfDatesError"><svg class="cf-cal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM7 12h5v5H7z"/></svg></span>
                             </span>
+                            <p class="cf-inline-error" id="cfDatesError" data-role="dates" aria-live="polite" hidden>
+                                <span data-msg="order"><span lang="en">The end date can't be before the start date.</span><span lang="es">La fecha de fin no puede ser anterior a la de inicio.</span></span>
+                                <span data-msg="past"><span lang="en">Pick dates from today onwards.</span><span lang="es">Elige fechas a partir de hoy.</span></span>
+                            </p>
                         </div>
                     </div>
                 </fieldset>
@@ -2737,10 +2815,25 @@
             today = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
             start.min = today;
             end.min = today;
+            var datesError = form.querySelector('[data-role="dates"]');
+            // Checks the range and shows the reason inline. Returns true when fine.
+            function checkDates() {
+                var problem = null;
+                if ((start.value && start.value < today) || (end.value && end.value < today)) problem = 'past';
+                else if (start.value && end.value && end.value < start.value) problem = 'order';
+                start.setAttribute('aria-invalid', problem === 'past' && start.value && start.value < today ? 'true' : 'false');
+                end.setAttribute('aria-invalid', problem && end.value && (end.value < today || problem === 'order') ? 'true' : 'false');
+                datesError.hidden = !problem;
+                [].forEach.call(datesError.querySelectorAll('[data-msg]'), function (m) {
+                    m.hidden = m.getAttribute('data-msg') !== problem;
+                });
+                return !problem;
+            }
             start.addEventListener('change', function () {
-                end.min = start.value || today;
-                if (end.value && start.value && end.value < start.value) end.value = start.value;
+                end.min = start.value && start.value > today ? start.value : today;
+                checkDates();
             });
+            end.addEventListener('change', checkDates);
 
             // "Ask me for it" on the password forms lands here, ready to send.
             function askPassword() {
@@ -2775,6 +2868,7 @@
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 failed.hidden = true;
+                if (!project.disabled && !checkDates()) { (end.getAttribute('aria-invalid') === 'true' ? end : start).focus(); return; }
                 if (!check()) { invalid.hidden = false; return; }
                 invalid.hidden = true;
                 var captcha = form.querySelector('textarea[name="h-captcha-response"]');

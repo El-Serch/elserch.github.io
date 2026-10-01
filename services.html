@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-title-en="Services | Sergio Inurreta" data-title-es="Servicios | Sergio Inurreta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Sergio Inurreta</title>
+    <meta name="description" content="Three product-design engagements, from a focused concept to a full product experience. Scope is public; prices are shared privately.">
+    <link rel="icon" type="image/svg+xml" href="assets/elserch-logo.svg">
+    <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="assets/site.css">
+    <script>
+        // Theme before first paint, so it never flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                if (saved === 'dark' || saved === 'light') {
+                    document.documentElement.setAttribute('data-theme', saved);
+                } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <script>
+        // Language before first paint: ?lang= wins, then a saved choice, then
+        // the browser's language. A ?lang= link is saved so it survives a trip
+        // to a case study and back.
+        (function () {
+            var root = document.documentElement, lang = 'en', saved = null, q = null;
+            try { saved = localStorage.getItem('lang'); } catch (e) {}
+            try { q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+            var browser = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+            if (q === 'en' || q === 'es') {
+                lang = q;
+                try { localStorage.setItem('lang', q); } catch (e) {}
+            } else if (saved === 'en' || saved === 'es') {
+                lang = saved;
+            } else if (/^es\b/i.test(browser)) {
+                lang = 'es';
+            }
+            root.setAttribute('lang', lang);
+            var t = root.getAttribute('data-title-' + lang);
+            if (t) document.title = t;
+        })();
+    </script>
+</head>
+<body>
+    <nav class="side-nav" aria-label="Main">
+        <a href="index.html" class="logo" aria-label="El Serch — home" data-label-en="El Serch — home" data-label-es="El Serch — inicio"><img src="assets/elserch-logo.svg" alt="" class="logo-mark"></a>
+        <ul class="nav-links">
+            <li><a href="index.html#work"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg><span class="nav-label"><span lang="en">Work</span><span lang="es">Trabajo</span></span></a></li>
+            <li><a href="services.html" class="is-active" aria-current="page"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg><span class="nav-label"><span lang="en">Services</span><span lang="es">Servicios</span></span></a></li>
+            <li><a href="index.html#about"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span class="nav-label"><span lang="en">About</span><span lang="es">Sobre mí</span></span></a></li>
+            <li><a href="index.html#experience"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8c0 1.1-.9 2-2 2-.18 0-.35-.02-.51-.07l-3.56 3.55c.05.16.07.34.07.52 0 1.1-.9 2-2 2s-2-.9-2-2c0-.18.02-.36.07-.52l-2.55-2.55c-.16.05-.34.07-.52.07s-.36-.02-.52-.07l-4.55 4.56c.05.16.07.33.07.51 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.18 0 .35.02.51.07l4.56-4.55C8.02 9.36 8 9.18 8 9c0-1.1.9-2 2-2s2 .9 2 2c0 .18-.02.36-.07.52l2.55 2.55c.16-.05.34-.07.52-.07s.36.02.52.07l3.55-3.56C19.02 8.35 19 8.18 19 8c0-1.1.9-2 2-2s2 .9 2 2z"/></svg><span class="nav-label"><span lang="en">Experience</span><span lang="es">Experiencia</span></span></a></li>
+            <li><a href="index.html#contact"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></span></a></li>
+        </ul>
+        <div class="nav-tools">
+        <button class="lang-toggle" type="button" id="langToggle" aria-label="Switch to Spanish" data-label-en="Switch to Spanish" data-label-es="Cambiar a inglés"><span lang="en">ES</span><span lang="es">EN</span></button>
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch between light and dark theme" data-label-en="Switch between light and dark theme" data-label-es="Cambiar entre tema claro y oscuro">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+        </button>
+        </div>
+    </nav>
+
+    <main>
+        <header class="cs-hero">
+            <div class="wrap">
+                <p class="cs-kicker"><span lang="en">Services</span><span lang="es">Servicios</span></p>
+                <h1><span lang="en">Bring me in when the product is complicated.</span><span lang="es">Llámame cuando el producto es complicado.</span></h1>
+                <p class="cs-lede"><span lang="en">Three fixed-scope engagements, from a focused concept to a full product experience. You work with me directly, from the first conversation to handoff.</span><span lang="es">Tres proyectos de alcance definido, de un concepto puntual a una experiencia de producto completa. Trabajas conmigo directamente, de la primera conversación al handoff.</span></p>
+            </div>
+        </header>
+
+        <section class="section" aria-labelledby="routes-title">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2 id="routes-title"><span lang="en">Two ways to work together</span><span lang="es">Dos formas de trabajar juntos</span></h2>
+                    <p class="lede"><span lang="en">This page is about projects. If you're hiring for a role, start with my experience instead.</span><span lang="es">Esta página es sobre proyectos. Si buscas cubrir un puesto, empieza por mi experiencia.</span></p>
+                </div>
+            <div class="routes">
+                <article class="route">
+                    <h3><span lang="en">Hiring for a role</span><span lang="es">Para un puesto</span></h3>
+                    <p><span lang="en">Full-time or contract positions in product or service design. That conversation starts with my experience, not these packages.</span><span lang="es">Posiciones de tiempo completo o por contrato en diseño de producto o servicios. Esa conversación empieza por mi experiencia, no por estos paquetes.</span></p>
+                    <div class="route-links">
+                        <a class="btn btn-ghost" href="index.html#experience"><span lang="en">See experience</span><span lang="es">Ver experiencia</span></a>
+                        <a class="btn btn-ghost" href="https://www.linkedin.com/in/el-serch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    </div>
+                </article>
+                <article class="route">
+                    <h3><span lang="en">Starting a project</span><span lang="es">Para un proyecto</span></h3>
+                    <p><span lang="en">A defined product problem with a timeline. Pick the closest scope below; we adjust it to what you're building.</span><span lang="es">Un problema de producto definido y una fecha. Elige el alcance más cercano; lo ajustamos a lo que estás construyendo.</span></p>
+                    <div class="route-links">
+                        <a class="btn btn-solid" lang="en" href="mailto:soy@elserch.com?subject=Project%20inquiry">Email me</a><a class="btn btn-solid" lang="es" href="mailto:soy@elserch.com?subject=Proyecto">Escríbeme</a>
+                    </div>
+                </article>
+            </div>
+            </div>
+        </section>
+
+        <section class="section section--alt pricing" aria-labelledby="scope-title">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2 id="scope-title"><span lang="en">Scope</span><span lang="es">Alcance</span></h2>
+                    <p class="lede"><span lang="en">Focused concept → product definition → full product experience.</span><span lang="es">Concepto puntual → definición de producto → experiencia de producto completa.</span></p>
+                </div>
+            <form class="unlock" id="unlockForm" autocomplete="off">
+                <div class="unlock-copy">
+                    <strong><span lang="en">Prices are shared privately</span><span lang="es">Los precios se comparten en privado</span></strong>
+                    <p><span lang="en">If I've given you the password, enter it to see them here.</span><span lang="es">Si te compartí la contraseña, escríbela para verlos aquí.</span></p>
+                </div>
+                <div>
+                    <label for="unlockPassword"><span lang="en">Password</span><span lang="es">Contraseña</span></label>
+                    <div class="unlock-row">
+                        <input type="password" id="unlockPassword" name="password" autocomplete="current-password" required>
+                        <button class="btn btn-solid" type="submit" id="unlockSubmit"><span class="when-idle"><span lang="en">Show prices</span><span lang="es">Ver precios</span></span><span class="when-busy"><span lang="en">Checking…</span><span lang="es">Verificando…</span></span></button>
+                    </div>
+                </div>
+                <p class="unlock-error" id="unlockError" role="alert" hidden><span lang="en">That password didn't work. Check it and try again.</span><span lang="es">Esa contraseña no funcionó. Revísala e inténtalo de nuevo.</span></p>
+                <p class="unlock-error" id="unlockUnsupported" hidden><span lang="en">This browser can't unlock prices. Email me and I'll send them.</span><span lang="es">Este navegador no puede mostrar los precios. Escríbeme y te los envío.</span></p>
+            </form>
+            <!-- lock:prices --><script type="application/json" id="lock-prices">{"salt":"Ih1xkzKiVlSjG021W/+SSA==","iterations":600000,"data":"lmCzO2nZ37BwodrqTTMs0jP1jPzJz6k9lsh1b9kvJSjtD0yGap/b4q2lNlDtI8VXShiUZh7oPJoMWN+14VRbOzV68FFn9DaHhxscpIXQwwqmrveVNy0ve+5zqhJb9Dta954k0+4KA0sqBGmpIHvJW/rRGRNDD+EAXMsDPQOeQBWBPg9bR16E78YpzBZ9gU9bHyB0+xVQDPpeEkTAn3g0arDEIAD9M5AYY4YMNaemAMbohSaZ7kGDCbVey10gurzYlZ5BYykYrX3hXGc6WAAecmg33HdjIkNVZ88lwM9gsMIsXrToUs0Qs99OVonJkDz3MVXVuAm8mRaDMA+/6ja6NC1drGVtIH7Vg4j8jvsP7IZmjv776DkWG1uUBmlXEljS2A/CjMAblfW5WQfNunoglKZuGn0MjweBKwGrdkVB2rlatAtRT4qkJ6G+vtSy4EJGXxS5uPlpwfOKisWVWTNZ9TkO4L2yk+/MDy//fJjj4EszLcw6jPDowtya4u+k/tQPDRl32rJ8owCTHjdrJH2HCJMaVnJRsvSLiHMdoIlBIVx/9VY22dPWMa+uamDj/yQlRMiXiVjlfwssbqUdsdXvWG+xN0i05CrrZy2EfI0km4ayV2ZsZroB5wH7q0e6bwZsNAmmRU3Y+diqSVN//tETSZ7I/W/PS13crh6zlUVXMM95m7olQFTxpc5bJYO+tf7x83X5B9DlPoJPwmZrATReTwqBLDbkCVnWgFYG7lKkAAVuBx65Q/MDpTDjjdUtyo1MSDHY6j7BUgVT2xuWRK6qwpCQhHkpcTG0gPt9Wn59lTv3w6SxlJ4/Q8a5OQZT31z2Hg=="}</script><!-- /lock:prices -->
+            <div class="pricing-table-wrap">
+                <table class="pricing-table">
+                    <caption class="sr-only"><span lang="en">What each engagement includes</span><span lang="es">Qué incluye cada proyecto</span></caption>
+                    <colgroup><col><col><col class="col-recommended"><col></colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col"><span lang="en">Scope</span><span lang="es">Alcance</span></th>
+                            <th scope="col"><span class="plan-name">UX/UI Concept</span></th>
+                            <th scope="col" class="recommended"><span class="badge"><span lang="en">Recommended</span><span lang="es">Recomendado</span></span><span class="plan-name">Product Design Sprint</span></th>
+                            <th scope="col"><span class="plan-name">Product Experience &amp; Visual System</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-key="price">
+                            <th scope="row"><span lang="en">Investment</span><span lang="es">Inversión</span></th>
+                            <td><span class="price-locked"><svg class="" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">On request</span><span lang="es">Bajo solicitud</span></span></td>
+                            <td><span class="price-locked"><svg class="" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">On request</span><span lang="es">Bajo solicitud</span></span></td>
+                            <td><span class="price-locked"><svg class="" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">On request</span><span lang="es">Bajo solicitud</span></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Stakeholder discovery</span><span lang="es">Discovery con stakeholders</span></th>
+                            <td><span lang="en">Up to 2 h</span><span lang="es">Hasta 2 h</span></td>
+                            <td><span lang="en">Up to 4 h</span><span lang="es">Hasta 4 h</span></td>
+                            <td><span lang="en">Up to 4 h</span><span lang="es">Hasta 4 h</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Requirements synthesis</span><span lang="es">Síntesis de requerimientos</span></th>
+                            <td>—</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Information architecture</span><span lang="es">Arquitectura de información</span></th>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Core user flows</span><span lang="es">User flows principales</span></th>
+                            <td>—</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Key screens</span><span lang="es">Pantallas principales</span></th>
+                            <td><span lang="en">Up to 6</span><span lang="es">Hasta 6</span></td>
+                            <td><span lang="en">Up to 10</span><span lang="es">Hasta 10</span></td>
+                            <td><span lang="en">Up to 15</span><span lang="es">Hasta 15</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Clickable Figma prototype</span><span lang="es">Prototipo navegable en Figma</span></th>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Basic visual identity</span><span lang="es">Identidad gráfica básica</span></th>
+                            <td>—</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Visual system / components</span><span lang="es">Sistema visual / componentes</span></th>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Error and edge-case states</span><span lang="es">Estados de error y excepción</span></th>
+                            <td>—</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Basic developer handoff</span><span lang="es">Handoff básico para desarrollo</span></th>
+                            <td>—</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span lang="en">Revision rounds</span><span lang="es">Rondas de ajustes</span></th>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>2</td>
+                        </tr>
+                        <tr data-key="time">
+                            <th scope="row"><span lang="en">Estimated timeline</span><span lang="es">Tiempo estimado</span></th>
+                            <td><span lang="en">3–5 business days</span><span lang="es">3–5 días hábiles</span></td>
+                            <td><span lang="en">5–8 business days</span><span lang="es">5–8 días hábiles</span></td>
+                            <td><span lang="en">8–12 business days</span><span lang="es">8–12 días hábiles</span></td>
+                        </tr>
+                        <tr data-key="ideal">
+                            <th scope="row"><span lang="en">Best for</span><span lang="es">Ideal para</span></th>
+                            <td><span lang="en">Validating an idea quickly</span><span lang="es">Validar rápidamente una idea</span></td>
+                            <td><span lang="en">Laying a solid foundation for an MVP</span><span lang="es">Definir una base sólida para un MVP</span></td>
+                            <td><span lang="en">Building a more complete product experience</span><span lang="es">Preparar una experiencia de producto más completa</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <aside class="out-of-scope">
+                <strong><span lang="en">Out of scope</span><span lang="es">Fuera de alcance</span></strong>
+                <ul>
+                    <li><span lang="en">Frontend and backend development</span><span lang="es">Desarrollo frontend/backend</span></li>
+                    <li><span lang="en">AI implementation</span><span lang="es">Implementación de IA</span></li>
+                    <li><span lang="en">Banking integrations</span><span lang="es">Integraciones bancarias</span></li>
+                    <li><span lang="en">Legal and regulatory research</span><span lang="es">Investigación legal/regulatoria</span></li>
+                    <li><span lang="en">External user testing</span><span lang="es">User testing externo</span></li>
+                </ul>
+            </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <span>&copy; 2026 Sergio &ldquo;El Serch&rdquo; Inurreta</span>
+            <span><span lang="en">Product &amp; Service Design, Mexico City</span><span lang="es">Diseño de Producto y Servicios, Ciudad de México</span></span>
+        </div>
+    </footer>
+
+    <script src="assets/site.js"></script>
+</body>
+</html>

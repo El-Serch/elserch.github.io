@@ -1,15 +1,1173 @@
 <!DOCTYPE html>
-<html lang="en" data-title-en="Sergio &quot;El Serch&quot; Inurreta | Product &amp; Service Designer" data-title-es="Sergio &quot;El Serch&quot; Inurreta | Diseñador de Producto y Servicios">
+<html lang="en" data-title-en="Sergio &quot;El Serch&quot; Inurreta - Product &amp; Service Designer" data-title-es="Sergio &quot;El Serch&quot; Inurreta - Diseñador de Producto y Servicios">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sergio &quot;El Serch&quot; Inurreta | Product &amp; Service Designer</title>
-    <meta name="description" content="Senior Product &amp; Service Designer for complex financial, enterprise and AI products. I make complicated systems understandable.">
+    <title>Sergio "El Serch" Inurreta - Product & Service Designer</title>
     <link rel="icon" type="image/svg+xml" href="assets/elserch-logo.svg">
-    <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="assets/site.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rail: 84px;
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #3b82f6;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --chip-bg: #f1f5f9;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #0f172a;
+            --footer-text: #ffffff;
+            --danger: #b91c1c;
+        }
+
+        /* Dark palette — shared by the explicit toggle and the OS preference */
+        :root[data-theme="dark"] {
+            --primary: #f1f5f9;
+            --secondary: #cbd5e1;
+            --accent: #60a5fa;
+            --text: #e2e8f0;
+            --text-light: #94a3b8;
+            --bg: #0f172a;
+            --bg-alt: #1a2436;
+            --border: #334155;
+            --card-bg: #1a2436;
+            --chip-bg: #2a3852;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --footer-bg: #020617;
+            --footer-text: #e2e8f0;
+            --danger: #fca5a5;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #f1f5f9;
+                --secondary: #cbd5e1;
+                --accent: #60a5fa;
+                --text: #e2e8f0;
+                --text-light: #94a3b8;
+                --bg: #0f172a;
+                --bg-alt: #1a2436;
+                --border: #334155;
+                --card-bg: #1a2436;
+                --chip-bg: #2a3852;
+            --chip-bg: #2a3852;
+                --nav-bg: rgba(15, 23, 42, 0.95);
+                --footer-bg: #020617;
+                --footer-text: #e2e8f0;
+                --danger: #fca5a5;
+            }
+        }
+
+        body {
+            padding-right: var(--rail);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation — vertical rail pinned to the right edge */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: var(--rail);
+            height: 100vh;
+            height: 100dvh;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: 1.75rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        /* Material icons — shown in place of labels on the mobile bar */
+        .nav-icon {
+            display: none;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.25rem;
+        }
+
+        .nav-links a {
+            position: relative;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a.is-active {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 2px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .nav-links a.is-active::after {
+            height: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 7rem 0 6rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 104px;
+            height: 104px;
+            display: block;
+            margin: 0 auto 1.75rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 0;
+            background: var(--bg);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary);
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-alt);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 4rem 0;
+            background: var(--bg-alt);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: var(--card-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 6rem 0;
+            background: var(--bg);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .project-year {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .project-type {
+            display: inline-block;
+            background: var(--chip-bg);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--chip-bg);
+            color: var(--text-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 6rem 0;
+            background: var(--bg-alt);
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 3rem auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg-alt);
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-period {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        .timeline-description ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .timeline-description li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 6rem 0;
+            background: var(--bg);
+        }
+
+        .pricing-table-wrap {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-bg);
+            overflow-x: auto;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            color: var(--secondary);
+        }
+
+        .pricing-table .col-recommended {
+            background: color-mix(in srgb, var(--accent) 7%, transparent);
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            padding: 0.9rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .pricing-table tbody tr:last-child th,
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table thead th {
+            vertical-align: bottom;
+            padding-top: 1.75rem;
+            padding-bottom: 1.25rem;
+            color: var(--primary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .pricing-table thead th:first-child {
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .pricing-table thead th.recommended {
+            box-shadow: inset 0 3px 0 var(--accent);
+        }
+
+        .pricing-table tbody th {
+            width: 28%;
+            text-align: left;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .pricing-table tr[data-key="price"] td {
+            font-size: 1.1rem;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .plan-name {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-bottom: 0.6rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            background: var(--primary);
+            color: var(--bg);
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .pricing .is-yes {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .pricing .is-no {
+            color: var(--text-light);
+        }
+
+        .out-of-scope {
+            margin-top: 2rem;
+            padding: 1.5rem 1.75rem;
+            border: 1px dashed var(--text-light);
+            border-radius: 12px;
+            color: var(--secondary);
+        }
+
+        .out-of-scope strong {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .out-of-scope ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.75rem;
+        }
+
+        .out-of-scope li::before {
+            content: '×';
+            margin-right: 0.5rem;
+            color: var(--text-light);
+        }
+
+        /* One card per plan — built from the table on narrow screens */
+        .pricing-cards {
+            display: none;
+        }
+
+        .pricing-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-bg);
+        }
+
+        .pricing-card.is-recommended {
+            border: 2px solid var(--accent);
+        }
+
+        .pricing-card .plan-name {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .pricing-card .plan-ideal {
+            margin-top: 0.35rem;
+            color: var(--text-light);
+        }
+
+        .pricing-card .plan-price {
+            margin-top: 1rem;
+            font-size: 1.35rem;
+            color: var(--primary);
+        }
+
+        .pricing-card .plan-time {
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+
+        .plan-features {
+            margin-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .plan-features .feature {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .plan-features .feature:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features dt {
+            color: var(--text);
+        }
+
+        .plan-features dd {
+            flex-shrink: 0;
+            text-align: right;
+            color: var(--secondary);
+        }
+
+        .plan-features .is-excluded dt {
+            color: var(--text-light);
+        }
+
+        /* Pricing, locked: the table is encrypted into #lock-pricing and
+           unlocks in place (see the script at the end of the page). */
+        .pricing.is-locked {
+            text-align: center;
+        }
+
+        .pricing.is-locked .section-subtitle {
+            max-width: 36rem;
+            margin: 0 auto 2rem;
+        }
+
+        .pricing-gate {
+            max-width: 26rem;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .pricing-gate label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .pricing-gate-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pricing-gate-row input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.75rem 0.9rem;
+            border: 1px solid var(--text-light);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font: inherit;
+            font-size: 1rem; /* 16px: stops iOS zooming into the field */
+        }
+
+        .pricing-gate-row .btn {
+            flex-shrink: 0;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            padding: 0.75rem 1.1rem;
+        }
+
+        .pricing-gate-row .btn:disabled {
+            cursor: progress;
+            opacity: 0.75;
+        }
+
+        .pricing-gate .when-busy,
+        .pricing-gate.is-busy .when-idle {
+            display: none;
+        }
+
+        .pricing-gate.is-busy .when-busy {
+            display: inline;
+        }
+
+        .pricing-gate-error {
+            margin-top: 0.6rem;
+            color: var(--danger);
+            font-size: 0.95rem;
+        }
+
+        .pricing-gate-help {
+            margin-top: 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .pricing-gate-help a {
+            color: var(--primary);
+        }
+
+        .btn-solid {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--bg);
+        }
+
+        .btn-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Locked (NDA) project cards */
+        .project-image--locked {
+            background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .lock-icon {
+            width: 52px;
+            height: 52px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            background: var(--bg-alt);
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            background: var(--bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .out-of-scope ul {
+                flex-direction: column;
+            }
+
+            .side-nav .nav-tools {
+                flex-direction: row;
+            }
+
+            .side-nav .lang-toggle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.7rem;
+            }
+
+            body {
+                padding-right: 0;
+                padding-bottom: 60px;
+            }
+
+            .side-nav {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-left: none;
+                border-top: 1px solid var(--border);
+                gap: 0.75rem;
+                padding: 0.7rem 1rem;
+            }
+
+            .side-nav .logo {
+                display: none;
+            }
+
+            .nav-links {
+                flex: 1;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            .nav-icon {
+                display: block;
+            }
+
+            .nav-label {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+
+            .nav-links {
+                gap: 0.25rem;
+            }
+
+            .nav-links a,
+            .back-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 48px;
+                min-height: 48px;
+                padding: 0.25rem 0.5rem;
+                border-radius: 8px;
+            }
+
+            .nav-links a::after,
+            .back-link::after {
+                display: block;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                transition: width 0.25s ease;
+            }
+
+            .nav-links a.is-active::after {
+                width: 22px;
+                height: 2px;
+            }
+
+            .side-nav .theme-toggle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .side-nav .theme-toggle svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .hero-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Language: show only the active language's copy */
+        html[lang="en"] [lang="es"],
+        html[lang="es"] [lang="en"] {
+            display: none !important;
+        }
+
+        .nav-tools {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text);
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text);
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        /* The comparison table needs ~800px of content width. Below that,
+           show one card per plan instead (built from the table by script). */
+        @media (max-width: 960px) {
+            .pricing.has-cards .pricing-table-wrap {
+                display: none;
+            }
+
+            .pricing.has-cards .pricing-cards {
+                display: grid;
+                gap: 1.25rem;
+                max-width: 36rem;
+                margin: 0 auto;
+            }
+
+            .pricing.has-cards .out-of-scope {
+                max-width: 36rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* Fallback if the cards never build: scroll the table sideways
+               with the row labels pinned. */
+            .pricing-table {
+                min-width: 640px;
+            }
+
+            .pricing-table tbody th,
+            .pricing-table thead th:first-child {
+                position: sticky;
+                left: 0;
+                z-index: 1;
+                background: var(--card-bg);
+            }
+        }
+
+        /* Short desktop viewports: tighten the rail so the toggle stays on screen */
+        @media (min-width: 769px) and (max-height: 800px) {
+            .side-nav {
+                padding: 1.25rem 0;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.4rem;
+            }
+
+            .nav-links a {
+                font-size: 0.72rem;
+                letter-spacing: 0.14em;
+            }
+        }
+
+        /* Too short for vertical words (Spanish needs ~710px): the rail
+           switches to the same icons the phone bar uses. */
+        @media (min-width: 769px) and (max-height: 760px) {
+            .nav-icon {
+                display: block;
+            }
+
+            .nav-label {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+
+            .nav-links {
+                gap: 1.1rem;
+            }
+
+            .nav-links a {
+                writing-mode: horizontal-tb;
+                display: flex;
+                padding: 0.4rem;
+            }
+        }
+
+        /* Narrowest phones: five links plus two tool buttons */
+        @media (max-width: 360px) {
+            .pricing-gate-row {
+                flex-direction: column;
+            }
+
+            .side-nav {
+                padding: 0.6rem 0.5rem;
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                min-width: 42px;
+            }
+
+            .side-nav .nav-tools {
+                gap: 0.35rem;
+            }
+        }
+
+        /* Pointer devices only — a tapped element keeps :hover on
+           touch until something else is tapped, which left nav icons
+           and cards stuck in their hover state. */
+        @media (hover: hover) {
+            .btn-solid:hover {
+                transform: translateY(-2px);
+            }
+
+            .lang-toggle:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            .nav-links a:hover {
+                color: var(--accent);
+            }
+
+            .nav-links a:hover::after {
+                height: 100%;
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            }
+
+            .btn-secondary:hover {
+                background: rgba(255,255,255,0.3);
+            }
+
+            .project-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            }
+
+            .contact-link:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+                transform: translateY(-2px);
+            }
+
+            .theme-toggle:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+        }
+    </style>
     <script>
-        // Theme before first paint, so it never flashes.
+        // Applied before first paint so the correct theme never flashes.
         (function () {
             try {
                 var saved = localStorage.getItem('theme');
@@ -22,12 +1180,13 @@
         })();
     </script>
     <script>
-        // Language before first paint: ?lang= wins, then a saved choice, then
-        // the browser's language. A ?lang= link is saved so it survives a trip
-        // to a case study and back.
+        // Language, decided before first paint: ?lang= in the URL wins, then a
+        // saved choice, then the browser's language. A ?lang= link is saved so
+        // the choice survives a trip to a case study and back.
         (function () {
-            var root = document.documentElement, lang = 'en', saved = null, q = null;
+            var root = document.documentElement, lang = 'en', saved = null;
             try { saved = localStorage.getItem('lang'); } catch (e) {}
+            var q = null;
             try { q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
             var browser = (navigator.languages && navigator.languages[0]) || navigator.language || '';
             if (q === 'en' || q === 'es') {
@@ -45,13 +1204,14 @@
     </script>
 </head>
 <body>
-    <nav class="side-nav" aria-label="Main">
-        <a href="index.html" class="logo" aria-label="El Serch — home" data-label-en="El Serch — home" data-label-es="El Serch — inicio"><img src="assets/elserch-logo.svg" alt="" class="logo-mark"></a>
+    <!-- Navigation -->
+    <nav class="side-nav">
+        <a href="index.html" class="logo" aria-label="El Serch — home" data-label-en="El Serch — home" data-label-es="El Serch — inicio"><img src="assets/elserch-logo.svg" alt="El Serch logo" class="logo-mark"></a>
         <ul class="nav-links">
-            <li><a href="#work"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg><span class="nav-label"><span lang="en">Work</span><span lang="es">Trabajo</span></span></a></li>
-            <li><a href="#services"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg><span class="nav-label"><span lang="en">Services</span><span lang="es">Servicios</span></span></a></li>
             <li><a href="#about"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span class="nav-label"><span lang="en">About</span><span lang="es">Sobre mí</span></span></a></li>
+            <li><a href="#portfolio"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg><span class="nav-label"><span lang="en">Portfolio</span><span lang="es">Portafolio</span></span></a></li>
             <li><a href="#experience"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8c0 1.1-.9 2-2 2-.18 0-.35-.02-.51-.07l-3.56 3.55c.05.16.07.34.07.52 0 1.1-.9 2-2 2s-2-.9-2-2c0-.18.02-.36.07-.52l-2.55-2.55c-.16.05-.34.07-.52.07s-.36-.02-.52-.07l-4.55 4.56c.05.16.07.33.07.51 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.18 0 .35.02.51.07l4.56-4.55C8.02 9.36 8 9.18 8 9c0-1.1.9-2 2-2s2 .9 2 2c0 .18-.02.36-.07.52l2.55 2.55c.16-.05.34-.07.52-.07s.36.02.52.07l3.55-3.56C19.02 8.35 19 8.18 19 8c0-1.1.9-2 2-2s2 .9 2 2z"/></svg><span class="nav-label"><span lang="en">Experience</span><span lang="es">Experiencia</span></span></a></li>
+            <li><a href="#pricing"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="nav-label"><span lang="en">Pricing</span><span lang="es">Precios</span></span></a></li>
             <li><a href="#contact"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></span></a></li>
         </ul>
         <div class="nav-tools">
@@ -63,315 +1223,580 @@
         </div>
     </nav>
 
-    <main>
-    <!-- Hero -->
-    <header class="hero">
-        <div class="wrap">
-            <div class="hero-grid">
-                <div>
-                    <p class="hero-name"><img src="assets/elserch-logo.svg" alt="">Sergio &ldquo;El Serch&rdquo; Inurreta</p>
-                    <h1 class="hero-title"><span lang="en">I design complex financial and AI products that make enterprise workflows understandable.</span><span lang="es">Diseño productos financieros y de IA complejos que vuelven comprensibles los flujos de trabajo empresariales.</span></h1>
-                    <p class="hero-desc"><span lang="en">Product &amp; Service Designer · Enterprise UX · Financial Platforms · AI &amp; Agentic Systems</span><span lang="es">Diseñador de Producto y Servicios · UX empresarial · Plataformas financieras · IA y sistemas agénticos</span></p>
-                    <div class="hero-actions">
-                        <a class="btn btn-solid" href="#work"><span lang="en">View selected work</span><span lang="es">Ver trabajo seleccionado</span></a>
-                        <a class="btn btn-ghost" href="#services"><span lang="en">Work with me</span><span lang="es">Trabajemos juntos</span></a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <img src="assets/elserch-logo.svg" alt="" class="hero-logo">
+            <h1>Sergio "El Serch" Inurreta</h1>
+            <div class="subtitle"><span lang="en">Product & Service Designer</span><span lang="es">Diseñador de Producto y Servicios</span></div>
+            <p class="tagline"><span lang="en">Enterprise UX • Financial Platforms • AI & Conversational Design</span><span lang="es">UX empresarial • Plataformas financieras • Diseño conversacional e IA</span></p>
+            <div class="cta-buttons">
+                <a href="#portfolio" class="btn btn-primary"><span lang="en">View Portfolio</span><span lang="es">Ver portafolio</span></a>
+                <a href="#contact" class="btn btn-secondary"><span lang="en">Get in Touch</span><span lang="es">Contáctame</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title"><span lang="en">About Me</span><span lang="es">Sobre mí</span></h2>
+            <p class="section-subtitle"><span lang="en">Designing complex digital experiences for enterprise organizations</span><span lang="es">Experiencias digitales complejas para grandes organizaciones</span></p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p><span lang="en">Product and Service Designer with 9+ years of experience designing complex digital platforms for banking, healthcare, and retail organizations. Specialized in enterprise UX, service design, and AI-driven interactions.</span><span lang="es">Diseñador de Producto y Servicios con más de 9 años de experiencia diseñando plataformas digitales complejas para organizaciones de banca, salud y retail. Especializado en UX empresarial, diseño de servicios e interacciones impulsadas por IA.</span></p>
+                    
+                    <p><span lang="en">I translate business and technical constraints into clear, scalable user experiences across multi-country platforms spanning Canada, USA, Mexico, and LATAM. My work bridges user needs, business goals, and technical feasibility.</span><span lang="es">Traduzco restricciones técnicas y de negocio en experiencias claras y escalables, en plataformas multipaís que abarcan Canadá, Estados Unidos, México y Latinoamérica. Mi trabajo conecta las necesidades de los usuarios, los objetivos de negocio y la viabilidad técnica.</span></p>
+                    
+                    <p><span lang="en">At IBM, I lead end-to-end enterprise experiences, facilitate Design Thinking workshops, and specialize in conversational UX and AI interaction design for complex business processes.</span><span lang="es">En IBM lidero experiencias empresariales de principio a fin, facilito talleres de Design Thinking y me especializo en UX conversacional y diseño de interacciones con IA para procesos de negocio complejos.</span></p>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">9+</div>
+                        <div class="stat-label"><span lang="en">Years Experience</span><span lang="es">Años de experiencia</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label"><span lang="en">Major Projects</span><span lang="es">Proyectos principales</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label"><span lang="en">Countries</span><span lang="es">Países</span></div>
                     </div>
                 </div>
-                <svg class="hero-figure" viewBox="0 0 460 340" aria-hidden="true" focusable="false">
-                    <path class="sys-faint" d="M10 30 C 140 30, 80 260, 250 170"/>
-                    <path class="sys-faint" d="M10 85 C 110 300, 170 20, 250 170"/>
-                    <path class="sys-faint" d="M10 140 C 90 60, 160 280, 250 170"/>
-                    <path class="sys-faint" d="M10 200 C 120 330, 120 40, 250 170"/>
-                    <path class="sys-faint" d="M10 255 C 80 120, 190 300, 250 170"/>
-                    <path class="sys-faint" d="M10 310 C 150 310, 100 90, 250 170"/>
-                    <circle class="sys-dot" cx="10" cy="30" r="3.5"/><circle class="sys-dot" cx="10" cy="85" r="3.5"/>
-                    <circle class="sys-dot" cx="10" cy="140" r="3.5"/><circle class="sys-dot" cx="10" cy="200" r="3.5"/>
-                    <circle class="sys-dot" cx="10" cy="255" r="3.5"/><circle class="sys-dot" cx="10" cy="310" r="3.5"/>
-                    <path class="sys-line" d="M250 170 H 442"/>
-                    <circle class="sys-node" cx="250" cy="170" r="5"/>
-                    <circle class="sys-node" cx="300" cy="170" r="6"/>
-                    <circle class="sys-node" cx="348" cy="170" r="6"/>
-                    <circle class="sys-node" cx="396" cy="170" r="6"/>
-                    <circle class="sys-signal" cx="442" cy="170" r="7"/>
-                </svg>
-            </div>
-
-            <dl class="proof">
-                <div><dt>9+ <span lang="en">years</span><span lang="es">años</span></dt><dd><span lang="en">designing enterprise platforms at IBM</span><span lang="es">diseñando plataformas empresariales en IBM</span></dd></div>
-                <div><dt>6 <span lang="en">markets</span><span lang="es">mercados</span></dt><dd><span lang="en">on one corporate banking platform</span><span lang="es">en una sola plataforma de banca corporativa</span></dd></div>
-                <div><dt>17 <span lang="en">platforms</span><span lang="es">plataformas</span></dt><dd><span lang="en">benchmarked for file and payment workflows</span><span lang="es">analizadas en flujos de archivos y pagos</span></dd></div>
-                <div><dt>4 <span lang="en">sectors</span><span lang="es">sectores</span></dt><dd><span lang="en">banking, healthcare, retail and government</span><span lang="es">banca, salud, retail y gobierno</span></dd></div>
-            </dl>
-        </div>
-    </header>
-
-    <!-- Selected work -->
-    <section id="work" class="section" aria-labelledby="work-title">
-        <div class="wrap">
-            <div class="section-head">
-                <h2 id="work-title"><span lang="en">Selected work</span><span lang="es">Trabajo seleccionado</span></h2>
-                <p class="lede"><span lang="en">Projects where the product, the organization and the technology were all complicated at once.</span><span lang="es">Proyectos donde el producto, la organización y la tecnología eran complejos al mismo tiempo.</span></p>
-            </div>
-
-            <a class="flagship" href="scotiabank-case-study.html">
-                <div>
-                    <p class="flagship-kicker">Scotiabank · ScotiaConnect · <span lang="en">2022–present</span><span lang="es">2022–actualidad</span></p>
-                    <h3><span lang="en">One corporate banking platform for six markets</span><span lang="es">Una plataforma de banca corporativa para seis mercados</span></h3>
-                    <p><span lang="en">Standardizing how corporate clients in Canada, the US, Mexico, Colombia, Chile and Peru send and manage files, across four file services and four product teams.</span><span lang="es">Estandarizar cómo los clientes corporativos de Canadá, EE. UU., México, Colombia, Chile y Perú envían y gestionan archivos, en cuatro servicios de archivos y cuatro equipos de producto.</span></p>
-                    <dl class="facts">
-                        <div><dt>6</dt><dd><span lang="en">markets</span><span lang="es">mercados</span></dd></div>
-                        <div><dt>4</dt><dd><span lang="en">file services</span><span lang="es">servicios de archivos</span></dd></div>
-                        <div><dt>4</dt><dd><span lang="en">product teams</span><span lang="es">equipos de producto</span></dd></div>
-                    </dl>
-                    <span class="more"><span lang="en">Read the case study</span><span lang="es">Leer el caso</span></span>
-                </div>
-                <figure>
-                    <svg viewBox="0 0 520 300" role="img" aria-labelledby="flag-cap">
-                        <path class="sys-faint" d="M58 40 C 120 40, 130 110, 190 110"/>
-                        <path class="sys-faint" d="M58 40 C 120 40, 130 190, 190 190"/>
-                        <path class="sys-faint" d="M58 82 C 120 82, 130 110, 190 110"/>
-                        <path class="sys-faint" d="M58 82 C 120 82, 130 190, 190 190"/>
-                        <path class="sys-faint" d="M58 124 C 120 124, 130 110, 190 110"/>
-                        <path class="sys-faint" d="M58 124 C 120 124, 130 190, 190 190"/>
-                        <path class="sys-faint" d="M58 166 C 120 166, 130 110, 190 110"/>
-                        <path class="sys-faint" d="M58 166 C 120 166, 130 190, 190 190"/>
-                        <path class="sys-faint" d="M58 208 C 120 208, 130 110, 190 110"/>
-                        <path class="sys-faint" d="M58 208 C 120 208, 130 190, 190 190"/>
-                        <path class="sys-faint" d="M58 250 C 120 250, 130 110, 190 110"/>
-                        <path class="sys-faint" d="M58 250 C 120 250, 130 190, 190 190"/>
-                        <path class="sys-faint" d="M190 190 C 250 190, 260 70, 318 70"/>
-                        <path class="sys-faint" d="M190 110 C 250 110, 260 122, 318 122"/>
-                        <path class="sys-faint" d="M190 110 C 250 110, 260 174, 318 174"/>
-                        <path class="sys-faint" d="M190 110 C 250 110, 260 226, 318 226"/>
-                        <path class="sys-line" d="M318 70 C 360 70, 360 150, 392 150"/>
-                        <path class="sys-line" d="M318 122 C 360 122, 360 150, 392 150"/>
-                        <path class="sys-line" d="M318 174 C 360 174, 360 150, 392 150"/>
-                        <path class="sys-line" d="M318 226 C 360 226, 360 150, 392 150"/>
-                        <circle class="sys-node" cx="58" cy="40" r="5"/><text class="sys-label" x="30" y="44">CA</text>
-                        <circle class="sys-node" cx="58" cy="82" r="5"/><text class="sys-label" x="30" y="86">US</text>
-                        <circle class="sys-node" cx="58" cy="124" r="5"/><text class="sys-label" x="30" y="128">MX</text>
-                        <circle class="sys-node" cx="58" cy="166" r="5"/><text class="sys-label" x="30" y="170">CO</text>
-                        <circle class="sys-node" cx="58" cy="208" r="5"/><text class="sys-label" x="30" y="212">CL</text>
-                        <circle class="sys-node" cx="58" cy="250" r="5"/><text class="sys-label" x="30" y="254">PE</text>
-                        <circle class="sys-node" cx="190" cy="110" r="6"/><text class="sys-label" x="190" y="96" text-anchor="middle">Web</text>
-                        <circle class="sys-node" cx="190" cy="190" r="6"/><text class="sys-label" x="190" y="214" text-anchor="middle">Host-to-host</text>
-                        <circle class="sys-node" cx="318" cy="70" r="5"/><text class="sys-label" x="318" y="59" text-anchor="middle">H2H</text>
-                        <circle class="sys-node" cx="318" cy="122" r="5"/><text class="sys-label" x="318" y="111" text-anchor="middle">H2W</text>
-                        <circle class="sys-node" cx="318" cy="174" r="5"/><text class="sys-label" x="318" y="163" text-anchor="middle">File Transfer</text>
-                        <circle class="sys-node" cx="318" cy="226" r="5"/><text class="sys-label" x="318" y="215" text-anchor="middle">File Upload</text>
-                        <path class="sys-line" d="M392 150 H 506"/>
-                        <circle class="sys-node" cx="392" cy="150" r="4.5"/>
-                        <circle class="sys-node" cx="420" cy="150" r="4.5"/>
-                        <circle class="sys-node" cx="448" cy="150" r="4.5"/>
-                        <circle class="sys-node" cx="476" cy="150" r="4.5"/>
-                        <circle class="sys-signal" cx="506" cy="150" r="6"/>
-                        <text class="sys-label" lang="en" x="58" y="292" text-anchor="middle">6 markets</text><text class="sys-label" lang="es" x="58" y="292" text-anchor="middle">6 mercados</text>
-                        <text class="sys-label" lang="en" x="190" y="292" text-anchor="middle">2 channels</text><text class="sys-label" lang="es" x="190" y="292" text-anchor="middle">2 canales</text>
-                        <text class="sys-label" lang="en" x="318" y="292" text-anchor="middle">4 services</text><text class="sys-label" lang="es" x="318" y="292" text-anchor="middle">4 servicios</text>
-                        <text class="sys-label" lang="en" x="450" y="292" text-anchor="middle">1 file lifecycle</text><text class="sys-label" lang="es" x="450" y="292" text-anchor="middle">1 ciclo de archivo</text>
-                    </svg>
-                    <figcaption id="flag-cap"><span lang="en">Six markets, two channels, four file services, one file lifecycle.</span><span lang="es">Seis mercados, dos canales, cuatro servicios de archivos, un ciclo de vida del archivo.</span></figcaption>
-                </figure>
-            </a>
-
-            <ul class="work-list">
-                <li><a class="work-row" href="confidential-a.html">
-                    <span class="work-year">2022–2023</span>
-                    <span class="work-client"><span lang="en">Confidential</span><span lang="es">Confidencial</span></span>
-                    <span class="work-summary"><strong><span lang="en">Treasury tools for a US financial institution</span><span lang="es">Herramientas de tesorería para una institución financiera de EE. UU.</span></strong><span><span lang="en">Wireframes and prototypes across five squads for internal treasury, wire-transfer and automation workflows.</span><span lang="es">Wireframes y prototipos para cinco squads en flujos internos de tesorería, transferencias y automatización.</span></span></span>
-                    <span class="work-go"><svg class="" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">Password</span><span lang="es">Contraseña</span></span>
-                </a></li>
-                <li><a class="work-row" href="nyhealth-case-study.html">
-                    <span class="work-year">2021</span>
-                    <span class="work-client">NY State Dept. of Health</span>
-                    <span class="work-summary"><strong><span lang="en">A health pass with a conversational assistant</span><span lang="es">Un pase de salud con asistente conversacional</span></strong><span><span lang="en">Digital health credentials and a virtual assistant on a blockchain-based platform.</span><span lang="es">Credenciales digitales de salud y un asistente virtual sobre una plataforma basada en blockchain.</span></span></span>
-                    <span class="work-go"><span lang="en">Case study</span><span lang="es">Ver caso</span></span>
-                </a></li>
-                <li><a class="work-row" href="walmart-case-study.html">
-                    <span class="work-year">2019</span>
-                    <span class="work-client">Walmart LATAM</span>
-                    <span class="work-summary"><strong><span lang="en">HR change management in three countries</span><span lang="es">Gestión del cambio de RR. HH. en tres países</span></strong><span><span lang="en">Discovery and service design for HR transformation in Mexico, Brazil and Argentina.</span><span lang="es">Discovery y diseño de servicios para la transformación de RR. HH. en México, Brasil y Argentina.</span></span></span>
-                    <span class="work-go"><span lang="en">Case study</span><span lang="es">Ver caso</span></span>
-                </a></li>
-                <li><a class="work-row" href="confidential-b.html">
-                    <span class="work-year">2017–2019</span>
-                    <span class="work-client"><span lang="en">Confidential</span><span lang="es">Confidencial</span></span>
-                    <span class="work-summary"><strong><span lang="en">A conversational banking assistant</span><span lang="es">Un asistente bancario conversacional</span></strong><span><span lang="en">Voice and text banking conversations for a bank in Mexico.</span><span lang="es">Conversaciones bancarias por voz y texto para un banco en México.</span></span></span>
-                    <span class="work-go"><svg class="" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span lang="en">Password</span><span lang="es">Contraseña</span></span>
-                </a></li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- What I do -->
-    <section id="capabilities" class="section section--alt" aria-labelledby="caps-title">
-        <div class="wrap">
-            <div class="section-head">
-                <h2 id="caps-title"><span lang="en">What I do</span><span lang="es">Qué hago</span></h2>
-                <p class="lede"><span lang="en">The kinds of problem I'm brought in for.</span><span lang="es">El tipo de problema para el que me llaman.</span></p>
-            </div>
-            <div class="caps">
-                <div class="cap"><h3><span lang="en">Enterprise product design</span><span lang="es">Diseño de producto empresarial</span></h3><p><span lang="en">Workflows with many roles, permissions and handoffs, shaped into products people can learn.</span><span lang="es">Flujos con muchos roles, permisos y traspasos, convertidos en productos que la gente puede aprender.</span></p></div>
-                <div class="cap"><h3><span lang="en">Financial platforms</span><span lang="es">Plataformas financieras</span></h3><p><span lang="en">Payments, files, approvals and reporting across markets with different rules.</span><span lang="es">Pagos, archivos, aprobaciones y reportes entre mercados con reglas distintas.</span></p></div>
-                <div class="cap"><h3><span lang="en">Service architecture</span><span lang="es">Arquitectura de servicios</span></h3><p><span lang="en">The people, systems and back-office steps behind a product, mapped so the interface stops hiding the gaps.</span><span lang="es">Las personas, sistemas y procesos internos detrás de un producto, mapeados para que la interfaz deje de esconder los huecos.</span></p></div>
-                <div class="cap"><h3><span lang="en">AI and agentic products</span><span lang="es">Productos de IA y agénticos</span></h3><p><span lang="en">What an assistant or agent should do, what it shouldn't, and how a person stays in control.</span><span lang="es">Qué debe hacer un asistente o agente, qué no, y cómo la persona mantiene el control.</span></p></div>
-                <div class="cap"><h3><span lang="en">Design systems and governance</span><span lang="es">Sistemas de diseño y gobernanza</span></h3><p><span lang="en">Shared components, vocabulary and process that hold up across several teams at once.</span><span lang="es">Componentes, vocabulario y procesos compartidos que funcionan entre varios equipos a la vez.</span></p></div>
-                <div class="cap"><h3><span lang="en">Research and product definition</span><span lang="es">Investigación y definición de producto</span></h3><p><span lang="en">Interviews, benchmarks and edge-case mapping that end in a decision.</span><span lang="es">Entrevistas, benchmarks y mapeo de casos límite que terminan en una decisión.</span></p></div>
-            </div>
-            <p class="method"><span lang="en">I map complex workflows, find where systems break down, and turn those constraints into product decisions.</span><span lang="es">Mapeo flujos complejos, encuentro dónde se rompen los sistemas y convierto esas restricciones en decisiones de producto.</span></p>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="section" aria-labelledby="services-title">
-        <div class="wrap">
-            <div class="section-head">
-                <h2 id="services-title"><span lang="en">Services</span><span lang="es">Servicios</span></h2>
-                <p class="lede"><span lang="en">For teams that need a senior product designer on a defined problem, for a defined time.</span><span lang="es">Para equipos que necesitan un diseñador de producto senior en un problema definido, por un tiempo definido.</span></p>
-            </div>
-            <div class="tiers">
-                <article class="tier">
-                    <h3>UX/UI Concept</h3>
-                    <p class="tier-for"><span lang="en">Validating an idea quickly</span><span lang="es">Validar rápidamente una idea</span></p>
-                    <ul>
-                        <li><span lang="en">Up to 2 h of stakeholder discovery</span><span lang="es">Hasta 2 h de discovery con stakeholders</span></li>
-                        <li><span lang="en">Information architecture</span><span lang="es">Arquitectura de información</span></li>
-                        <li><span lang="en">Up to 6 key screens</span><span lang="es">Hasta 6 pantallas principales</span></li>
-                        <li><span lang="en">Clickable Figma prototype</span><span lang="es">Prototipo navegable en Figma</span></li>
-                    </ul>
-                    <p class="tier-time"><span lang="en">3–5 business days, 1 revision round</span><span lang="es">3–5 días hábiles, 1 ronda de ajustes</span></p>
-                </article>
-                <article class="tier is-recommended">
-                    <span class="badge"><span lang="en">Recommended</span><span lang="es">Recomendado</span></span>
-                    <h3>Product Design Sprint</h3>
-                    <p class="tier-for"><span lang="en">Laying a solid foundation for an MVP</span><span lang="es">Definir una base sólida para un MVP</span></p>
-                    <ul>
-                        <li><span lang="en">Up to 4 h of stakeholder discovery</span><span lang="es">Hasta 4 h de discovery con stakeholders</span></li>
-                        <li><span lang="en">Requirements synthesis and core user flows</span><span lang="es">Síntesis de requerimientos y user flows principales</span></li>
-                        <li><span lang="en">Up to 10 key screens, with error and edge-case states</span><span lang="es">Hasta 10 pantallas, con estados de error y excepción</span></li>
-                        <li><span lang="en">Basic visual identity and developer handoff</span><span lang="es">Identidad gráfica básica y handoff para desarrollo</span></li>
-                    </ul>
-                    <p class="tier-time"><span lang="en">5–8 business days, 1 revision round</span><span lang="es">5–8 días hábiles, 1 ronda de ajustes</span></p>
-                </article>
-                <article class="tier">
-                    <h3>Product Experience &amp; Visual System</h3>
-                    <p class="tier-for"><span lang="en">Building a more complete product experience</span><span lang="es">Preparar una experiencia de producto más completa</span></p>
-                    <ul>
-                        <li><span lang="en">Everything in the Sprint</span><span lang="es">Todo lo del Sprint</span></li>
-                        <li><span lang="en">Up to 15 key screens</span><span lang="es">Hasta 15 pantallas principales</span></li>
-                        <li><span lang="en">A visual system and components</span><span lang="es">Sistema visual y componentes</span></li>
-                    </ul>
-                    <p class="tier-time"><span lang="en">8–12 business days, 2 revision rounds</span><span lang="es">8–12 días hábiles, 2 rondas de ajustes</span></p>
-                </article>
-            </div>
-            <div class="services-foot">
-                <p><span lang="en">Scope is public; prices are shared privately.</span><span lang="es">El alcance es público; los precios se comparten en privado.</span></p>
-                <a class="btn btn-ghost" href="services.html"><span lang="en">Full scope and pricing</span><span lang="es">Alcance completo y precios</span></a>
             </div>
         </div>
     </section>
 
-    <!-- About -->
-    <section id="about" class="section section--alt" aria-labelledby="about-title">
-        <div class="wrap split">
-            <h2 id="about-title"><span lang="en">About</span><span lang="es">Sobre mí</span></h2>
-            <div class="about-text">
-                <p class="big-ish"><span lang="en">I'm Sergio, El Serch to most people. Since 2017 I've designed at IBM the kind of products that are hard to explain in one sentence: corporate banking platforms, treasury tools, health passes, conversational assistants.</span><span lang="es">Soy Sergio, El Serch para casi todos. Desde 2017 diseño en IBM el tipo de productos difíciles de explicar en una frase: plataformas de banca corporativa, herramientas de tesorería, pases de salud, asistentes conversacionales.</span></p>
-                <p><span lang="en">I'm most useful when the workflow, the organization and the technology are complicated at once, and someone has to make the whole thing make sense.</span><span lang="es">Soy más útil cuando el flujo, la organización y la tecnología son complejos a la vez, y alguien tiene que lograr que todo tenga sentido.</span></p>
-                <p class="aside"><span lang="en">Financial platform product designer by day, stock guru by night.</span><span lang="es">Diseñador de plataformas financieras de día, gurú de la bolsa de noche.</span></p>
-                <ul class="facts-list">
-                    <li><span><span lang="en">Based in</span><span lang="es">Con base en</span></span><span><span lang="en">Mexico City</span><span lang="es">Ciudad de México</span></span></li>
-                    <li><span><span lang="en">Works in</span><span lang="es">Trabajo en</span></span><span><span lang="en">Spanish and English (basic Italian)</span><span lang="es">Español e inglés (italiano básico)</span></span></li>
-                    <li><span><span lang="en">At IBM since</span><span lang="es">En IBM desde</span></span><span>2017</span></li>
-                </ul>
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="container">
+            <h2 class="section-title"><span lang="en">Core Skills</span><span lang="es">Habilidades clave</span></h2>
+            <div class="skills-grid">
+                <div class="skill-tag"><span lang="en">Service Design</span><span lang="es">Diseño de servicios</span></div>
+                <div class="skill-tag"><span lang="en">Enterprise UX</span><span lang="es">UX empresarial</span></div>
+                <div class="skill-tag"><span lang="en">User Research</span><span lang="es">Investigación de usuarios</span></div>
+                <div class="skill-tag"><span lang="en">Design Systems</span><span lang="es">Sistemas de diseño</span></div>
+                <div class="skill-tag"><span lang="en">Conversational &amp; AI Design</span><span lang="es">Diseño conversacional e IA</span></div>
+                <div class="skill-tag"><span lang="en">Workshop Facilitation</span><span lang="es">Facilitación de talleres</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience" class="section" aria-labelledby="xp-title">
-        <div class="wrap">
-            <div class="section-head">
-                <h2 id="xp-title"><span lang="en">Experience</span><span lang="es">Experiencia</span></h2>
-                <p class="lede"><span lang="en">Nine years at IBM, across banking, healthcare, retail and government.</span><span lang="es">Nueve años en IBM, en banca, salud, retail y gobierno.</span></p>
-            </div>
-            <div class="split">
-                <article class="xp-role">
-                    <header>
-                        <h3>IBM <span lang="en">Mexico</span><span lang="es">México</span></h3>
-                        <span class="xp-period"><span lang="en">Sep 2017 – present</span><span lang="es">Sep 2017 – actualidad</span></span>
-                    </header>
-                    <p class="xp-period"><span lang="en">Product &amp; Service Designer</span><span lang="es">Diseñador de Producto y Servicios</span></p>
-                    <ul>
-                        <li><span lang="en">End-to-end enterprise experiences for banking, healthcare and government platforms</span><span lang="es">Experiencias empresariales de principio a fin para plataformas de banca, salud y gobierno</span></li>
-                        <li><span lang="en">User research, service blueprints and product definition with multidisciplinary teams</span><span lang="es">Investigación de usuarios, service blueprints y definición de producto con equipos multidisciplinarios</span></li>
-                        <li><span lang="en">AI-driven and conversational interfaces for complex business processes</span><span lang="es">Interfaces conversacionales e impulsadas por IA para procesos de negocio complejos</span></li>
-                        <li><span lang="en">UX strategy balanced against technical and regulatory constraints</span><span lang="es">Estrategia de UX equilibrada con restricciones técnicas y regulatorias</span></li>
-                        <li><span lang="en">Enterprise Design Thinking workshops and design sprints</span><span lang="es">Talleres de Enterprise Design Thinking y design sprints</span></li>
-                    </ul>
-                </article>
-                <div class="xp-side">
-                    <h3><span lang="en">Clients</span><span lang="es">Clientes</span></h3>
-                    <ul>
-                        <li>Scotiabank</li>
-                        <li>New York State Department of Health</li>
-                        <li>Walmart LATAM</li>
-                        <li><span lang="en">Two financial institutions under NDA</span><span lang="es">Dos instituciones financieras bajo NDA</span></li>
-                    </ul>
-                    <h3><span lang="en">Certifications</span><span lang="es">Certificaciones</span></h3>
-                    <ul>
-                        <li>IBM Enterprise Design Thinking Advocate</li>
-                        <li>IBM Cognitive Delivery</li>
-                        <li>Scrum Master with UX (Scrum.org)</li>
-                    </ul>
-                    <h3><span lang="en">Publications</span><span lang="es">Publicaciones</span></h3>
-                    <ul>
-                        <li>Facial De-Identification Method (2023)</li>
-                        <li>Superposition of Images in Privacy Systems (2022)</li>
-                    </ul>
-                    <a class="text-link" href="https://www.credly.com/users/sergio-francisco-inurreta-gonzalez" target="_blank" rel="noopener noreferrer"><span lang="en">Verified badges on Credly</span><span lang="es">Insignias verificadas en Credly</span></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section section--alt" aria-labelledby="contact-title">
-        <div class="wrap">
-            <div class="section-head">
-                <h2 id="contact-title"><span lang="en">Contact</span><span lang="es">Contacto</span></h2>
-                <p class="lede"><span lang="en">Two ways in, depending on what you're hiring for.</span><span lang="es">Dos caminos, según lo que buscas.</span></p>
-            </div>
-            <div class="routes">
-                <article class="route">
-                    <h3><span lang="en">Hiring for a role</span><span lang="es">Para un puesto</span></h3>
-                    <p><span lang="en">Full-time or contract positions in product or service design. My full history is on LinkedIn.</span><span lang="es">Posiciones de tiempo completo o por contrato en diseño de producto o servicios. Mi trayectoria completa está en LinkedIn.</span></p>
-                    <div class="route-links">
-                        <a class="btn btn-solid" lang="en" href="mailto:soy@elserch.com?subject=Role%20opportunity">Email me</a><a class="btn btn-solid" lang="es" href="mailto:soy@elserch.com?subject=Oportunidad%20laboral">Escríbeme</a>
-                        <a class="btn btn-ghost" href="https://www.linkedin.com/in/el-serch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title"><span lang="en">Featured Projects</span><span lang="es">Proyectos destacados</span></h2>
+            <p class="section-subtitle"><span lang="en">Selected work across banking, healthcare, and enterprise platforms</span><span lang="es">Trabajo selecto en banca, salud y plataformas empresariales</span></p>
+            
+            <div class="projects-grid">
+                <!-- Project 1: Scotiabank -->
+                <a href="scotiabank-case-study.html" class="project-card">
+                    <div class="project-image">SB</div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Scotiabank</h3>
+                            <span class="project-year"><span lang="en">2022–Present</span><span lang="es">2022–actualidad</span></span>
+                        </div>
+                        <span class="project-type"><span lang="en">Enterprise Banking Platform</span><span lang="es">Plataforma de banca empresarial</span></span>
+                        <p class="project-description"><span lang="en">Multi-country corporate and commercial online platform spanning Canada, USA, Mexico, Colombia, Chile, and Peru. Led research, service design, and product definition for standardized platform rollout.</span><span lang="es">Plataforma en línea corporativa y comercial en Canadá, Estados Unidos, México, Colombia, Chile y Perú. Lideré la investigación, el diseño de servicios y la definición de producto para un despliegue estandarizado.</span></p>
+                        <div class="project-tags">
+                            <span class="tag"><span lang="en">Enterprise UX</span><span lang="es">UX empresarial</span></span>
+                            <span class="tag"><span lang="en">Service Design</span><span lang="es">Diseño de servicios</span></span>
+                            <span class="tag"><span lang="en">Multi-country</span><span lang="es">Multipaís</span></span>
+                            <span class="tag"><span lang="en">Banking</span><span lang="es">Banca</span></span>
+                        </div>
                     </div>
-                </article>
-                <article class="route">
-                    <h3><span lang="en">Starting a project</span><span lang="es">Para un proyecto</span></h3>
-                    <p><span lang="en">A defined problem and a timeline. See how engagements work, then tell me what you're building.</span><span lang="es">Un problema definido y una fecha. Revisa cómo trabajo y cuéntame qué estás construyendo.</span></p>
-                    <div class="route-links">
-                        <a class="btn btn-solid" lang="en" href="mailto:soy@elserch.com?subject=Project%20inquiry">Email me</a><a class="btn btn-solid" lang="es" href="mailto:soy@elserch.com?subject=Proyecto">Escríbeme</a>
-                        <a class="btn btn-ghost" href="services.html"><span lang="en">See services</span><span lang="es">Ver servicios</span></a>
+                </a>
+
+                <!-- Project 2: confidential, under NDA — full case study is encrypted in confidential-a.html -->
+                <a href="confidential-a.html" class="project-card is-locked">
+                    <div class="project-image project-image--locked"><svg class="lock-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title"><span lang="en">Confidential project</span><span lang="es">Proyecto confidencial</span></h3>
+                            <span class="project-year">2022–2023</span>
+                        </div>
+                        <span class="project-type"><span lang="en">Internal treasury tools</span><span lang="es">Herramientas internas de tesorería</span></span>
+                        <p class="project-description"><span lang="en">Treasury, payments and automation tools for a US financial institution. Under NDA, so it's password-protected.</span><span lang="es">Herramientas de tesorería, pagos y automatización para una institución financiera de EE. UU. Está bajo NDA, así que requiere contraseña.</span></p>
+                        <div class="project-tags">
+                            <span class="tag"><span lang="en">Financial services</span><span lang="es">Servicios financieros</span></span>
+                            <span class="tag"><span lang="en">Internal Tools</span><span lang="es">Herramientas internas</span></span>
+                            <span class="tag"><span lang="en">Prototyping</span><span lang="es">Prototipado</span></span>
+                        </div>
                     </div>
-                </article>
+                </a>
+
+                <!-- Project 3: NY Health -->
+                <a href="nyhealth-case-study.html" class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">NY</div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">NY State Dept. of Health</h3>
+                            <span class="project-year">2021</span>
+                        </div>
+                        <span class="project-type"><span lang="en">Health Pass Platform</span><span lang="es">Plataforma Health Pass</span></span>
+                        <p class="project-description"><span lang="en">Unified digital pass aided by conversational assistant for blockchain-based health platform. Designed AI-driven virtual assistant for healthcare access.</span><span lang="es">Pase digital unificado con apoyo de un asistente conversacional, sobre una plataforma de salud basada en blockchain. Diseñé un asistente virtual con IA para el acceso a servicios de salud.</span></p>
+                        <div class="project-tags">
+                            <span class="tag"><span lang="en">Healthcare</span><span lang="es">Salud</span></span>
+                            <span class="tag"><span lang="en">AI Assistant</span><span lang="es">Asistente de IA</span></span>
+                            <span class="tag">Blockchain</span>
+                            <span class="tag"><span lang="en">Government</span><span lang="es">Gobierno</span></span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 4: confidential, under NDA — full case study is encrypted in confidential-b.html -->
+                <a href="confidential-b.html" class="project-card is-locked">
+                    <div class="project-image project-image--locked"><svg class="lock-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title"><span lang="en">Confidential project</span><span lang="es">Proyecto confidencial</span></h3>
+                            <span class="project-year">2017–2019</span>
+                        </div>
+                        <span class="project-type"><span lang="en">Virtual banking assistant</span><span lang="es">Asistente bancario virtual</span></span>
+                        <p class="project-description"><span lang="en">Conversational banking over voice and text for a bank in Mexico. Under NDA, so it's password-protected.</span><span lang="es">Banca conversacional por voz y texto para un banco en México. Está bajo NDA, así que requiere contraseña.</span></p>
+                        <div class="project-tags">
+                            <span class="tag"><span lang="en">Conversational UX</span><span lang="es">UX conversacional</span></span>
+                            <span class="tag"><span lang="en">Voice Design</span><span lang="es">Diseño de voz</span></span>
+                            <span class="tag"><span lang="en">AI</span><span lang="es">IA</span></span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 5: Walmart -->
+                <a href="walmart-case-study.html" class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #0071ce 0%, #ffc220 100%);">WM</div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Walmart LATAM</h3>
+                            <span class="project-year">2019</span>
+                        </div>
+                        <span class="project-type"><span lang="en">HR Change Management</span><span lang="es">Gestión del cambio en Recursos Humanos</span></span>
+                        <p class="project-description"><span lang="en">Cross-country discovery and service design for HR transformation across Mexico, Brazil, and Argentina. Discovery and design phases for employee experience improvement.</span><span lang="es">Discovery y diseño de servicios multipaís para la transformación de Recursos Humanos en México, Brasil y Argentina. Fases de discovery y diseño para mejorar la experiencia del colaborador.</span></p>
+                        <div class="project-tags">
+                            <span class="tag"><span lang="en">Service Design</span><span lang="es">Diseño de servicios</span></span>
+                            <span class="tag">Discovery</span>
+                            <span class="tag"><span lang="en">HR</span><span lang="es">RR. HH.</span></span>
+                            <span class="tag">LATAM</span>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <p class="contact-direct"><span lang="en">Or write directly:</span><span lang="es">O escribe directo:</span> <a class="text-link" href="mailto:soy@elserch.com">soy@elserch.com</a></p>
         </div>
     </section>
-    </main>
 
-    <footer class="footer">
-        <div class="wrap">
-            <span>&copy; 2026 Sergio &ldquo;El Serch&rdquo; Inurreta</span>
-            <span><span lang="en">Product &amp; Service Design, Mexico City</span><span lang="es">Diseño de Producto y Servicios, Ciudad de México</span></span>
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title"><span lang="en">Experience & Credentials</span><span lang="es">Experiencia y credenciales</span></h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title"><span lang="en">IBM Mexico</span><span lang="es">IBM México</span></h3>
+                        <div class="timeline-period"><span lang="en">September 2017 – Present</span><span lang="es">Septiembre de 2017 – actualidad</span></div>
+                        <div class="timeline-description">
+                            <ul>
+                                <li><span lang="en">Design end-to-end enterprise experiences for banking, healthcare, and government platforms</span><span lang="es">Diseño experiencias empresariales de principio a fin para plataformas de banca, salud y gobierno</span></li>
+                                <li><span lang="en">Lead user research, service blueprints, and product definition across multidisciplinary teams</span><span lang="es">Lidero investigación de usuarios, service blueprints y definición de producto con equipos multidisciplinarios</span></li>
+                                <li><span lang="en">Specialize in AI-driven and conversational interfaces for complex business processes</span><span lang="es">Me especializo en interfaces conversacionales e impulsadas por IA para procesos de negocio complejos</span></li>
+                                <li><span lang="en">Balance UX strategy with technical and regulatory constraints</span><span lang="es">Equilibro la estrategia de UX con restricciones técnicas y regulatorias</span></li>
+                                <li><span lang="en">Facilitate Enterprise Design Thinking workshops and design sprints</span><span lang="es">Facilito talleres de Enterprise Design Thinking y design sprints</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title"><span lang="en">Certifications</span><span lang="es">Certificaciones</span></h3>
+                        <div class="timeline-description">
+                            <ul>
+                                <li>IBM Enterprise Design Thinking Advocate</li>
+                                <li>IBM Cognitive Delivery</li>
+                                <li>Scrum Master with UX (Scrum.org)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title"><span lang="en">Publications</span><span lang="es">Publicaciones</span></h3>
+                        <div class="timeline-description">
+                            <ul>
+                                <li>Facial De-Identification Method (2023)</li>
+                                <li>Superposition of Images in Privacy Systems (2022)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section: locked. The table is encrypted into the lock:pricing slot
+         below by tools/lock.mjs in the private repo, and unlocks in place. -->
+    <section id="pricing" class="pricing is-locked" aria-labelledby="pricing-title">
+        <div class="container">
+            <h2 class="section-title" id="pricing-title"><span lang="en">Scope options</span><span lang="es">Opciones de alcance</span></h2>
+            <p class="section-subtitle"><span lang="en">Three packages, from a quick concept to a full product experience. Pricing is shared privately.</span><span lang="es">Tres paquetes, desde un concepto rápido hasta una experiencia de producto completa. Los precios se comparten en privado.</span></p>
+
+            <form class="pricing-gate" id="pricingGate" novalidate>
+                <label for="pricingPassword"><span lang="en">Say the word</span><span lang="es">Dime la palabra</span></label>
+                <div class="pricing-gate-row">
+                    <input id="pricingPassword" name="password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false">
+                    <button type="submit" class="btn btn-solid" id="pricingUnlock"><svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span class="when-idle"><span lang="en">Unlock</span><span lang="es">Desbloquear</span></span><span class="when-busy"><span lang="en">Unlocking…</span><span lang="es">Desbloqueando…</span></span></button>
+                </div>
+                <p class="pricing-gate-error" id="pricingError" role="alert" hidden><span lang="en">That's not the word. Try again.</span><span lang="es">Esa no es la palabra. Intenta de nuevo.</span></p>
+                <p class="pricing-gate-error" id="pricingUnsupported" hidden><span lang="en">This browser can't unlock pricing. Try a recent Chrome, Safari, Firefox or Edge.</span><span lang="es">Este navegador no puede desbloquear los precios. Prueba una versión reciente de Chrome, Safari, Firefox o Edge.</span></p>
+                <p class="pricing-gate-help"><span lang="en">Don't have the password? <a href="mailto:soy@elserch.com?subject=Password%20for%20elserch.com">Ask me for it</a>.</span><span lang="es">¿No tienes la contraseña? <a href="mailto:soy@elserch.com?subject=Contrase%C3%B1a%20para%20elserch.com">Pídemela</a>.</span></p>
+            </form>
+            <!-- lock:pricing --><script type="application/json" id="lock-pricing">{"salt":"zogOGE8SX8DXBQ6Mm1Enpg==","iterations":600000,"data":"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"}</script><!-- /lock:pricing -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title"><span lang="en">Let's Connect</span><span lang="es">Conectemos</span></h2>
+            
+            <div class="contact-links">
+                <a href="mailto:soy@elserch.com" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>soy@elserch.com</span>
+                </a>
+
+                <a href="https://www.linkedin.com/in/el-serch/" class="contact-link" target="_blank" rel="noopener noreferrer">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                    <span>LinkedIn</span>
+                </a>
+
+                <a href="https://www.credly.com/users/sergio-francisco-inurreta-gonzalez" class="contact-link" target="_blank" rel="noopener noreferrer">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.68 13.69L12 11.93l2.31 1.76-.88-2.85L15.75 9h-2.84L12 6.19 11.09 9H8.25l2.31 1.84-.88 2.85zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6zm0 15l-4 1.02v-3.1c1.18.68 2.54 1.08 4 1.08s2.82-.4 4-1.08v3.1L12 19z"/></svg>
+                    <span>Credly</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><span lang="en">&copy; 2026 Sergio "El Serch" Inurreta. All rights reserved.</span><span lang="es">&copy; 2026 Sergio "El Serch" Inurreta. Todos los derechos reservados.</span></p>
         </div>
     </footer>
 
-    <script src="assets/site.js"></script>
+    <script>
+        // Theme toggle
+        (function () {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var root = document.documentElement;
+                var isDark = root.getAttribute('data-theme') === 'dark'
+                    || (!root.hasAttribute('data-theme')
+                        && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                var next = isDark ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('theme', next); } catch (e) {}
+            });
+        })();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight the rail link for whichever section holds the viewport centre.
+        (function () {
+            var links = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+            if (!links.length) return;
+            var map = {}, targets = [];
+            links.forEach(function (a) {
+                var el = document.querySelector(a.getAttribute('href'));
+                if (el) { map[el.id] = a; targets.push(el); }
+            });
+            if (!targets.length) return;
+
+            var last = targets[targets.length - 1];
+            var visible = {};
+            var atFoot = false;
+            var chosen = null;
+
+            function paint() {
+                var id = null;
+                if (chosen) {
+                    id = chosen;
+                } else if (atFoot) {
+                    // Once the page bottoms out, the final section sits below the
+                    // centre line and can never reach it however far you scroll,
+                    // so the section before it would stay lit. Pin it instead.
+                    id = last.id;
+                } else {
+                    targets.forEach(function (t) { if (!id && visible[t.id]) id = t.id; });
+                }
+                links.forEach(function (a) { a.classList.toggle('is-active', map[id] === a); });
+            }
+
+            var ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    ticking = false;
+                    var d = document.documentElement;
+                    var next = window.pageYOffset + window.innerHeight >= d.scrollHeight - 2;
+                    if (next !== atFoot) { atFoot = next; paint(); }
+                });
+            }
+
+            if ('IntersectionObserver' in window) {
+                var obs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+                    paint();
+                }, { rootMargin: '-45% 0px -45% 0px' });
+                targets.forEach(function (t) { obs.observe(t); });
+            }
+
+            // A click says exactly where the reader went. Near the foot of the page
+            // several short sections share one scroll position, so position alone
+            // can't tell them apart. Honour the click until the reader scrolls.
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href^="#"]');
+                if (!a) return;
+                var id = a.getAttribute('href').slice(1);
+                if (!map[id]) return;
+                chosen = id;
+                paint();
+            });
+            function release() { if (chosen) { chosen = null; paint(); } }
+            window.addEventListener('wheel', release, { passive: true });
+            window.addEventListener('touchmove', release, { passive: true });
+            window.addEventListener('keydown', function (e) {
+                if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].indexOf(e.key) > -1) release();
+            });
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            onScroll();
+        })();
+
+
+        // Language toggle
+        (function () {
+            var root = document.documentElement;
+            function apply(lang) {
+                root.setAttribute('lang', lang);
+                var t = root.getAttribute('data-title-' + lang);
+                if (t) document.title = t;
+                [].forEach.call(document.querySelectorAll('[data-label-' + lang + ']'), function (el) {
+                    el.setAttribute('aria-label', el.getAttribute('data-label-' + lang));
+                });
+            }
+            apply(root.getAttribute('lang') === 'es' ? 'es' : 'en');
+
+            var btn = document.getElementById('langToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var next = root.getAttribute('lang') === 'es' ? 'en' : 'es';
+                apply(next);
+                try { localStorage.setItem('lang', next); } catch (e) {}
+                // keep a ?lang= URL honest, or a reload would flip it back
+                try {
+                    var url = new URL(location.href);
+                    if (url.searchParams.has('lang')) {
+                        url.searchParams.set('lang', next);
+                        history.replaceState(null, '', url);
+                    }
+                } catch (e) {}
+            });
+        })();
+
+        // Pricing: rebuild the comparison table as one card per plan for narrow
+        // screens. Runs once the table has been decrypted into the section.
+        function buildPricingCards(section) {
+            var table = section.querySelector('.pricing-table');
+            if (!table || section.classList.contains('has-cards')) return;
+            var plans = [].slice.call(table.querySelectorAll('thead th')).slice(1);
+            var rows = [].slice.call(table.querySelectorAll('tbody tr'));
+
+            function mark(cell) {
+                var t = cell.textContent.trim();
+                if (t !== '✓' && t !== '—') return;
+                var yes = t === '✓';
+                cell.classList.add(yes ? 'is-yes' : 'is-no');
+                cell.textContent = '';
+                var glyph = document.createElement('span');
+                glyph.setAttribute('aria-hidden', 'true');
+                glyph.textContent = t;
+                cell.appendChild(glyph);
+                [['en', yes ? 'Included' : 'Not included'],
+                 ['es', yes ? 'Incluido' : 'No incluido']].forEach(function (l) {
+                    var said = document.createElement('span');
+                    said.className = 'sr-only';
+                    said.setAttribute('lang', l[0]);
+                    said.textContent = l[1];
+                    cell.appendChild(said);
+                });
+            }
+            rows.forEach(function (tr) { [].forEach.call(tr.querySelectorAll('td'), mark); });
+
+            function copyInto(target, cell) {
+                [].forEach.call(cell.childNodes, function (n) { target.appendChild(n.cloneNode(true)); });
+            }
+
+            var deck = document.createElement('div');
+            deck.className = 'pricing-cards';
+            plans.forEach(function (th, i) {
+                var card = document.createElement('article');
+                card.className = 'pricing-card' + (th.classList.contains('recommended') ? ' is-recommended' : '');
+                var badge = th.querySelector('.badge');
+                if (badge) card.appendChild(badge.cloneNode(true));
+                var name = document.createElement('h3');
+                name.className = 'plan-name';
+                copyInto(name, th.querySelector('.plan-name'));
+                card.appendChild(name);
+
+                var lead = {};
+                var list = document.createElement('dl');
+                list.className = 'plan-features';
+                rows.forEach(function (tr) {
+                    var cell = tr.querySelectorAll('td')[i];
+                    var key = tr.getAttribute('data-key');
+                    if (key) { lead[key] = cell; return; }
+                    var item = document.createElement('div');
+                    item.className = 'feature' + (cell.classList.contains('is-no') ? ' is-excluded' : '');
+                    var dt = document.createElement('dt');
+                    copyInto(dt, tr.querySelector('th'));
+                    var dd = document.createElement('dd');
+                    dd.className = cell.className;
+                    copyInto(dd, cell);
+                    item.appendChild(dt);
+                    item.appendChild(dd);
+                    list.appendChild(item);
+                });
+                [['ideal', 'plan-ideal'], ['price', 'plan-price'], ['time', 'plan-time']].forEach(function (pair) {
+                    if (!lead[pair[0]]) return;
+                    var line = document.createElement('p');
+                    line.className = pair[1];
+                    copyInto(line, lead[pair[0]]);
+                    card.appendChild(line);
+                });
+                card.appendChild(list);
+                deck.appendChild(card);
+            });
+            var wrap = section.querySelector('.pricing-table-wrap');
+            wrap.parentNode.insertBefore(deck, wrap.nextSibling);
+            section.classList.add('has-cards');
+        }
+
+        // Pricing: unlock in place. The same key opens pricing.html and the
+        // confidential projects, and a key remembered from any of them opens this.
+        (function () {
+            var section = document.getElementById('pricing');
+            var holder = document.getElementById('lock-pricing');
+            if (!section || !holder) return;
+            var lock;
+            try { lock = JSON.parse(holder.textContent); } catch (e) { return; }
+            var STORE = 'elserch-private';
+            var form = document.getElementById('pricingGate');
+            var input = document.getElementById('pricingPassword');
+            var button = document.getElementById('pricingUnlock');
+            var error = document.getElementById('pricingError');
+            var subtle = window.crypto && window.crypto.subtle;
+
+            if (!subtle) {
+                document.getElementById('pricingUnsupported').hidden = false;
+                button.disabled = true;
+                return;
+            }
+
+            // Must match normalise() in the private repo's gate and lock script:
+            // capitals, spacing and accents (á → a, ñ → n) are ignored.
+            function normalise(p) {
+                return p.normalize('NFD').replace(/[̀-ͯ]/g, '').trim().replace(/\s+/g, ' ').toLowerCase();
+            }
+            function fromB64(s) {
+                var bin = atob(s), out = new Uint8Array(bin.length);
+                for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+                return out;
+            }
+            function toB64(bytes) {
+                var bin = '';
+                for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+                return btoa(bin);
+            }
+            function deriveKey(password) {
+                return subtle.importKey('raw', new TextEncoder().encode(normalise(password)), 'PBKDF2', false, ['deriveBits'])
+                    .then(function (base) {
+                        return subtle.deriveBits({ name: 'PBKDF2', salt: fromB64(lock.salt), iterations: lock.iterations, hash: 'SHA-256' }, base, 256);
+                    })
+                    .then(function (bits) { return new Uint8Array(bits); });
+            }
+            function decrypt(raw) {
+                var blob = fromB64(lock.data);
+                return subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt'])
+                    .then(function (key) { return subtle.decrypt({ name: 'AES-GCM', iv: blob.slice(0, 12) }, key, blob.slice(12)); })
+                    .then(function (plain) { return new TextDecoder().decode(plain); });
+            }
+            // Swap the section's contents rather than the section itself, so the
+            // nav's scroll tracking keeps watching the same element.
+            function reveal(html) {
+                section.classList.remove('is-locked');
+                section.innerHTML = html;
+                buildPricingCards(section);
+            }
+
+            var saved = null;
+            try { saved = JSON.parse(sessionStorage.getItem(STORE) || 'null'); } catch (e) {}
+            if (saved && saved.salt === lock.salt && saved.key) {
+                decrypt(fromB64(saved.key)).then(reveal, function () {
+                    try { sessionStorage.removeItem(STORE); } catch (e) {}
+                });
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                if (!input.value) { input.focus(); return; }
+                form.classList.add('is-busy');
+                button.disabled = true;
+                error.hidden = true;
+                var raw;
+                deriveKey(input.value)
+                    .then(function (k) { raw = k; return decrypt(k); })
+                    .then(function (html) {
+                        try { sessionStorage.setItem(STORE, JSON.stringify({ salt: lock.salt, key: toB64(raw) })); } catch (e) {}
+                        reveal(html);
+                        var title = section.querySelector('.section-title');
+                        if (title) { title.setAttribute('tabindex', '-1'); title.focus({ preventScroll: true }); }
+                    })
+                    .catch(function () {
+                        form.classList.remove('is-busy');
+                        button.disabled = false;
+                        error.hidden = false;
+                        input.select();
+                        input.focus();
+                    });
+            });
+        })();
+    </script>
 </body>
 </html>

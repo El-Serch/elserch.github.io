@@ -1434,6 +1434,184 @@
             cursor: pointer;
         }
 
+        /* Contact form (Web3Forms) */
+        .contact-form,
+        .cf-done {
+            max-width: 40rem;
+            margin: 0 auto;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card-bg);
+            text-align: left;
+        }
+
+        .contact-form[hidden],
+        .cf-done[hidden] {
+            display: none;
+        }
+
+        .hp {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .cf-reason {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border: 0;
+            margin-bottom: 1.25rem;
+        }
+
+        .cf-reason legend {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cf-reason label {
+            position: relative;
+        }
+
+        .cf-reason input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .cf-reason label > span {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .cf-reason input:checked + span {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .cf-reason input:focus-visible + span {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .cf-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .cf-field {
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .cf-field > span {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .cf-field input,
+        .cf-field textarea {
+            width: 100%;
+            padding: 0.75rem 0.9rem;
+            border: 1px solid var(--text-light);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font: inherit;
+            font-size: 1rem;
+        }
+
+        .cf-field textarea {
+            resize: vertical;
+            min-height: 8rem;
+        }
+
+        .cf-field [aria-invalid="true"] {
+            border-color: var(--danger);
+        }
+
+        .cf-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem 1.25rem;
+        }
+
+        .cf-send {
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+        }
+
+        .cf-send:disabled {
+            cursor: progress;
+            opacity: 0.75;
+        }
+
+        .contact-form .when-busy,
+        .contact-form.is-busy .when-idle {
+            display: none;
+        }
+
+        .contact-form.is-busy .when-busy {
+            display: inline;
+        }
+
+        .cf-note {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .cf-error {
+            margin-top: 0.75rem;
+            color: var(--danger);
+            font-size: 0.95rem;
+        }
+
+        .cf-error a {
+            color: inherit;
+        }
+
+        .cf-done {
+            text-align: center;
+        }
+
+        .cf-done-title {
+            margin-bottom: 0.4rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .contact-or {
+            margin: 2.5rem 0 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 640px) {
+            .contact-form,
+            .cf-done {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .cf-row {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 0;
+            }
+        }
+
         /* Language: show only the active language's copy */
         html[lang="en"] [lang="es"],
         html[lang="es"] [lang="en"] {
@@ -2019,7 +2197,50 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title"><span lang="en">Let's Connect</span><span lang="es">Conectemos</span></h2>
-            
+            <p class="section-subtitle"><span lang="en">Tell me what you're hiring for or building. I reply within two business days.</span><span lang="es">Cuéntame qué puesto buscas cubrir o qué estás construyendo. Respondo en un máximo de dos días hábiles.</span></p>
+
+            <form class="contact-form" id="contactForm" novalidate>
+                <!-- Web3Forms delivers this to soy@elserch.com. The access key is
+                     public by design: it can only send mail to that address. -->
+                <input type="hidden" name="access_key" value="0293e16c-86a7-49e3-96b2-470bb3985213">
+                <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                <fieldset class="cf-reason">
+                    <legend><span lang="en">I'm writing about</span><span lang="es">Te escribo por</span></legend>
+                    <label><input type="radio" name="reason" value="Role opportunity" checked><span><span lang="en">A role</span><span lang="es">Un puesto</span></span></label>
+                    <label><input type="radio" name="reason" value="Project inquiry"><span><span lang="en">A project</span><span lang="es">Un proyecto</span></span></label>
+                    <label><input type="radio" name="reason" value="Something else"><span><span lang="en">Something else</span><span lang="es">Otra cosa</span></span></label>
+                </fieldset>
+
+                <div class="cf-row">
+                    <label class="cf-field">
+                        <span><span lang="en">Name</span><span lang="es">Nombre</span></span>
+                        <input type="text" name="name" autocomplete="name" required maxlength="120">
+                    </label>
+                    <label class="cf-field">
+                        <span><span lang="en">Email</span><span lang="es">Correo</span></span>
+                        <input type="email" name="email" autocomplete="email" required maxlength="200">
+                    </label>
+                </div>
+                <label class="cf-field">
+                    <span><span lang="en">Message</span><span lang="es">Mensaje</span></span>
+                    <textarea name="message" rows="5" required maxlength="5000"></textarea>
+                </label>
+
+                <div class="cf-actions">
+                    <button type="submit" class="btn btn-solid cf-send"><span class="when-idle"><span lang="en">Send message</span><span lang="es">Enviar mensaje</span></span><span class="when-busy"><span lang="en">Sending…</span><span lang="es">Enviando…</span></span></button>
+                    <p class="cf-note"><span lang="en">Sent through Web3Forms, and only used to reply to you.</span><span lang="es">Se envía a través de Web3Forms y solo se usa para responderte.</span></p>
+                </div>
+                <p class="cf-error" data-role="invalid" role="alert" hidden><span lang="en">Please add your name, a valid email and a message.</span><span lang="es">Agrega tu nombre, un correo válido y un mensaje.</span></p>
+                <p class="cf-error" data-role="failed" role="alert" hidden><span lang="en">That didn't go through. Please try again, or write to <a href="mailto:soy@elserch.com">soy@elserch.com</a>.</span><span lang="es">No se pudo enviar. Inténtalo de nuevo o escribe a <a href="mailto:soy@elserch.com">soy@elserch.com</a>.</span></p>
+            </form>
+            <div class="cf-done" id="contactDone" tabindex="-1" hidden>
+                <p class="cf-done-title"><span lang="en">Thanks, your message is on its way.</span><span lang="es">Gracias, tu mensaje va en camino.</span></p>
+                <p><span lang="en">I'll reply to the email you gave within two business days.</span><span lang="es">Te responderé al correo que dejaste en un máximo de dos días hábiles.</span></p>
+            </div>
+
+            <p class="contact-or"><span lang="en">Or reach me directly</span><span lang="es">O encuéntrame directamente</span></p>
+
             <div class="contact-links">
                 <a href="mailto:soy@elserch.com" class="contact-link">
                     <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -2358,6 +2579,74 @@
             var start = /^#p-/.test(location.hash) && document.getElementById(location.hash.slice(1));
             go(start && start.classList.contains('project-panel') ? start : document.getElementById('p-scotiabank'));
             if (start) start.scrollIntoView();
+        })();
+
+        /* --------------------------------------------------------- contact form
+           Posts to Web3Forms, which emails soy@elserch.com with the visitor's
+           address as reply-to. The email and copy buttons below it are the
+           fallback if this fails. */
+        (function () {
+            var form = document.getElementById('contactForm');
+            if (!form || !window.fetch) return;
+            var done = document.getElementById('contactDone');
+            var invalid = form.querySelector('[data-role="invalid"]');
+            var failed = form.querySelector('[data-role="failed"]');
+            var button = form.querySelector('.cf-send');
+
+            function check() {
+                var ok = true;
+                ['name', 'email', 'message'].forEach(function (n) {
+                    var el = form.elements[n];
+                    var v = el.value.trim();
+                    var bad = !v || (n === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+                    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+                    if (bad && ok) { el.focus(); ok = false; }
+                });
+                return ok;
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                failed.hidden = true;
+                if (!check()) { invalid.hidden = false; return; }
+                invalid.hidden = true;
+                if (form.elements.botcheck.checked) return; // a bot filled the trap
+
+                var reason = form.querySelector('input[name="reason"]:checked').value;
+                var name = form.elements.name.value.trim();
+                var email = form.elements.email.value.trim();
+                var data = {
+                    access_key: form.elements.access_key.value,
+                    subject: 'elserch.com · ' + reason + ' · ' + name,
+                    from_name: 'elserch.com',
+                    reason: reason,
+                    name: name,
+                    email: email,
+                    replyto: email,
+                    message: form.elements.message.value.trim(),
+                    language: document.documentElement.getAttribute('lang'),
+                    botcheck: false
+                };
+                form.classList.add('is-busy');
+                button.disabled = true;
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (!res || !res.success) throw new Error('rejected');
+                        form.hidden = true;
+                        done.hidden = false;
+                        done.focus();
+                    })
+                    .catch(function () { failed.hidden = false; })
+                    .then(function () {
+                        form.classList.remove('is-busy');
+                        button.disabled = false;
+                    });
+            });
         })();
 
         /* -------------------------------------------------------- copy email

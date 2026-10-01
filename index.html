@@ -1622,6 +1622,11 @@
             color: var(--danger);
         }
 
+        .cf-captcha {
+            min-height: 78px;
+            margin: 0.25rem 0 1rem;
+        }
+
         .cf-actions {
             display: flex;
             flex-wrap: wrap;
@@ -2331,6 +2336,11 @@
                     <textarea name="message" rows="5" required maxlength="5000"></textarea>
                 </label>
 
+                <!-- hCaptcha, rendered by Web3Forms' script (loaded at the end of the page).
+                     Theme and language are set from the page just before it loads. -->
+                <div class="h-captcha cf-captcha" data-captcha="true"></div>
+                <p class="cf-error" data-role="captcha" role="alert" hidden><span lang="en">Please complete the captcha.</span><span lang="es">Completa el captcha, por favor.</span></p>
+
                 <div class="cf-actions">
                     <button type="submit" class="btn btn-solid cf-send"><span class="when-idle"><span lang="en">Send message</span><span lang="es">Enviar mensaje</span></span><span class="when-busy"><span lang="en">Sending…</span><span lang="es">Enviando…</span></span></button>
                     <p class="cf-note"><span lang="en">Sent through Web3Forms, and only used to reply to you.</span><span lang="es">Se envía a través de Web3Forms y solo se usa para responderte.</span></p>
@@ -2763,6 +2773,10 @@
                 failed.hidden = true;
                 if (!check()) { invalid.hidden = false; return; }
                 invalid.hidden = true;
+                var captcha = form.querySelector('textarea[name="h-captcha-response"]');
+                var captchaError = form.querySelector('[data-role="captcha"]');
+                captchaError.hidden = true;
+                if (!captcha || !captcha.value) { captchaError.hidden = false; return; }
                 if (form.elements.botcheck.checked) return; // a bot filled the trap
 
                 var reason = form.querySelector('input[name="reason"]:checked').value;
@@ -2778,7 +2792,8 @@
                     replyto: email,
                     message: form.elements.message.value.trim(),
                     language: document.documentElement.getAttribute('lang'),
-                    botcheck: false
+                    botcheck: false,
+                    'h-captcha-response': captcha.value
                 };
                 if (!project.disabled) {
                     if (budget.value) data.budget = '$' + budget.value + ' MXN';
@@ -2798,7 +2813,11 @@
                         done.hidden = false;
                         done.focus();
                     })
-                    .catch(function () { failed.hidden = false; })
+                    .catch(function () {
+                        failed.hidden = false;
+                        // a token is single-use: ask for a fresh one
+                        try { if (window.hcaptcha) window.hcaptcha.reset(); } catch (err) {}
+                    })
                     .then(function () {
                         form.classList.remove('is-busy');
                         button.disabled = false;
@@ -2963,6 +2982,24 @@
                         });
                 });
             });
+        })();
+    </script>
+    <script>
+        // hCaptcha (Web3Forms): match the page's theme and language, then load.
+        (function () {
+            var box = document.querySelector('.h-captcha');
+            if (!box) return;
+            var root = document.documentElement;
+            var dark = root.getAttribute('data-theme') === 'dark'
+                || (!root.hasAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            box.setAttribute('data-theme', dark ? 'dark' : 'light');
+            box.setAttribute('data-lang', root.getAttribute('lang') === 'es' ? 'es' : 'en');
+            if (window.innerWidth < 380) box.setAttribute('data-size', 'compact');
+            var sc = document.createElement('script');
+            sc.src = 'https://web3forms.com/client/script.js';
+            sc.async = true;
+            sc.defer = true;
+            document.body.appendChild(sc);
         })();
     </script>
 </body>

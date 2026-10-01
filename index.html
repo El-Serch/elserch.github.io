@@ -2017,6 +2017,32 @@
             outline: none;
         }
 
+        /* Technical CTA labels (system view only). Font size 0 hides the human
+           label, text nodes included; the alt label restores the size. */
+        .sys-alt {
+            display: none;
+        }
+
+        html[data-view="system"] .has-sys-alt {
+            font-size: 0 !important;
+        }
+
+        html[data-view="system"] .has-sys-alt > :not(.sys-alt):not(.sys-tag) {
+            display: none !important;
+        }
+
+        html[data-view="system"] .has-sys-alt > .sys-alt {
+            display: inline;
+            font: 600 var(--sys-fs, 15px) / 1.3 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            font-size: calc(var(--sys-fs, 15px) * 0.92);
+            letter-spacing: -0.01em;
+        }
+
+        html[data-view="system"] .has-sys-alt > .sys-alt::before {
+            content: '$ ';
+            opacity: 0.6;
+        }
+
         /* Page map */
         .sys-map {
             display: none;
@@ -2929,6 +2955,11 @@
                 chosen = id;
                 paint();
             });
+            // The system view's page map scrolls by script; it announces where to.
+            document.addEventListener('sys:go', function (e) {
+                chosen = map[e.detail] ? e.detail : null;
+                paint();
+            });
             function release() { if (chosen) { chosen = null; paint(); } }
             window.addEventListener('wheel', release, { passive: true });
             window.addEventListener('touchmove', release, { passive: true });
@@ -3350,9 +3381,37 @@
                     });
                 });
             }
+            // In system view the calls to action say what they actually do.
+            var ALT = [
+                { sel: '.cta-buttons a[href="#portfolio"]', en: 'scroll-down to #work', es: 'scroll-down a #trabajo' },
+                { sel: '.cta-buttons a[href="#contact"]', en: 'scroll-down to #contact', es: 'scroll-down a #contacto' },
+                { sel: '[data-ask-password]', en: 'scroll-down to #contact', es: 'scroll-down a #contacto' },
+                { sel: '.panel-close', en: 'collapse(panel) → card', es: 'collapse(panel) → tarjeta' },
+                { sel: '.pricing-gate button[type="submit"]', en: 'decrypt(AES-GCM)', es: 'decrypt(AES-GCM)' },
+                { sel: '.cf-send', en: 'POST → api.web3forms.com', es: 'POST → api.web3forms.com' },
+                { sel: '.contact-link[href^="mailto:"]', en: 'mailto:soy@elserch.com', es: 'mailto:soy@elserch.com' },
+                { sel: '.copy-email', en: 'clipboard.writeText()', es: 'clipboard.writeText()' },
+                { sel: '.contact-link[href*="linkedin"]', en: 'open ↗ linkedin.com', es: 'abrir ↗ linkedin.com' },
+                { sel: '.contact-link[href*="credly"]', en: 'open ↗ credly.com', es: 'abrir ↗ credly.com' }
+            ];
+            function altAll() {
+                ALT.forEach(function (a) {
+                    [].forEach.call(document.querySelectorAll(a.sel), function (el) {
+                        if (el.querySelector(':scope > .sys-alt')) return;
+                        el.style.setProperty('--sys-fs', getComputedStyle(el).fontSize);
+                        el.classList.add('has-sys-alt');
+                        var span = document.createElement('span');
+                        span.className = 'sys-alt';
+                        span.innerHTML = pair(a.en, a.es);
+                        el.appendChild(span);
+                    });
+                });
+            }
+
             var built = false;
             function build() {
                 tagAll();
+                altAll();
                 if (built) return;
                 built = true;
 
@@ -3381,6 +3440,8 @@
                     var b = e.target.closest('[data-go]');
                     if (!b) return;
                     var go = b.getAttribute('data-go');
+                    var section = go === 'top' ? null : (/^p-/.test(go) ? 'portfolio' : go);
+                    document.dispatchEvent(new CustomEvent('sys:go', { detail: section }));
                     if (go === 'top') { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); return; }
                     var target = document.getElementById(go);
                     if (target && target.classList.contains('project-panel')) {

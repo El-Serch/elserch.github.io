@@ -2000,10 +2000,11 @@
             color: var(--accent);
             border: 1px solid var(--accent);
             font-size: 12px;
+            max-width: calc(100% - 110px); /* clear of the ↑ ↓ controls */
         }
 
         html[data-view="system"] .side-nav > .sys-tag {
-            top: 10px;
+            top: 96px;
             left: auto;
             right: calc(100% + 8px);
             transform: none;
@@ -2041,6 +2042,163 @@
         html[data-view="system"] .has-sys-alt > .sys-alt::before {
             content: '$ ';
             opacity: 0.6;
+        }
+
+        /* System view edits: controls, hidden projects, editable copy, bar */
+        .sys-ctl,
+        .sys-bar {
+            display: none;
+        }
+
+        html[data-view="system"] .sys-ctl {
+            display: flex;
+            gap: 4px;
+            position: absolute;
+            z-index: 31;
+        }
+
+        html[data-view="system"] .sys-ctl--section {
+            top: 12px;
+            right: 14px;
+        }
+
+        html[data-view="system"] .sys-ctl--card {
+            top: 8px;
+            right: 8px;
+        }
+
+        .sys-ctl button {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: 1px dashed var(--accent);
+            border-radius: 4px;
+            background: rgba(6, 26, 50, 0.9);
+            color: var(--accent);
+            font: 700 14px/1 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            cursor: pointer;
+        }
+
+        .sys-ctl button[aria-pressed="true"] {
+            border-style: solid;
+            background: var(--accent);
+            color: var(--sys-ink);
+        }
+
+        .sys-ctl button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .sys-ctl button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        html:not([data-view="system"]) .is-hidden-human {
+            display: none !important;
+        }
+
+        html[data-view="system"] .project-card.is-hidden-human > :not(.sys-ctl):not(.sys-tag) {
+            opacity: 0.35;
+        }
+
+        html[data-view="system"] .project-card.is-hidden-human {
+            outline-color: var(--danger);
+        }
+
+        html[data-view="system"] .project-card.is-hidden-human > .sys-tag {
+            background: var(--danger);
+        }
+
+        html[data-view="system"] .project-card.is-hidden-human > .sys-tag::after {
+            content: ' · hidden in human view';
+        }
+
+        html[lang="es"][data-view="system"] .project-card.is-hidden-human > .sys-tag::after {
+            content: ' · oculto en vista humana';
+        }
+
+        .sys-map li.is-off button {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        html[data-view="system"] .sys-editable[contenteditable] {
+            cursor: text;
+            caret-color: var(--accent);
+        }
+
+        html[data-view="system"] .sys-editable[contenteditable]:focus {
+            outline-style: solid;
+            background: rgba(111, 227, 255, 0.08);
+        }
+
+        html[data-view="system"] .sys-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: fixed;
+            top: 12px;
+            left: 50%;
+            z-index: 950;
+            transform: translateX(-50%);
+            max-width: calc(100vw - var(--rail) - 24px);
+            padding: 0.45rem 0.5rem 0.45rem 0.9rem;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            background: rgba(6, 26, 50, 0.96);
+            color: var(--text);
+            font: 12px/1.3 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            white-space: nowrap;
+        }
+
+        .sys-bar strong {
+            color: var(--accent);
+        }
+
+        .sys-bar-hint {
+            color: var(--text-light);
+        }
+
+        .sys-bar-count {
+            color: var(--primary);
+        }
+
+        .sys-bar-reset {
+            padding: 0.3rem 0.6rem;
+            border: 1px dashed var(--accent);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--accent);
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .sys-bar-reset:disabled {
+            opacity: 0.35;
+            cursor: default;
+        }
+
+        @media (min-width: 1280px) {
+            html[data-view="system"] .sys-bar {
+                left: calc(50% + 9.5rem - var(--rail) / 2);
+            }
+        }
+
+        @media (max-width: 860px) {
+            .sys-bar-hint {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* above the bottom nav bar, clear of the section labels */
+            html[data-view="system"] .sys-bar {
+                top: auto;
+                bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+                max-width: calc(100vw - 16px);
+            }
         }
 
         /* Page map */
@@ -2955,6 +3113,13 @@
                 chosen = id;
                 paint();
             });
+            // System view can reorder sections: keep targets in page order.
+            document.addEventListener('sys:layout', function () {
+                targets.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+                last = targets[targets.length - 1];
+                paint();
+            });
+
             // The system view's page map scrolls by script; it announces where to.
             document.addEventListener('sys:go', function (e) {
                 chosen = map[e.detail] ? e.detail : null;
@@ -3171,6 +3336,12 @@
                 }
             });
 
+            // System view edits can choose which project opens first.
+            document.addEventListener('sys:open', function (e) {
+                var p = document.getElementById(e.detail);
+                if (p && p.classList.contains('project-panel')) go(p);
+            });
+
             var start = /^#p-/.test(location.hash) && document.getElementById(location.hash.slice(1));
             go(start && start.classList.contains('project-panel') ? start : document.getElementById('p-scotiabank'));
             if (start) start.scrollIntoView();
@@ -3336,14 +3507,14 @@
             var NODES = [
                 { sel: '.side-nav', kind: 'nav', en: 'Nav · 4 anchors + language, theme, view', es: 'Nav · 4 anclas + idioma, tema, vista' },
                 { sel: '.hero', kind: 'section', en: 'Section · Hero — positioning', es: 'Sección · Hero — posicionamiento' },
-                { sel: '.hero-title', kind: 'part', en: 'H1 · Value proposition', es: 'H1 · Propuesta de valor' },
-                { sel: '.hero-call', kind: 'part', en: 'Claim · when to call me', es: 'Claim · cuándo llamarme' },
+                { sel: '.hero-title', kind: 'part', en: 'H1 · Value proposition — click to edit', es: 'H1 · Propuesta de valor — clic para editar' },
+                { sel: '.hero-call', kind: 'part', en: 'Claim · when to call me — click to edit', es: 'Claim · cuándo llamarme — clic para editar' },
                 { sel: '.cta-buttons', kind: 'part', en: 'CTA ×2 → Work · Contact', es: 'CTA ×2 → Trabajo · Contacto' },
                 { sel: '#about', kind: 'section', en: 'Section · About', es: 'Sección · Sobre mí' },
                 { sel: '.about-text', kind: 'part', en: 'Bio · 2 paragraphs', es: 'Bio · 2 párrafos' },
                 { sel: '.stats', kind: 'part', en: 'Proof · 3 figures', es: 'Prueba · 3 cifras' },
                 { sel: '.credentials', kind: 'part', en: 'Credentials · experience, certs, publications', es: 'Credenciales · experiencia, certificaciones, publicaciones' },
-                { sel: '#portfolio', kind: 'section', en: 'Section · Work — 5 projects, one open at a time', es: 'Sección · Trabajo — 5 proyectos, uno abierto a la vez' },
+                { sel: '#portfolio', kind: 'section', en: 'Section · Work — projects, one open at a time', es: 'Sección · Trabajo — proyectos, uno abierto a la vez' },
                 { sel: '.project-card:not(.is-locked)', kind: 'part', en: 'Card → opens its panel', es: 'Tarjeta → abre su panel' },
                 { sel: '.project-card.is-locked', kind: 'part', en: 'Card · NDA → teaser + password', es: 'Tarjeta · NDA → adelanto + contraseña' },
                 { sel: '.project-panel', kind: 'part', en: 'Panel · expanded project, replaces its card', es: 'Panel · proyecto abierto, reemplaza su tarjeta' },
@@ -3419,22 +3590,35 @@
                 var map = document.createElement('aside');
                 map.className = 'sys-map';
                 map.setAttribute('aria-label', 'Page map');
-                var cards = [].slice.call(document.querySelectorAll('.project-card[data-project]'));
-                var projects = cards.map(function (c) {
-                    var locked = c.classList.contains('is-locked');
-                    var name = c.querySelector('.project-title').innerHTML;
-                    return '<li><button type="button" data-go="' + c.getAttribute('data-project') + '">' + name + (locked ? ' <i>🔒</i>' : '') + '</button></li>';
-                }).join('');
-                map.innerHTML =
-                    '<p class="sys-map-title">' + pair('Page map', 'Mapa de la página') + ' <span>elserch.com /</span></p>' +
-                    '<ol>' +
-                    '<li><button type="button" data-go="top">Hero</button><small>' + pair('positioning → Work, Contact', 'posicionamiento → Trabajo, Contacto') + '</small></li>' +
-                    '<li><button type="button" data-go="about">' + pair('About', 'Sobre mí') + '</button><small>' + pair('bio · 3 figures · credentials', 'bio · 3 cifras · credenciales') + '</small></li>' +
-                    '<li><button type="button" data-go="portfolio">' + pair('Work', 'Trabajo') + '</button><small>' + pair('5 projects · 1 open at a time', '5 proyectos · 1 abierto a la vez') + '</small><ol>' + projects + '</ol></li>' +
-                    '<li><button type="button" data-go="pricing">' + pair('Pricing', 'Precios') + ' <i>🔒</i></button><small>' + pair('3 tiers · teaser until unlocked', '3 niveles · adelanto hasta desbloquear') + '</small></li>' +
-                    '<li><button type="button" data-go="contact">' + pair('Contact', 'Contacto') + '</button><small>' + pair('form → Web3Forms → email', 'formulario → Web3Forms → correo') + '</small></li>' +
-                    '</ol>' +
-                    '<p class="sys-map-key">🔑 ' + pair('One password opens pricing and both NDA projects.', 'Una contraseña abre precios y ambos proyectos NDA.') + '</p>';
+                var SECTION_ROWS = {
+                    about: function () { return '<li><button type="button" data-go="about">' + pair('About', 'Sobre mí') + '</button><small>' + pair('bio · 3 figures · credentials', 'bio · 3 cifras · credenciales') + '</small></li>'; },
+                    portfolio: function () {
+                        var cards = [].slice.call(document.querySelectorAll('.project-card[data-project]'));
+                        var shown = cards.filter(function (c) { return !c.classList.contains('is-hidden-human'); }).length;
+                        var projects = cards.map(function (c) {
+                            var locked = c.classList.contains('is-locked');
+                            var hidden = c.classList.contains('is-hidden-human');
+                            var first = c.classList.contains('is-default-open');
+                            var name = c.querySelector('.project-title').innerHTML;
+                            return '<li' + (hidden ? ' class="is-off"' : '') + '><button type="button" data-go="' + c.getAttribute('data-project') + '">' + name + (locked ? ' <i>🔒</i>' : '') + (first ? ' <i>★</i>' : '') + '</button></li>';
+                        }).join('');
+                        return '<li><button type="button" data-go="portfolio">' + pair('Work', 'Trabajo') + '</button><small>' + pair(shown + ' projects · 1 open at a time', shown + ' proyectos · 1 abierto a la vez') + '</small><ol>' + projects + '</ol></li>';
+                    },
+                    pricing: function () { return '<li><button type="button" data-go="pricing">' + pair('Pricing', 'Precios') + ' <i>🔒</i></button><small>' + pair('3 tiers · teaser until unlocked', '3 niveles · adelanto hasta desbloquear') + '</small></li>'; },
+                    contact: function () { return '<li><button type="button" data-go="contact">' + pair('Contact', 'Contacto') + '</button><small>' + pair('form → Web3Forms → email', 'formulario → Web3Forms → correo') + '</small></li>'; }
+                };
+                function renderMap() {
+                    var order = [].slice.call(document.querySelectorAll('#about, #portfolio, #pricing, #contact')).map(function (el) { return el.id; });
+                    map.innerHTML =
+                        '<p class="sys-map-title">' + pair('Page map', 'Mapa de la página') + ' <span>elserch.com /</span></p>' +
+                        '<ol>' +
+                        '<li><button type="button" data-go="top">Hero</button><small>' + pair('positioning → Work, Contact', 'posicionamiento → Trabajo, Contacto') + '</small></li>' +
+                        order.map(function (id) { return SECTION_ROWS[id](); }).join('') +
+                        '</ol>' +
+                        '<p class="sys-map-key">🔑 ' + pair('One password opens pricing and both NDA projects.', 'Una contraseña abre precios y ambos proyectos NDA.') + '</p>';
+                }
+                renderMap();
+                document.addEventListener('sys:layout', renderMap);
                 document.body.appendChild(map);
                 map.addEventListener('click', function (e) {
                     var b = e.target.closest('[data-go]');
@@ -3481,6 +3665,250 @@
             });
 
             try { if (new URLSearchParams(location.search).get('view') === 'system') apply(true); } catch (e) {}
+        })();
+
+        /* ------------------------------------------------- system view: edits
+           What you change in system view changes the human view: section
+           order, project order, which projects show, which one opens first, and
+           the hero copy. Kept for this browser tab only; Reset puts it back. */
+        (function () {
+            var root = document.documentElement;
+            var KEY = 'elserch-layout';
+            var SECTIONS = ['about', 'portfolio', 'pricing', 'contact'];
+            var grid = document.querySelector('.projects-grid');
+            var hero = document.querySelector('.hero');
+            if (!grid || !hero) return;
+
+            function pair(en, es) {
+                return '<span lang="en">' + en + '</span><span lang="es">' + es + '</span>';
+            }
+            function cards() { return [].slice.call(grid.querySelectorAll('.project-card[data-project]')); }
+            function lang() { return root.getAttribute('lang') === 'es' ? 'es' : 'en'; }
+
+            // ---- the original page, to count changes against
+            var ORIGINAL = {
+                sections: SECTIONS.slice(),
+                projects: cards().map(function (c) { return c.getAttribute('data-project'); }),
+                open: 'p-scotiabank'
+            };
+            var COPY = {};
+            [['title', '.hero-title'], ['call', '.hero-call']].forEach(function (k) {
+                ['en', 'es'].forEach(function (l) {
+                    var el = document.querySelector(k[1] + ' > [lang="' + l + '"]');
+                    if (el) COPY[k[0] + '-' + l] = { el: el, text: el.textContent };
+                });
+            });
+
+            var state = null;
+            try { state = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) {}
+            if (!state || typeof state !== 'object') state = {};
+            state.sections = (state.sections || ORIGINAL.sections).filter(function (id) { return SECTIONS.indexOf(id) > -1; });
+            SECTIONS.forEach(function (id) { if (state.sections.indexOf(id) < 0) state.sections.push(id); });
+            state.projects = (state.projects || ORIGINAL.projects).filter(function (id) { return ORIGINAL.projects.indexOf(id) > -1; });
+            ORIGINAL.projects.forEach(function (id) { if (state.projects.indexOf(id) < 0) state.projects.push(id); });
+            state.hidden = (state.hidden || []).filter(function (id) { return ORIGINAL.projects.indexOf(id) > -1; });
+            state.open = state.open && ORIGINAL.projects.indexOf(state.open) > -1 ? state.open : ORIGINAL.open;
+            state.copy = state.copy || {};
+
+            function save() {
+                try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+            }
+            function changes() {
+                var n = 0;
+                if (state.sections.join() !== ORIGINAL.sections.join()) n++;
+                if (state.projects.join() !== ORIGINAL.projects.join()) n++;
+                n += state.hidden.length;
+                if (state.open !== ORIGINAL.open) n++;
+                Object.keys(state.copy).forEach(function (k) {
+                    if (COPY[k] && state.copy[k] !== COPY[k].text) n++;
+                });
+                return n;
+            }
+
+            // ---- apply the state to the page
+            function apply() {
+                // sections, after the hero, and the nav links in the same order
+                var after = hero;
+                var navList = document.querySelector('.nav-links');
+                state.sections.forEach(function (id) {
+                    var sec = document.getElementById(id);
+                    if (!sec) return;
+                    after.parentNode.insertBefore(sec, after.nextSibling);
+                    after = sec;
+                    var link = navList && navList.querySelector('a[href="#' + id + '"]');
+                    if (link) navList.appendChild(link.parentNode);
+                });
+                // projects: each card travels with its panel
+                state.projects.forEach(function (id) {
+                    var card = grid.querySelector('[data-project="' + id + '"]');
+                    var panel = document.getElementById(id);
+                    if (!card) return;
+                    grid.appendChild(card);
+                    if (panel) grid.appendChild(panel);
+                    var hidden = state.hidden.indexOf(id) > -1;
+                    card.classList.toggle('is-hidden-human', hidden);
+                    if (panel) panel.classList.toggle('is-hidden-human', hidden);
+                    card.classList.toggle('is-default-open', state.open === id);
+                });
+                // hero copy
+                Object.keys(state.copy).forEach(function (k) {
+                    if (COPY[k] && COPY[k].el.textContent !== state.copy[k]) COPY[k].el.textContent = state.copy[k];
+                });
+                // an open project that is now hidden closes (in the human view)
+                if (root.getAttribute('data-view') !== 'system') closeHiddenOpen();
+                updateControls();
+                document.dispatchEvent(new CustomEvent('sys:layout'));
+            }
+
+            function closeHiddenOpen() {
+                var open = grid.querySelector('.project-panel:not([hidden]).is-hidden-human');
+                if (!open) return;
+                var close = open.querySelector('[data-close]');
+                if (close) close.click();
+            }
+
+            // ---- controls (visible in system view only)
+            function ctl(action, label, glyph) {
+                return '<button type="button" data-sys-act="' + action + '" title="' + label + '" aria-label="' + label + '">' + glyph + '</button>';
+            }
+            SECTIONS.forEach(function (id) {
+                var sec = document.getElementById(id);
+                if (!sec) return;
+                var box = document.createElement('div');
+                box.className = 'sys-ctl sys-ctl--section';
+                box.setAttribute('data-sys-for', id);
+                box.innerHTML = ctl('up', 'Move section up', '↑') + ctl('down', 'Move section down', '↓');
+                sec.appendChild(box);
+            });
+            cards().forEach(function (card) {
+                var box = document.createElement('div');
+                box.className = 'sys-ctl sys-ctl--card';
+                box.setAttribute('data-sys-for', card.getAttribute('data-project'));
+                box.innerHTML = ctl('left', 'Move project earlier', '←') + ctl('right', 'Move project later', '→') +
+                    ctl('star', 'Open this project first', '★') + ctl('hide', 'Hide or show in the human view', '◐');
+                card.appendChild(box);
+            });
+
+            function move(list, id, step) {
+                var i = list.indexOf(id), j = i + step;
+                if (i < 0 || j < 0 || j >= list.length) return false;
+                list.splice(i, 1);
+                list.splice(j, 0, id);
+                return true;
+            }
+
+            document.addEventListener('click', function (e) {
+                var b = e.target.closest && e.target.closest('[data-sys-act]');
+                if (!b) return;
+                e.preventDefault();
+                e.stopPropagation();
+                var id = b.parentNode.getAttribute('data-sys-for');
+                var act = b.getAttribute('data-sys-act');
+                if (act === 'up' || act === 'down') move(state.sections, id, act === 'up' ? -1 : 1);
+                if (act === 'left' || act === 'right') move(state.projects, id, act === 'left' ? -1 : 1);
+                if (act === 'star') {
+                    state.open = id;
+                    var i = state.hidden.indexOf(id);
+                    if (i > -1) state.hidden.splice(i, 1);
+                    document.dispatchEvent(new CustomEvent('sys:open', { detail: id }));
+                }
+                if (act === 'hide') {
+                    var k = state.hidden.indexOf(id);
+                    if (k > -1) state.hidden.splice(k, 1);
+                    else if (state.hidden.length < ORIGINAL.projects.length - 1) {
+                        state.hidden.push(id);
+                        if (state.open === id) {
+                            state.open = state.projects.filter(function (p) { return state.hidden.indexOf(p) < 0; })[0];
+                        }
+                    }
+                }
+                save();
+                apply();
+                b.focus({ preventScroll: true });
+            }, true);
+
+            function updateControls() {
+                [].forEach.call(document.querySelectorAll('.sys-ctl--section'), function (box) {
+                    var i = state.sections.indexOf(box.getAttribute('data-sys-for'));
+                    box.querySelector('[data-sys-act="up"]').disabled = i === 0;
+                    box.querySelector('[data-sys-act="down"]').disabled = i === state.sections.length - 1;
+                });
+                [].forEach.call(document.querySelectorAll('.sys-ctl--card'), function (box) {
+                    var id = box.getAttribute('data-sys-for');
+                    var i = state.projects.indexOf(id);
+                    box.querySelector('[data-sys-act="left"]').disabled = i === 0;
+                    box.querySelector('[data-sys-act="right"]').disabled = i === state.projects.length - 1;
+                    var star = box.querySelector('[data-sys-act="star"]');
+                    star.setAttribute('aria-pressed', state.open === id ? 'true' : 'false');
+                    box.querySelector('[data-sys-act="hide"]').setAttribute('aria-pressed', state.hidden.indexOf(id) > -1 ? 'true' : 'false');
+                });
+                var n = changes();
+                var count = document.querySelector('.sys-bar-count');
+                if (count) count.innerHTML = n === 1 ? pair('1 change', '1 cambio') : pair(n + ' changes', n + ' cambios');
+                var reset = document.querySelector('.sys-bar-reset');
+                if (reset) reset.disabled = n === 0;
+            }
+
+            // ---- hero copy, editable in place
+            Object.keys(COPY).forEach(function (k) {
+                var el = COPY[k].el;
+                el.classList.add('sys-editable');
+                el.setAttribute('spellcheck', 'false');
+                el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+                    if (e.key === 'Escape') { el.textContent = state.copy[k] || COPY[k].text; el.blur(); }
+                });
+                el.addEventListener('paste', function (e) {
+                    e.preventDefault();
+                    var text = (e.clipboardData || window.clipboardData).getData('text').replace(/\s+/g, ' ');
+                    document.execCommand('insertText', false, text);
+                });
+                el.addEventListener('blur', function () {
+                    var text = el.textContent.replace(/\s+/g, ' ').trim().slice(0, 160);
+                    if (!text) text = COPY[k].text; // never leave the hero empty
+                    el.textContent = text;
+                    if (text === COPY[k].text) delete state.copy[k]; else state.copy[k] = text;
+                    save();
+                    updateControls();
+                });
+            });
+            function editable(on) {
+                Object.keys(COPY).forEach(function (k) {
+                    if (on) COPY[k].el.setAttribute('contenteditable', 'true');
+                    else COPY[k].el.removeAttribute('contenteditable');
+                });
+            }
+
+            // ---- the bar: what this mode does, how many changes, reset
+            var bar = document.createElement('div');
+            bar.className = 'sys-bar';
+            bar.setAttribute('role', 'status');
+            bar.innerHTML = '<strong>' + pair('System view', 'Vista de sistema') + '</strong>' +
+                '<span class="sys-bar-hint">' + pair('Edits here change the human view', 'Lo que cambies aquí cambia la vista humana') + '</span>' +
+                '<span class="sys-bar-count"></span>' +
+                '<button type="button" class="sys-bar-reset">' + pair('Reset', 'Restablecer') + '</button>';
+            document.body.appendChild(bar);
+            bar.querySelector('.sys-bar-reset').addEventListener('click', function () {
+                try { sessionStorage.removeItem(KEY); } catch (e) {}
+                location.reload();
+            });
+
+            // follow the view switch
+            function onView() {
+                var on = root.getAttribute('data-view') === 'system';
+                editable(on);
+                if (!on) closeHiddenOpen();
+            }
+            new MutationObserver(onView).observe(root, { attributes: true, attributeFilter: ['data-view'] });
+
+            apply();
+            onView();
+            // the first project to open, if it isn't Scotiabank or it was hidden
+            var openNow = grid.querySelector('.project-panel:not([hidden])');
+            var want = document.getElementById(state.open);
+            if (!/^#p-/.test(location.hash) && want && openNow !== want && state.hidden.indexOf(state.open) < 0) {
+                document.dispatchEvent(new CustomEvent('sys:open', { detail: state.open }));
+            }
         })();
 
         /* -------------------------------------------------------- copy email

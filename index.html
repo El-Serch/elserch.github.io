@@ -1699,6 +1699,59 @@
             }
         }
 
+        /* Credentials strip inside About */
+        .credentials {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2rem;
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .cred h3 {
+            margin-bottom: 0.6rem;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .cred p,
+        .cred li {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            line-height: 1.55;
+        }
+
+        .cred p + p {
+            margin-top: 0.3rem;
+        }
+
+        .cred strong {
+            color: var(--primary);
+        }
+
+        .cred ul {
+            list-style: none;
+        }
+
+        .cred li + li {
+            margin-top: 0.3rem;
+        }
+
+        .cred-year {
+            color: var(--text-light);
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 760px) {
+            .credentials {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
         /* Language: show only the active language's copy */
         html[lang="en"] [lang="es"],
         html[lang="es"] [lang="en"] {
@@ -1956,7 +2009,6 @@
         <ul class="nav-links">
             <li><a href="#about"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span class="nav-label"><span lang="en">About</span><span lang="es">Sobre mí</span></span></a></li>
             <li><a href="#portfolio"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg><span class="nav-label"><span lang="en">Portfolio</span><span lang="es">Portafolio</span></span></a></li>
-            <li><a href="#experience"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8c0 1.1-.9 2-2 2-.18 0-.35-.02-.51-.07l-3.56 3.55c.05.16.07.34.07.52 0 1.1-.9 2-2 2s-2-.9-2-2c0-.18.02-.36.07-.52l-2.55-2.55c-.16.05-.34.07-.52.07s-.36-.02-.52-.07l-4.55 4.56c.05.16.07.33.07.51 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.18 0 .35.02.51.07l4.56-4.55C8.02 9.36 8 9.18 8 9c0-1.1.9-2 2-2s2 .9 2 2c0 .18-.02.36-.07.52l2.55 2.55c.16-.05.34-.07.52-.07s.36.02.52.07l3.55-3.56C19.02 8.35 19 8.18 19 8c0-1.1.9-2 2-2s2 .9 2 2z"/></svg><span class="nav-label"><span lang="en">Experience</span><span lang="es">Experiencia</span></span></a></li>
             <li><a href="#pricing"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg><span class="nav-label"><span lang="en">Pricing</span><span lang="es">Precios</span></span></a></li>
             <li><a href="#contact"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><span class="nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></span></a></li>
         </ul>
@@ -2012,20 +2064,27 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section class="skills">
-        <div class="container">
-            <h2 class="section-title"><span lang="en">Core Skills</span><span lang="es">Habilidades clave</span></h2>
-            <div class="skills-grid">
-                <div class="skill-tag"><span lang="en">Service Design</span><span lang="es">Diseño de servicios</span></div>
-                <div class="skill-tag"><span lang="en">Enterprise UX</span><span lang="es">UX empresarial</span></div>
-                <div class="skill-tag"><span lang="en">User Research</span><span lang="es">Investigación de usuarios</span></div>
-                <div class="skill-tag"><span lang="en">Design Systems</span><span lang="es">Sistemas de diseño</span></div>
-                <div class="skill-tag"><span lang="en">Conversational &amp; AI Design</span><span lang="es">Diseño conversacional e IA</span></div>
-                <div class="skill-tag"><span lang="en">Workshop Facilitation</span><span lang="es">Facilitación de talleres</span></div>
+            <div class="credentials">
+                <div class="cred">
+                    <h3><span lang="en">Experience</span><span lang="es">Experiencia</span></h3>
+                    <p><strong><span lang="en">IBM Mexico</span><span lang="es">IBM México</span></strong> · <span lang="en">Sep 2017 – present</span><span lang="es">sep 2017 – actualidad</span></p>
+                    <p><span lang="en">Product &amp; service design for banking, healthcare and government platforms.</span><span lang="es">Diseño de producto y servicios para plataformas de banca, salud y gobierno.</span></p>
+                </div>
+                <div class="cred">
+                    <h3><span lang="en">Certifications</span><span lang="es">Certificaciones</span></h3>
+                    <ul>
+                        <li>IBM Enterprise Design Thinking Advocate</li>
+                        <li>IBM Cognitive Delivery</li>
+                        <li>Scrum Master with UX (Scrum.org)</li>
+                    </ul>
+                </div>
+                <div class="cred">
+                    <h3><span lang="en">Publications</span><span lang="es">Publicaciones</span></h3>
+                    <ul>
+                        <li>Facial De-Identification Method <span class="cred-year">2023</span></li>
+                        <li>Superposition of Images in Privacy Systems <span class="cred-year">2022</span></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -2176,61 +2235,6 @@
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
                     <div class="panel-body"><p class="panel-kicker">Walmart LATAM · 2019</p><h3 class="panel-title" id="p-walmart-title" tabindex="-1"><span lang="en">One HR change, three countries.</span><span lang="es">Un cambio de RR. HH., tres países.</span></h3><p class="panel-lede"><span lang="en">Discovery and service design for an HR transformation across Mexico, Brazil and Argentina.</span><span lang="es">Discovery y diseño de servicios para una transformación de RR. HH. en México, Brasil y Argentina.</span></p><dl class="panel-meta"><div><dt><span lang="en">Team</span><span lang="es">Equipo</span></dt><dd><span lang="en">Six designers</span><span lang="es">Seis diseñadores</span></dd></div><div><dt><span lang="en">Scope</span><span lang="es">Alcance</span></dt><dd><span lang="en">Discovery and design</span><span lang="es">Discovery y diseño</span></dd></div></dl><figure class="panel-flow"><ol style="--cols: 3"><li><h4><span lang="en">Countries</span><span lang="es">Países</span><span class="flow-count">3</span></h4><ul><li><span lang="en">Mexico</span><span lang="es">México</span></li><li><span lang="en">Brazil</span><span lang="es">Brasil</span></li><li>Argentina</li></ul></li><li><h4>Discovery</h4><ul><li><span lang="en">Collaborative mapping in Mural</span><span lang="es">Mapeo colaborativo en Mural</span></li></ul></li><li><h4><span lang="en">Design</span><span lang="es">Diseño</span></h4><ul><li><span lang="en">Service design</span><span lang="es">Diseño de servicios</span></li><li><span lang="en">Deliverables in InDesign</span><span lang="es">Entregables en InDesign</span></li></ul></li></ol></figure></div>
                 </section>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title"><span lang="en">Experience & Credentials</span><span lang="es">Experiencia y credenciales</span></h2>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3 class="timeline-title"><span lang="en">IBM Mexico</span><span lang="es">IBM México</span></h3>
-                        <div class="timeline-period"><span lang="en">September 2017 – Present</span><span lang="es">Septiembre de 2017 – actualidad</span></div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li><span lang="en">Design end-to-end enterprise experiences for banking, healthcare, and government platforms</span><span lang="es">Diseño experiencias empresariales de principio a fin para plataformas de banca, salud y gobierno</span></li>
-                                <li><span lang="en">Lead user research, service blueprints, and product definition across multidisciplinary teams</span><span lang="es">Lidero investigación de usuarios, service blueprints y definición de producto con equipos multidisciplinarios</span></li>
-                                <li><span lang="en">Specialize in AI-driven and conversational interfaces for complex business processes</span><span lang="es">Me especializo en interfaces conversacionales e impulsadas por IA para procesos de negocio complejos</span></li>
-                                <li><span lang="en">Balance UX strategy with technical and regulatory constraints</span><span lang="es">Equilibro la estrategia de UX con restricciones técnicas y regulatorias</span></li>
-                                <li><span lang="en">Facilitate Enterprise Design Thinking workshops and design sprints</span><span lang="es">Facilito talleres de Enterprise Design Thinking y design sprints</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3 class="timeline-title"><span lang="en">Certifications</span><span lang="es">Certificaciones</span></h3>
-                        <div class="timeline-description">
-                            <ul>
-                                <li>IBM Enterprise Design Thinking Advocate</li>
-                                <li>IBM Cognitive Delivery</li>
-                                <li>Scrum Master with UX (Scrum.org)</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3 class="timeline-title"><span lang="en">Publications</span><span lang="es">Publicaciones</span></h3>
-                        <div class="timeline-description">
-                            <ul>
-                                <li>Facial De-Identification Method (2023)</li>
-                                <li>Superposition of Images in Privacy Systems (2022)</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </div>
     </section>

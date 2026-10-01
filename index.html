@@ -2508,6 +2508,120 @@
             }
         }
 
+        /* drag handles on the nav anchors (system view only) */
+        .sys-drag {
+            display: none;
+        }
+
+        html[data-view="system"] .nav-links li {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            touch-action: none;
+        }
+
+        html[data-view="system"] .side-nav .nav-links li {
+            flex-direction: column;
+        }
+
+        html[data-view="system"] .sys-drag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 22px;
+            padding: 0;
+            border: 1px dashed var(--k-serch);
+            border-radius: 4px;
+            background: rgba(6, 26, 50, 0.9);
+            color: var(--k-serch);
+            font: 700 15px/1 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            cursor: grab;
+            touch-action: none;
+            writing-mode: horizontal-tb;
+        }
+
+        html[data-view="system"] .sys-drag:focus-visible {
+            outline: 2px solid var(--k-serch);
+            outline-offset: 2px;
+        }
+
+        html[data-view="system"] .nav-links li.is-dragging {
+            position: relative;
+            z-index: 5;
+            opacity: 0.9;
+        }
+
+        html[data-view="system"] .nav-links li.is-dragging .sys-drag {
+            cursor: grabbing;
+            background: var(--k-serch);
+            color: #2a0a1c;
+        }
+
+        @media (max-width: 768px) {
+            html[data-view="system"] .side-nav .nav-links li {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            html[data-view="system"] .sys-drag {
+                width: 30px;
+                height: 16px;
+                font-size: 12px;
+            }
+        }
+
+        /* a rejected edit shakes, and a toast explains */
+        @keyframes sys-shake {
+            0%, 100% { transform: none; }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        .sys-nope {
+            display: inline-block;
+            animation: sys-shake 0.4s ease-in-out;
+        }
+
+        .sys-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            z-index: 1000;
+            max-width: min(30rem, calc(100vw - 32px));
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--k-serch, #e456ad);
+            border-radius: 6px;
+            background: rgba(6, 26, 50, 0.97);
+            color: #eaf4ff;
+            font: 13px/1.45 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 12px);
+            transition: opacity 0.25s, transform 0.25s;
+        }
+
+        .sys-toast strong {
+            color: var(--k-serch, #e456ad);
+        }
+
+        .sys-toast.is-on {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 768px) {
+            .sys-toast {
+                bottom: calc(8.5rem + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sys-nope {
+                animation: none;
+            }
+        }
+
         /* Page map */
         .sys-map {
             display: none;
@@ -4127,6 +4241,97 @@
                 b.focus({ preventScroll: true });
             }, true);
 
+
+            // ---- drag the nav anchors to reorder the sections
+            var navList = document.querySelector('.nav-links');
+            if (navList) {
+                [].forEach.call(navList.querySelectorAll('a[href^="#"]'), function (a) {
+                    var id = a.getAttribute('href').slice(1);
+                    if (SECTIONS.indexOf(id) < 0) return;
+                    var h = document.createElement('button');
+                    h.type = 'button';
+                    h.className = 'sys-drag';
+                    h.setAttribute('data-sys-drag', id);
+                    h.setAttribute('aria-label', 'Drag to reorder (arrow keys work too)');
+                    h.innerHTML = '<span aria-hidden="true">≡</span>';
+                    a.parentNode.insertBefore(h, a);
+                });
+
+                var drag = null;
+                function vertical() { return getComputedStyle(navList).flexDirection.indexOf('column') === 0; }
+                function itemFor(id) { return navList.querySelector('[data-sys-drag="' + id + '"]').parentNode; }
+                function commit(order) {
+                    if (order.join() === state.sections.join()) return;
+                    state.sections = order;
+                    state.count++;
+                    save();
+                    apply();
+                }
+                function liveOrder() {
+                    return [].map.call(navList.querySelectorAll('[data-sys-drag]'), function (b) { return b.getAttribute('data-sys-drag'); });
+                }
+
+                navList.addEventListener('pointerdown', function (e) {
+                    var h = e.target.closest('.sys-drag');
+                    if (!h || root.getAttribute('data-view') !== 'system') return;
+                    e.preventDefault();
+                    var li = h.parentNode;
+                    var r = li.getBoundingClientRect();
+                    drag = { li: li, id: h.getAttribute('data-sys-drag'), v: vertical(), grab: vertical() ? e.clientY - r.top : e.clientX - r.left };
+                    li.classList.add('is-dragging');
+                    // Listen on the window: moving the item in the DOM would drop
+                    // a pointer capture, and the release can land anywhere.
+                    window.addEventListener('pointermove', onMove);
+                    window.addEventListener('pointerup', end);
+                    window.addEventListener('pointercancel', end);
+                });
+                function onMove(e) {
+                    if (!drag) return;
+                    var pos = drag.v ? e.clientY : e.clientX;
+                    var items = [].slice.call(navList.children);
+                    // live reorder: pass the middle of a neighbour and you swap with it
+                    items.forEach(function (other) {
+                        if (other === drag.li) return;
+                        var o = other.getBoundingClientRect();
+                        var mid = drag.v ? o.top + o.height / 2 : o.left + o.width / 2;
+                        var before = drag.li.compareDocumentPosition(other) & 2; // other is before the dragged one
+                        if (before && pos < mid) navList.insertBefore(drag.li, other);
+                        else if (!before && pos > mid) navList.insertBefore(drag.li, other.nextSibling);
+                    });
+                    drag.li.style.transform = '';
+                    var n = drag.li.getBoundingClientRect();
+                    var off = pos - drag.grab - (drag.v ? n.top : n.left);
+                    drag.li.style.transform = drag.v ? 'translateY(' + off + 'px)' : 'translateX(' + off + 'px)';
+                }
+                function end() {
+                    window.removeEventListener('pointermove', onMove);
+                    window.removeEventListener('pointerup', end);
+                    window.removeEventListener('pointercancel', end);
+                    if (!drag) return;
+                    drag.li.classList.remove('is-dragging');
+                    drag.li.style.transform = '';
+                    var id = drag.id;
+                    drag = null;
+                    commit(liveOrder());
+                    var hb = navList.querySelector('[data-sys-drag="' + id + '"]');
+                    if (hb) hb.focus({ preventScroll: true });
+                }
+                navList.addEventListener('keydown', function (e) {
+                    var h = e.target.closest && e.target.closest('.sys-drag');
+                    if (!h) return;
+                    var step = { ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1 }[e.key];
+                    if (!step) return;
+                    e.preventDefault();
+                    var order = state.sections.slice();
+                    if (move(order, h.getAttribute('data-sys-drag'), step)) commit(order);
+                    var again = navList.querySelector('[data-sys-drag="' + h.getAttribute('data-sys-drag') + '"]');
+                    if (again) again.focus({ preventScroll: true });
+                });
+                navList.addEventListener('click', function (e) {
+                    if (e.target.closest('.sys-drag')) e.preventDefault();
+                });
+            }
+
             function updateControls() {
                 [].forEach.call(document.querySelectorAll('.sys-ctl--section'), function (box) {
                     var i = state.sections.indexOf(box.getAttribute('data-sys-for'));
@@ -4149,6 +4354,54 @@
                 if (reset) reset.disabled = n === 0;
             }
 
+
+            // ---- keep the pitch printable: a small word filter for EN/ES.
+            // Whole words after folding accents, l33t speak and stretched
+            // letters ("fuuuck"), plus stems for verb forms. Not a moderation
+            // service: it's a first line that turns vandalism into a joke.
+            var BAD = (function () {
+                try { var d = JSON.parse(atob('eyJ3IjogWyJmdWNrIiwgImZ1Y2tlciIsICJmdWNraW5nIiwgImZ1Y2tlZCIsICJtb3RoZXJmdWNrZXIiLCAic2hpdCIsICJzaGl0dHkiLCAiYnVsbHNoaXQiLCAiYml0Y2giLCAiYml0Y2hlcyIsICJjdW50IiwgImRpY2siLCAiZGlja2hlYWQiLCAiY29jayIsICJwdXNzeSIsICJhc3Nob2xlIiwgImFzcyIsICJhcnNlIiwgImJhc3RhcmQiLCAic2x1dCIsICJ3aG9yZSIsICJmYWciLCAiZmFnZ290IiwgIm5pZ2dlciIsICJuaWdnYSIsICJyZXRhcmQiLCAicmV0YXJkZWQiLCAid2Fua2VyIiwgInR3YXQiLCAicG9ybiIsICJwb3JubyIsICJwaXNzIiwgImRvdWNoZSIsICJqZXJrb2ZmIiwgImRpbGRvIiwgInJhcGUiLCAicmFwaXN0IiwgIm5hemkiLCAia2lrZSIsICJzcGljIiwgImNoaW5rIiwgInRyYW5ueSIsICJwdXRhIiwgInB1dG8iLCAicHV0YXMiLCAicHV0b3MiLCAicGVuZGVqbyIsICJwZW5kZWphIiwgInBlbmRlam9zIiwgInBlbmRlamFkYSIsICJ2ZXJnYSIsICJ2ZXJnYXMiLCAiY3VsZXJvIiwgImN1bGVyYSIsICJjdWxlcm9zIiwgIm1hbWFkYSIsICJtYW1hZGFzIiwgIm1hbW9uIiwgIm1hbW9uYSIsICJqb3RvIiwgImpvdG9zIiwgIm1hcmljb24iLCAibWFyaWNhIiwgImNhYnJvbiIsICJjYWJyb25hIiwgImNhYnJvbmVzIiwgInBpbmNoZSIsICJwaW5jaGVzIiwgIm1pZXJkYSIsICJjb25vIiwgIm9qZXRlIiwgImN1bG8iLCAiem9ycmEiLCAicGVycmEiLCAibmFjbyIsICJuYWNhIiwgIm1hbXBvIiwgInBhbm9jaGEiLCAicGl0byIsICJjaGljaGlzIiwgIm5hbGdhcyIsICJwdXRhem8iLCAicHV0aXphIiwgImhkcCIsICJwdG0iLCAiYWx2IiwgInZyZyIsICJtZHIiLCAic3RmdSIsICJ3dGYiLCAiZmNrIiwgImZ1ayIsICJzaHQiXSwgInMiOiBbImZ1Y2siLCAiY2hpbmdhZCIsICJjaGluZ2FzIiwgImNoaW5ndWUiLCAiY2hpbmdvIiwgImNoaW5nYSIsICJwZW5kZWoiLCAicHV0aXQiLCAidmVyZ290IiwgInZlcmd1ZXIiLCAiY3VsZXIiLCAibWFtYWQiLCAiY2Ficm9uIiwgIm1pZXJkIiwgInNoaXQiLCAiYml0Y2giLCAicHVcdTAwZjFldCIsICJwdW5ldCIsICJqb2RpZCIsICJqb2RlciIsICJuaWdnIiwgImZhZ2dvIiwgInJldGFyZCJdfQ==')); return { w: d.w, s: d.s }; } catch (e) { return { w: [], s: [] }; }
+            })();
+            function fold(t) {
+                return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+                    .replace(/[0@4]/g, function (c) { return c === '0' ? 'o' : 'a'; })
+                    .replace(/[1!|]/g, 'i').replace(/3/g, 'e').replace(/[5$]/g, 's').replace(/7/g, 't')
+                    .replace(/([a-z])\1{2,}/g, '$1$1');
+            }
+            function isFoul(text) {
+                var words = fold(text).split(/[^a-z]+/).filter(Boolean);
+                // s p a c e d   o u t letters count as one word
+                var run = '';
+                words.concat(['']).forEach(function (w) {
+                    if (w.length === 1) { run += w; return; }
+                    if (run.length >= 3) words.push(run);
+                    run = '';
+                });
+                return words.some(function (w) {
+                    var squeezed = w.replace(/([a-z])\1+/g, '$1');
+                    return [w, squeezed].some(function (x) {
+                        return BAD.w.indexOf(x) > -1 || BAD.s.some(function (stem) { return x.indexOf(stem) === 0; });
+                    });
+                });
+            }
+            var toast = null;
+            function scold(el) {
+                el.classList.remove('sys-nope');
+                void el.offsetWidth;
+                el.classList.add('sys-nope');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.className = 'sys-toast';
+                    toast.setAttribute('role', 'alert');
+                    document.body.appendChild(toast);
+                }
+                toast.innerHTML = '<strong>' + pair('Nice try.', 'Buen intento.') + '</strong> ' +
+                    pair('This is a portfolio, keep it printable. Your edit was rolled back.', 'Es un portafolio, mantenlo presentable. Tu cambio se deshizo.');
+                toast.classList.add('is-on');
+                clearTimeout(toast.t);
+                toast.t = setTimeout(function () { toast.classList.remove('is-on'); }, 4200);
+            }
+
             // ---- hero copy, editable in place
             Object.keys(COPY).forEach(function (k) {
                 var el = COPY[k].el;
@@ -4167,6 +4420,11 @@
                 el.addEventListener('blur', function () {
                     var text = el.textContent.replace(/\s+/g, ' ').trim().slice(0, 160);
                     if (!text) text = COPY[k].text; // never leave the hero empty
+                    if (isFoul(text)) {
+                        el.textContent = (el.getAttribute('data-was') || COPY[k].text).replace(/\s+/g, ' ').trim();
+                        scold(el);
+                        return;
+                    }
                     el.textContent = text;
                     if (text !== (el.getAttribute('data-was') || '').replace(/\s+/g, ' ').trim()) state.count++;
                     if (text === COPY[k].text) delete state.copy[k]; else state.copy[k] = text;
@@ -4188,10 +4446,12 @@
                 left: '<span class="sys-chip">←</span><span class="sys-chip">→</span>',
                 star: '<span class="sys-chip">★</span>',
                 hide: '<span class="sys-chip sys-chip--eye">' + '<svg class="eye-open" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><svg class="eye-closed" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>' + '</span>',
-                edit: '<span class="sys-chip">✎</span>'
+                edit: '<span class="sys-chip">✎</span>',
+                drag: '<span class="sys-chip">≡</span>'
             };
             var STEPS = [
                 ['up', 'Reorder sections', 'Move a whole section up or down the page.', 'Reordena secciones', 'Sube o baja una sección completa.'],
+                ['drag', 'Drag the menu', 'Grab ≡ on a menu item and drop it: the sections follow.', 'Arrastra el menú', 'Toma ≡ en un elemento del menú y suéltalo: las secciones lo siguen.'],
                 ['left', 'Reorder projects', 'Change the order of the project cards.', 'Reordena proyectos', 'Cambia el orden de las tarjetas.'],
                 ['star', 'Pick the opener', 'Choose which project is open when the page loads.', 'Elige el que abre', 'Decide qué proyecto aparece abierto al cargar.'],
                 ['hide', 'Show or hide', 'Open eye: visible. Closed eye: hidden in the human view.', 'Muestra u oculta', 'Ojo abierto: visible. Ojo cerrado: oculto en la vista humana.'],
@@ -4208,12 +4468,13 @@
                     return '<li><button type="button" class="sys-step" data-hint="' + st[0] + '">' + CTRL[st[0]] +
                         '<span><strong>' + pair(st[1], st[3]) + '</strong><small>' + pair(st[2], st[4]) + '</small></span></button></li>';
                 }).join('') + '</ol>' +
-                '<p class="sys-intro-foot">' + pair('Hover a step to light up its controls; click it to jump there. Switch the view back to see your version. Reset puts mine back. It all lasts until you close this tab.',
-                    'Pasa el cursor por un paso para iluminar sus controles; haz clic para ir ahí. Regresa a la vista humana para ver tu versión. Restablecer devuelve la mía. Dura hasta que cierres esta pestaña.') + '</p>' +
-                '<button type="button" class="sys-intro-close">' + pair("Let's see", 'A ver') + '</button>';
+                '<p class="sys-intro-foot">' + pair('Hover a step to light up its controls; click it to jump there. Switch the view back to see your version; Reset, in the bar up top, puts mine back. It all lasts until you close this tab.',
+                    'Pasa el cursor por un paso para iluminar sus controles; haz clic para ir ahí. Regresa a la vista humana para ver tu versión; Restablecer, en la barra de arriba, devuelve la mía. Dura hasta que cierres esta pestaña.') + '</p>' +
+                '';
             document.body.insertBefore(intro, document.body.firstChild);
 
             function hintSel(h) {
+                if (h === 'drag') return '.sys-drag';
                 return h === 'edit' ? '.sys-editable[contenteditable]' : '[data-sys-act="' + h + '"]' + (h === 'up' ? ', [data-sys-act="down"]' : h === 'left' ? ', [data-sys-act="right"]' : '');
             }
             function hint(h) {
@@ -4225,13 +4486,6 @@
             intro.addEventListener('focusin', function (e) { var st = e.target.closest('.sys-step'); hint(st && st.getAttribute('data-hint')); });
             intro.addEventListener('focusout', function () { hint(null); });
             intro.addEventListener('click', function (e) {
-                if (e.target.closest('.sys-intro-close')) {
-                    intro.classList.add('is-closed');
-                    state.introClosed = true;
-                    save();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    return;
-                }
                 var st = e.target.closest('.sys-step');
                 if (!st) return;
                 var h = st.getAttribute('data-hint');
@@ -4241,7 +4495,6 @@
                 first.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 setTimeout(function () { hint(null); }, 2600);
             });
-            if (state.introClosed) intro.classList.add('is-closed');
 
             // ---- the bar: what this mode does, how many changes, reset
             var bar = document.createElement('div');
@@ -4250,15 +4503,8 @@
             bar.innerHTML = '<strong>' + pair('System view', 'Vista de sistema') + '</strong>' +
                 '<span class="sys-bar-hint">' + pair('Edits here change the human view', 'Lo que cambies aquí cambia la vista humana') + '</span>' +
                 '<span class="sys-bar-count"></span>' +
-                '<button type="button" class="sys-bar-help" aria-label="How it works" title="How it works">?</button>' +
                 '<button type="button" class="sys-bar-reset">' + pair('Reset', 'Restablecer') + '</button>';
             document.body.appendChild(bar);
-            bar.querySelector('.sys-bar-help').addEventListener('click', function () {
-                intro.classList.remove('is-closed');
-                state.introClosed = false;
-                save();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
             bar.querySelector('.sys-bar-reset').addEventListener('click', function () {
                 try { sessionStorage.removeItem(KEY); } catch (e) {}
                 location.reload();

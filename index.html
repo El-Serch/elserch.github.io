@@ -2566,8 +2566,14 @@
 
             html[data-view="system"] .sys-drag {
                 width: 30px;
-                height: 16px;
-                font-size: 12px;
+                height: 18px;
+                font-size: 13px;
+            }
+
+            /* the bar is horizontal here, so the grip turns vertical: ||| */
+            html[data-view="system"] .sys-drag > span {
+                display: inline-block;
+                transform: rotate(90deg);
             }
         }
 
@@ -3073,8 +3079,8 @@
         <div class="container">
             <img src="assets/elserch-logo.svg" alt="" class="hero-logo">
             <p class="hero-name">Sergio "El Serch" Inurreta</p>
-            <h1 class="hero-title"><span lang="en">I design complex financial and AI products that make enterprise workflows understandable.</span><span lang="es">Diseño productos financieros y de IA complejos que vuelven comprensibles los flujos empresariales.</span></h1>
-            <p class="hero-call"><span lang="en">I'm the one teams call when a complex problem needs solving.</span><span lang="es">Soy a quien llaman cuando un problema complejo necesita resolverse.</span></p>
+            <h1 class="hero-title"><span lang="en">Designing simple and understandable solutions for complex financial and AI products.</span><span lang="es">Diseño soluciones simples y comprensibles para productos financieros y de IA complejos.</span></h1>
+            <p class="hero-call"><span lang="en">Using AI since 2016</span><span lang="es">Usando IA desde 2016</span></p>
             <p class="tagline"><span lang="en">Product &amp; Service Designer · Enterprise UX · Financial Platforms · AI &amp; Agentic Systems</span><span lang="es">Diseño de Producto y Servicios · UX empresarial · Plataformas financieras · IA y sistemas agénticos</span></p>
             <div class="cta-buttons">
                 <a href="#portfolio" class="btn btn-primary"><span lang="en">View selected work</span><span lang="es">Ver trabajo seleccionado</span></a>
@@ -3929,7 +3935,7 @@
                 { sel: '.side-nav', kind: 'nav', c: 'sec', en: 'Nav · 4 anchors + language, theme, view', es: 'Nav · 4 anclas + idioma, tema, vista' },
                 { sel: '.hero', kind: 'section', c: 'sec', en: 'Section · Hero — positioning', es: 'Sección · Hero — posicionamiento' },
                 { sel: '.hero-title', kind: 'part', c: 'serch', en: 'H1 · Value proposition — click to edit', es: 'H1 · Propuesta de valor — clic para editar' },
-                { sel: '.hero-call', kind: 'part', c: 'serch', en: 'Claim · when to call me — click to edit', es: 'Claim · cuándo llamarme — clic para editar' },
+                { sel: '.hero-call', kind: 'part', c: 'serch', en: 'Claim · AI since 2016 — click to edit', es: 'Claim · IA desde 2016 — clic para editar' },
                 { sel: '.cta-buttons', kind: 'part', c: 'str', en: 'CTA ×2 → Work · Contact', es: 'CTA ×2 → Trabajo · Contacto' },
                 { sel: '#about', kind: 'section', c: 'sec', en: 'Section · About', es: 'Sección · Sobre mí' },
                 { sel: '.about-text', kind: 'part', c: 'comp', en: 'Bio · 2 paragraphs', es: 'Bio · 2 párrafos' },
@@ -4360,7 +4366,7 @@
             // letters ("fuuuck"), plus stems for verb forms. Not a moderation
             // service: it's a first line that turns vandalism into a joke.
             var BAD = (function () {
-                try { var d = JSON.parse(atob('eyJ3IjogWyJmdWNrIiwgImZ1Y2tlciIsICJmdWNraW5nIiwgImZ1Y2tlZCIsICJtb3RoZXJmdWNrZXIiLCAic2hpdCIsICJzaGl0dHkiLCAiYnVsbHNoaXQiLCAiYml0Y2giLCAiYml0Y2hlcyIsICJjdW50IiwgImRpY2siLCAiZGlja2hlYWQiLCAiY29jayIsICJwdXNzeSIsICJhc3Nob2xlIiwgImFzcyIsICJhcnNlIiwgImJhc3RhcmQiLCAic2x1dCIsICJ3aG9yZSIsICJmYWciLCAiZmFnZ290IiwgIm5pZ2dlciIsICJuaWdnYSIsICJyZXRhcmQiLCAicmV0YXJkZWQiLCAid2Fua2VyIiwgInR3YXQiLCAicG9ybiIsICJwb3JubyIsICJwaXNzIiwgImRvdWNoZSIsICJqZXJrb2ZmIiwgImRpbGRvIiwgInJhcGUiLCAicmFwaXN0IiwgIm5hemkiLCAia2lrZSIsICJzcGljIiwgImNoaW5rIiwgInRyYW5ueSIsICJwdXRhIiwgInB1dG8iLCAicHV0YXMiLCAicHV0b3MiLCAicGVuZGVqbyIsICJwZW5kZWphIiwgInBlbmRlam9zIiwgInBlbmRlamFkYSIsICJ2ZXJnYSIsICJ2ZXJnYXMiLCAiY3VsZXJvIiwgImN1bGVyYSIsICJjdWxlcm9zIiwgIm1hbWFkYSIsICJtYW1hZGFzIiwgIm1hbW9uIiwgIm1hbW9uYSIsICJqb3RvIiwgImpvdG9zIiwgIm1hcmljb24iLCAibWFyaWNhIiwgImNhYnJvbiIsICJjYWJyb25hIiwgImNhYnJvbmVzIiwgInBpbmNoZSIsICJwaW5jaGVzIiwgIm1pZXJkYSIsICJjb25vIiwgIm9qZXRlIiwgImN1bG8iLCAiem9ycmEiLCAicGVycmEiLCAibmFjbyIsICJuYWNhIiwgIm1hbXBvIiwgInBhbm9jaGEiLCAicGl0byIsICJjaGljaGlzIiwgIm5hbGdhcyIsICJwdXRhem8iLCAicHV0aXphIiwgImhkcCIsICJwdG0iLCAiYWx2IiwgInZyZyIsICJtZHIiLCAic3RmdSIsICJ3dGYiLCAiZmNrIiwgImZ1ayIsICJzaHQiXSwgInMiOiBbImZ1Y2siLCAiY2hpbmdhZCIsICJjaGluZ2FzIiwgImNoaW5ndWUiLCAiY2hpbmdvIiwgImNoaW5nYSIsICJwZW5kZWoiLCAicHV0aXQiLCAidmVyZ290IiwgInZlcmd1ZXIiLCAiY3VsZXIiLCAibWFtYWQiLCAiY2Ficm9uIiwgIm1pZXJkIiwgInNoaXQiLCAiYml0Y2giLCAicHVcdTAwZjFldCIsICJwdW5ldCIsICJqb2RpZCIsICJqb2RlciIsICJuaWdnIiwgImZhZ2dvIiwgInJldGFyZCJdfQ==')); return { w: d.w, s: d.s }; } catch (e) { return { w: [], s: [] }; }
+                try { var d = JSON.parse(atob('eyJ3IjogWyJhbHYiLCAiYXBlc3RhIiwgImFwZXN0YXMiLCAiYXJzZSIsICJhc3MiLCAiYXNzaG9sZSIsICJiYWJvc2EiLCAiYmFib3NvIiwgImJhc3RhcmQiLCAiYmFzdXJhIiwgImJpdGNoIiwgImJpdGNoZXMiLCAiYnJ1dGEiLCAiYnJ1dG8iLCAiYnVsbHNoaXQiLCAiY2Ficm9uIiwgImNhYnJvbmEiLCAiY2Ficm9uZXMiLCAiY2hpY2hpcyIsICJjaGluayIsICJjbG93biIsICJjb2NrIiwgImNvbm8iLCAiY3JhcCIsICJjcmFwcHkiLCAiY3VsZXJhIiwgImN1bGVybyIsICJjdWxlcm9zIiwgImN1bG8iLCAiY3VudCIsICJkaWNrIiwgImRpY2toZWFkIiwgImRpbGRvIiwgImRvdWNoZSIsICJkdW1iIiwgImR1bWJhc3MiLCAiZXN0YWZhIiwgImVzdHVwaWRhIiwgImVzdHVwaWRvIiwgImZhZyIsICJmYWdnb3QiLCAiZmFrZSIsICJmY2siLCAiZnJhdWQiLCAiZnJhdWRlIiwgImZ1Y2siLCAiZnVja2VkIiwgImZ1Y2tlciIsICJmdWNraW5nIiwgImZ1ayIsICJnYWNobyIsICJnYXJiYWdlIiwgImhkcCIsICJpZGlvdCIsICJpZGlvdGEiLCAiaWRpb3RhcyIsICJpZGlvdHMiLCAiaW1iZWNpbCIsICJpbmNvbXBldGVudCIsICJpbmNvbXBldGVudGUiLCAiaW51dGlsIiwgImludXRpbGVzIiwgImphY2thc3MiLCAiamVya29mZiIsICJqb3RvIiwgImpvdG9zIiwgImtpa2UiLCAibGFtZSIsICJsb3NlciIsICJsb3NlcnMiLCAibWFtYWRhIiwgIm1hbWFkYXMiLCAibWFtb24iLCAibWFtb25hIiwgIm1hbXBvIiwgIm1hcmljYSIsICJtYXJpY29uIiwgIm1kciIsICJtZWRpb2NyZSIsICJtZW5zYSIsICJtZW5zbyIsICJtaWVyZGEiLCAibW9yb24iLCAibW9yb25zIiwgIm1vdGhlcmZ1Y2tlciIsICJuYWNhIiwgIm5hY28iLCAibmFsZ2FzIiwgIm5hemkiLCAibmlnZ2EiLCAibmlnZ2VyIiwgIm9qZXRlIiwgInBhbm9jaGEiLCAicGF5YXNvIiwgInBlbmRlamEiLCAicGVuZGVqYWRhIiwgInBlbmRlam8iLCAicGVuZGVqb3MiLCAicGVycmEiLCAicGluY2hlIiwgInBpbmNoZXMiLCAicGlzcyIsICJwaXRvIiwgInBvcm4iLCAicG9ybm8iLCAicHRtIiwgInB1c3N5IiwgInB1dGEiLCAicHV0YXMiLCAicHV0YXpvIiwgInB1dGl6YSIsICJwdXRvIiwgInB1dG9zIiwgInJhcGUiLCAicmFwaXN0IiwgInJldGFyZCIsICJyZXRhcmRlZCIsICJzY2FtIiwgInNoaXQiLCAic2hpdGhlYWQiLCAic2hpdHR5IiwgInNodCIsICJzbHV0IiwgInNwaWMiLCAic3RmdSIsICJzdHVwaWQiLCAic3VjayIsICJzdWNrZXIiLCAic3Vja3MiLCAidG9udGEiLCAidG9udG8iLCAidG9udG9zIiwgInRyYW5ueSIsICJ0cmFzaCIsICJ0d2F0IiwgInVzZWxlc3MiLCAidmVyZ2EiLCAidmVyZ2FzIiwgInZyZyIsICJ3YW5rZXIiLCAid2hvcmUiLCAid3RmIiwgInpvcnJhIl0sICJzIjogWyJiYWJvcyIsICJiaXRjaCIsICJjYWJyb24iLCAiY2hpbmdhIiwgImNoaW5nYWQiLCAiY2hpbmdhcyIsICJjaGluZ28iLCAiY2hpbmd1ZSIsICJjdWxlciIsICJkdW1iIiwgImVzdHVwaWQiLCAiZmFnZ28iLCAiZnVjayIsICJpZGlvdCIsICJpbWJlY2lsIiwgImpvZGVyIiwgImpvZGlkIiwgIm1hbWFkIiwgIm1pZXJkIiwgIm1vcm9uIiwgIm5pZ2ciLCAicGVuZGVqIiwgInB1bmV0IiwgInB1dGl0IiwgInB1XHUwMGYxZXQiLCAicmV0YXJkIiwgInNoaXQiLCAic3R1cGlkIiwgInZlcmdvdCIsICJ2ZXJndWVyIl19')); return { w: d.w, s: d.s }; } catch (e) { return { w: [], s: [] }; }
             })();
             function fold(t) {
                 return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()

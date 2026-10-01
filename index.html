@@ -685,6 +685,130 @@
             margin: 0 auto 2rem;
         }
 
+        /* Pricing teaser: a faded preview of the plans behind the password card */
+        .pricing-tease {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+            max-width: 64rem;
+            margin: 0 auto;
+            text-align: left;
+            pointer-events: none;
+            user-select: none;
+            -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 92%);
+            mask-image: linear-gradient(to bottom, #000 35%, transparent 92%);
+        }
+
+        .tease-plan {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            padding: 1.5rem 1.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-bg);
+        }
+
+        .tease-plan.is-recommended {
+            border-color: var(--accent);
+            box-shadow: inset 0 3px 0 var(--accent);
+        }
+
+        .tease-badge {
+            align-self: flex-start;
+            margin-bottom: 0.35rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .tease-name {
+            color: var(--primary);
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .tease-for {
+            color: var(--text-light);
+            font-size: 0.92rem;
+        }
+
+        .tease-price {
+            margin: 0.75rem 0 0.5rem;
+            color: var(--primary);
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .tease-price small,
+        .tease-price {
+            letter-spacing: -0.01em;
+        }
+
+        .tease-plan ul {
+            list-style: none;
+            border-top: 1px solid var(--border);
+            padding-top: 0.75rem;
+        }
+
+        .tease-plan li {
+            padding: 0.3rem 0 0.3rem 1.4rem;
+            position: relative;
+            color: var(--secondary);
+            font-size: 0.92rem;
+        }
+
+        .tease-plan li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .is-blurred {
+            filter: blur(6px);
+        }
+
+        .pricing-gate.pricing-gate--card {
+            position: relative;
+            z-index: 1;
+            margin-top: -12rem;
+            padding: 1.75rem 1.75rem 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card-bg);
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.14);
+        }
+
+        .gate-lead {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 860px) {
+            .pricing-tease {
+                grid-template-columns: minmax(0, 1fr);
+                max-width: 26rem;
+            }
+
+            .pricing-gate.pricing-gate--card {
+                margin-top: -5rem;
+                padding: 1.5rem 1.25rem 1.25rem;
+            }
+
+            /* one plan is enough of a hint on small screens */
+            .tease-plan:not(.is-recommended) {
+                display: none;
+            }
+        }
+
         .pricing-gate {
             max-width: 26rem;
             margin: 0 auto;
@@ -1846,9 +1970,33 @@
     <section id="pricing" class="pricing is-locked" aria-labelledby="pricing-title">
         <div class="container">
             <h2 class="section-title" id="pricing-title"><span lang="en">Scope options</span><span lang="es">Opciones de alcance</span></h2>
-            <p class="section-subtitle"><span lang="en">Three packages, from a quick concept to a full product experience. Pricing is shared privately.</span><span lang="es">Tres paquetes, desde un concepto rápido hasta una experiencia de producto completa. Los precios se comparten en privado.</span></p>
+            <p class="section-subtitle"><span lang="en">Three engagements, from a focused concept to a full product experience. The full scope and prices are one password away.</span><span lang="es">Tres proyectos, de un concepto puntual a una experiencia de producto completa. El alcance completo y los precios están a una contraseña.</span></p>
 
-            <form class="pricing-gate" id="pricingGate" data-unlock novalidate>
+            <!-- A preview, not the real table: plan names and a few public scope
+                 lines. Prices here are dummy glyphs; the real ones are encrypted below. -->
+            <div class="pricing-tease" aria-hidden="true">
+                <div class="tease-plan">
+                    <span class="tease-name">UX/UI Concept</span>
+                    <span class="tease-for"><span lang="en">Validating an idea quickly</span><span lang="es">Validar rápidamente una idea</span></span>
+                    <span class="tease-price"><span class="is-blurred">$00,000</span> MXN</span>
+                    <ul><li><span lang="en">Up to 6 key screens</span><span lang="es">Hasta 6 pantallas</span></li><li><span lang="en">Information architecture</span><span lang="es">Arquitectura de información</span></li><li><span lang="en">Clickable Figma prototype</span><span lang="es">Prototipo navegable en Figma</span></li><li class="is-blurred"><span lang="en">Stakeholder discovery</span><span lang="es">Discovery con stakeholders</span></li><li class="is-blurred"><span lang="en">Developer handoff</span><span lang="es">Handoff para desarrollo</span></li><li class="is-blurred"><span lang="en">Revision rounds</span><span lang="es">Rondas de ajustes</span></li></ul>
+                </div>
+                <div class="tease-plan is-recommended">
+                    <span class="tease-badge"><span lang="en">Recommended</span><span lang="es">Recomendado</span></span><span class="tease-name">Product Design Sprint</span>
+                    <span class="tease-for"><span lang="en">A solid foundation for an MVP</span><span lang="es">Una base sólida para un MVP</span></span>
+                    <span class="tease-price"><span class="is-blurred">$00,000</span> MXN</span>
+                    <ul><li><span lang="en">Up to 10 key screens</span><span lang="es">Hasta 10 pantallas</span></li><li><span lang="en">Core user flows</span><span lang="es">User flows principales</span></li><li><span lang="en">Basic visual identity</span><span lang="es">Identidad gráfica básica</span></li><li class="is-blurred"><span lang="en">Stakeholder discovery</span><span lang="es">Discovery con stakeholders</span></li><li class="is-blurred"><span lang="en">Developer handoff</span><span lang="es">Handoff para desarrollo</span></li><li class="is-blurred"><span lang="en">Revision rounds</span><span lang="es">Rondas de ajustes</span></li></ul>
+                </div>
+                <div class="tease-plan">
+                    <span class="tease-name">Product Experience &amp; Visual System</span>
+                    <span class="tease-for"><span lang="en">A more complete product experience</span><span lang="es">Una experiencia de producto más completa</span></span>
+                    <span class="tease-price"><span class="is-blurred">$00,000</span> MXN</span>
+                    <ul><li><span lang="en">Up to 15 key screens</span><span lang="es">Hasta 15 pantallas</span></li><li><span lang="en">Visual system and components</span><span lang="es">Sistema visual y componentes</span></li><li><span lang="en">Error and edge-case states</span><span lang="es">Estados de error y excepción</span></li><li class="is-blurred"><span lang="en">Stakeholder discovery</span><span lang="es">Discovery con stakeholders</span></li><li class="is-blurred"><span lang="en">Developer handoff</span><span lang="es">Handoff para desarrollo</span></li><li class="is-blurred"><span lang="en">Revision rounds</span><span lang="es">Rondas de ajustes</span></li></ul>
+                </div>
+            </div>
+
+            <form class="pricing-gate pricing-gate--card" id="pricingGate" data-unlock novalidate>
+                <p class="gate-lead"><span lang="en">See the full scope and prices</span><span lang="es">Ve el alcance completo y los precios</span></p>
                 <label for="pricingPassword"><span lang="en">Say the word</span><span lang="es">Dime la palabra</span></label>
                 <div class="pricing-gate-row">
                     <input id="pricingPassword" name="password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false">

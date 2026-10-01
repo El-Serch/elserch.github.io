@@ -52,6 +52,8 @@ The homepage's pricing section is locked the same way: the table is encrypted in
 
 Visitors unlock with a shared password (AES-GCM, key derived with PBKDF2-SHA256). Capitals, spacing and accents don't matter. One unlock opens the homepage pricing and all three locked pages for the rest of that browser tab. Private images are embedded inside the encrypted content, never stored in this repo.
 
+**Project images.** Each project card on the homepage has a placeholder (gradient + initials) in `<div class="project-image">`. To use a real image, put it in `assets/projects/` and replace the initials with an image, e.g. `<div class="project-image"><img src="assets/projects/scotiabank.jpg" alt=""></div>` (remove the inline gradient `style` if there is one). The expanded project panel copies the card's image into its cover automatically, so each image is set in one place. A wide image (about 16:5, at least 1600px across) works for both.
+
 **Colors are variables.** Each page declares a `:root` palette and a dark-mode override. To restyle, change the variables rather than hunting hex codes. Each case study sets its own `--accent` to match its hero gradient, with a lighter value for dark mode.
 
 ## Notes

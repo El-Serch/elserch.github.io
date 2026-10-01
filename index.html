@@ -179,23 +179,35 @@
             margin: 0 auto 1.75rem;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
+        .hero-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            opacity: 0.95;
         }
 
-        .hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .hero .hero-title {
+            max-width: 25ch;
+            margin: 1rem auto 0;
+            font-size: clamp(2rem, 1.2rem + 2.4vw, 3.1rem);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-call {
+            max-width: 34rem;
+            margin: 1.25rem auto 0;
+            font-size: 1.25rem;
+            line-height: 1.5;
             opacity: 0.95;
         }
 
         .hero .tagline {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 0.95rem;
+            opacity: 0.8;
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 1.5rem auto 0;
         }
 
         .cta-buttons {
@@ -931,12 +943,8 @@
                 height: 80px;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
+            .hero-call {
+                font-size: 1.1rem;
             }
 
             .about-content {
@@ -985,10 +993,55 @@
             to { opacity: 1; transform: none; }
         }
 
-        .panel-bar {
+        .project-panel {
+            position: relative;
+        }
+
+        /* Cover: a copy of the card's image (see the script). Swap the card's
+           initials for an <img> and the cover follows. */
+        .panel-cover {
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: -2rem;
+            align-items: center;
+            justify-content: center;
+            height: clamp(150px, 20vw, 260px);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .panel-cover.project-image--locked {
+            background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+        }
+
+        .about-text .about-lead {
+            color: var(--primary);
+            font-size: 1.25rem;
+            line-height: 1.55;
+        }
+
+        .panel-cover .lock-icon {
+            width: 64px;
+            height: 64px;
+        }
+
+        .project-image img,
+        .panel-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .panel-bar {
+            position: absolute;
+            top: calc(2.5rem + 1rem);
+            right: 1rem;
+            z-index: 1;
         }
 
         .panel-close {
@@ -1000,6 +1053,7 @@
             border: 1px solid var(--border);
             border-radius: 999px;
             background: var(--card-bg);
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
             color: var(--secondary);
             font: inherit;
             font-size: 0.9rem;
@@ -1016,7 +1070,6 @@
             color: var(--accent);
             font-size: 0.9rem;
             font-weight: 600;
-            padding-right: 8rem;
         }
 
         .panel-title {
@@ -1210,11 +1263,12 @@
             }
 
             .panel-bar {
-                margin-bottom: 0.75rem;
+                top: calc(1.75rem + 0.75rem);
+                right: 0.75rem;
             }
 
-            .panel-kicker {
-                padding-right: 0;
+            .panel-cover {
+                margin-bottom: 1.5rem;
             }
 
             .panel-flow > ol,
@@ -1525,12 +1579,13 @@
     <section class="hero">
         <div class="container">
             <img src="assets/elserch-logo.svg" alt="" class="hero-logo">
-            <h1>Sergio "El Serch" Inurreta</h1>
-            <div class="subtitle"><span lang="en">Product & Service Designer</span><span lang="es">Diseñador de Producto y Servicios</span></div>
-            <p class="tagline"><span lang="en">Enterprise UX • Financial Platforms • AI & Conversational Design</span><span lang="es">UX empresarial • Plataformas financieras • Diseño conversacional e IA</span></p>
+            <p class="hero-name">Sergio "El Serch" Inurreta</p>
+            <h1 class="hero-title"><span lang="en">I design complex financial and AI products that make enterprise workflows understandable.</span><span lang="es">Diseño productos financieros y de IA complejos que vuelven comprensibles los flujos empresariales.</span></h1>
+            <p class="hero-call"><span lang="en">I'm the one teams call when a complex problem needs solving.</span><span lang="es">Soy a quien llaman cuando un problema complejo necesita resolverse.</span></p>
+            <p class="tagline"><span lang="en">Product &amp; Service Designer · Enterprise UX · Financial Platforms · AI &amp; Agentic Systems</span><span lang="es">Diseño de Producto y Servicios · UX empresarial · Plataformas financieras · IA y sistemas agénticos</span></p>
             <div class="cta-buttons">
-                <a href="#portfolio" class="btn btn-primary"><span lang="en">View Portfolio</span><span lang="es">Ver portafolio</span></a>
-                <a href="#contact" class="btn btn-secondary"><span lang="en">Get in Touch</span><span lang="es">Contáctame</span></a>
+                <a href="#portfolio" class="btn btn-primary"><span lang="en">View selected work</span><span lang="es">Ver trabajo seleccionado</span></a>
+                <a href="#contact" class="btn btn-secondary"><span lang="en">Work with me</span><span lang="es">Trabajemos juntos</span></a>
             </div>
         </div>
     </section>
@@ -1539,29 +1594,27 @@
     <section id="about" class="about">
         <div class="container">
             <h2 class="section-title"><span lang="en">About Me</span><span lang="es">Sobre mí</span></h2>
-            <p class="section-subtitle"><span lang="en">Designing complex digital experiences for enterprise organizations</span><span lang="es">Experiencias digitales complejas para grandes organizaciones</span></p>
-            
+            <p class="section-subtitle"><span lang="en">Complex systems, made understandable</span><span lang="es">Sistemas complejos, hechos comprensibles</span></p>
+
             <div class="about-content">
                 <div class="about-text">
-                    <p><span lang="en">Product and Service Designer with 9+ years of experience designing complex digital platforms for banking, healthcare, and retail organizations. Specialized in enterprise UX, service design, and AI-driven interactions.</span><span lang="es">Diseñador de Producto y Servicios con más de 9 años de experiencia diseñando plataformas digitales complejas para organizaciones de banca, salud y retail. Especializado en UX empresarial, diseño de servicios e interacciones impulsadas por IA.</span></p>
-                    
-                    <p><span lang="en">I translate business and technical constraints into clear, scalable user experiences across multi-country platforms spanning Canada, USA, Mexico, and LATAM. My work bridges user needs, business goals, and technical feasibility.</span><span lang="es">Traduzco restricciones técnicas y de negocio en experiencias claras y escalables, en plataformas multipaís que abarcan Canadá, Estados Unidos, México y Latinoamérica. Mi trabajo conecta las necesidades de los usuarios, los objetivos de negocio y la viabilidad técnica.</span></p>
-                    
-                    <p><span lang="en">At IBM, I lead end-to-end enterprise experiences, facilitate Design Thinking workshops, and specialize in conversational UX and AI interaction design for complex business processes.</span><span lang="es">En IBM lidero experiencias empresariales de principio a fin, facilito talleres de Design Thinking y me especializo en UX conversacional y diseño de interacciones con IA para procesos de negocio complejos.</span></p>
+                    <p class="about-lead"><span lang="en">I'm Sergio, El Serch to most people. Since 2017 I've designed at IBM the kind of products that are hard to explain in one sentence: corporate banking platforms, treasury tools, health passes, conversational assistants.</span><span lang="es">Soy Sergio, El Serch para casi todos. Desde 2017 diseño en IBM el tipo de productos difíciles de explicar en una frase: plataformas de banca corporativa, herramientas de tesorería, pases de salud, asistentes conversacionales.</span></p>
+
+                    <p><span lang="en">I map complex workflows, find where systems break down, and turn those constraints into product decisions.</span><span lang="es">Mapeo flujos complejos, encuentro dónde se rompen los sistemas y convierto esas restricciones en decisiones de producto.</span></p>
                 </div>
-                
+
                 <div class="stats">
                     <div class="stat-card">
                         <div class="stat-number">9+</div>
-                        <div class="stat-label"><span lang="en">Years Experience</span><span lang="es">Años de experiencia</span></div>
+                        <div class="stat-label"><span lang="en">Years designing enterprise platforms at IBM</span><span lang="es">Años diseñando plataformas empresariales en IBM</span></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">12+</div>
-                        <div class="stat-label"><span lang="en">Major Projects</span><span lang="es">Proyectos principales</span></div>
+                        <div class="stat-number">6</div>
+                        <div class="stat-label"><span lang="en">Markets on one corporate banking platform</span><span lang="es">Mercados en una plataforma de banca corporativa</span></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label"><span lang="en">Countries</span><span lang="es">Países</span></div>
+                        <div class="stat-number">17</div>
+                        <div class="stat-label"><span lang="en">Platforms benchmarked for file and payment workflows</span><span lang="es">Plataformas analizadas en flujos de archivos y pagos</span></div>
                     </div>
                 </div>
             </div>
@@ -1586,8 +1639,8 @@
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio">
         <div class="container">
-            <h2 class="section-title"><span lang="en">Featured Projects</span><span lang="es">Proyectos destacados</span></h2>
-            <p class="section-subtitle"><span lang="en">Selected work across banking, healthcare, and enterprise platforms</span><span lang="es">Trabajo selecto en banca, salud y plataformas empresariales</span></p>
+            <h2 class="section-title"><span lang="en">Selected Work</span><span lang="es">Trabajo seleccionado</span></h2>
+            <p class="section-subtitle"><span lang="en">Banking, healthcare and enterprise platforms. Open a project to see how it fits together.</span><span lang="es">Banca, salud y plataformas empresariales. Abre un proyecto para ver cómo encaja todo.</span></p>
             
             <div class="projects-grid">
                 <!-- Project 1: Scotiabank -->
@@ -1609,6 +1662,7 @@
                     </div>
                 </a>
                 <section class="project-panel" id="p-scotiabank" aria-labelledby="p-scotiabank-title" hidden>
+                    <div class="panel-cover" aria-hidden="true"></div>
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
                     <div class="panel-body"><p class="panel-kicker"><span lang="en">Scotiabank · ScotiaConnect · 2022–present</span><span lang="es">Scotiabank · ScotiaConnect · 2022–actualidad</span></p><h3 class="panel-title" id="p-scotiabank-title" tabindex="-1"><span lang="en">Six markets. Multiple legacy platforms. One corporate banking experience.</span><span lang="es">Seis mercados. Múltiples plataformas heredadas. Una sola experiencia de banca corporativa.</span></h3><p class="panel-lede"><span lang="en">Standardizing the file-based services corporate clients use to send payments and data.</span><span lang="es">Estandarizar los servicios de archivos que usan los clientes corporativos para enviar pagos y datos.</span></p><dl class="panel-meta"><div><dt><span lang="en">Role</span><span lang="es">Rol</span></dt><dd><span lang="en">Product Designer, IBM</span><span lang="es">Diseñador de producto, IBM</span></dd></div><div><dt><span lang="en">Teams</span><span lang="es">Equipos</span></dt><dd><span lang="en">Four product teams</span><span lang="es">Cuatro equipos de producto</span></dd></div><div><dt><span lang="en">Markets</span><span lang="es">Mercados</span></dt><dd>CA · US · MX · CO · CL · PE</dd></div></dl><figure class="panel-flow"><ol style="--cols: 4"><li><h4><span lang="en">Markets</span><span lang="es">Mercados</span><span class="flow-count">6</span></h4><ul><li>Canada</li><li>United States</li><li>Mexico</li><li>Colombia</li><li>Chile</li><li>Peru</li></ul></li><li><h4><span lang="en">Channels</span><span lang="es">Canales</span><span class="flow-count">2</span></h4><ul><li>Web (ScotiaConnect)</li><li>Host-to-host</li></ul></li><li><h4><span lang="en">File services</span><span lang="es">Servicios de archivos</span><span class="flow-count">4</span></h4><ul><li>H2H</li><li>H2W</li><li>File Transfer</li><li>File Upload</li></ul></li><li><h4><span lang="en">File lifecycle</span><span lang="es">Ciclo del archivo</span></h4><ul><li><span lang="en">Submit</span><span lang="es">Envío</span></li><li><span lang="en">Validate</span><span lang="es">Validación</span></li><li><span lang="en">Approve</span><span lang="es">Aprobación</span></li><li><span lang="en">Process</span><span lang="es">Procesamiento</span></li><li><span lang="en">Report</span><span lang="es">Reporte</span></li></ul></li></ol><figcaption><span lang="en">Simplified for publication.</span><span lang="es">Simplificado para publicación.</span></figcaption></figure><div class="panel-block"><h4 class="panel-label"><span lang="en">Key decisions</span><span lang="es">Decisiones clave</span></h4><ol class="panel-decisions"><li><span class="panel-num">01</span><strong><span lang="en">One model for four file services</span><span lang="es">Un modelo para cuatro servicios de archivos</span></strong><span><span lang="en">H2H, H2W, File Transfer and File Upload defined on one shared lifecycle and vocabulary.</span><span lang="es">H2H, H2W, File Transfer y File Upload definidos sobre un mismo ciclo de vida y vocabulario.</span></span></li><li><span class="panel-num">02</span><strong><span lang="en">Benchmark before standardizing</span><span lang="es">Benchmark antes de estandarizar</span></strong><span><span lang="en">17 banking and payments platforms reviewed first, to separate market expectations from local constraints.</span><span lang="es">17 plataformas bancarias y de pagos revisadas primero, para separar lo que el mercado espera de las restricciones locales.</span></span></li><li><span class="panel-num">03</span><strong><span lang="en">Four phases instead of nine steps</span><span lang="es">Cuatro fases en lugar de nueve pasos</span></strong><span><span lang="en">A nine-step design process consolidated into a reusable playbook: Scouting, Planning, Delivery, Learning.</span><span lang="es">Un proceso de nueve pasos consolidado en un playbook reutilizable: Scouting, Planning, Delivery, Learning.</span></span></li></ol></div><ul class="panel-stats"><li><strong>4</strong><span><span lang="en">file services on one standard</span><span lang="es">servicios de archivos en un estándar</span></span></li><li><strong>6</strong><span><span lang="en">markets on one platform</span><span lang="es">mercados en una plataforma</span></span></li><li><strong>17</strong><span><span lang="en">platforms benchmarked</span><span lang="es">plataformas analizadas</span></span></li><li><strong>9 → 4</strong><span><span lang="en">process steps to playbook phases</span><span lang="es">pasos del proceso a fases del playbook</span></span></li></ul></div>
                 </section>
@@ -1631,6 +1685,7 @@
                     </div>
                 </a>
                 <section class="project-panel" id="p-confidential-a" aria-labelledby="p-confidential-a-title" hidden>
+                    <div class="panel-cover" aria-hidden="true"></div>
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
                     <div class="panel-body"><p class="panel-kicker"><span lang="en">Confidential · 2022–2023</span><span lang="es">Confidencial · 2022–2023</span></p><h3 class="panel-title" id="p-confidential-a-title" tabindex="-1"><span lang="en">Internal treasury tools for a US financial institution.</span><span lang="es">Herramientas internas de tesorería para una institución financiera de EE. UU.</span></h3><p class="panel-lede"><span lang="en">Wireframes and prototypes across five squads for treasury, wire-transfer and automation workflows.</span><span lang="es">Wireframes y prototipos para cinco squads en flujos de tesorería, transferencias y automatización.</span></p></div>
                     <form class="pricing-gate panel-gate" data-unlock novalidate>
@@ -1665,6 +1720,7 @@
                     </div>
                 </a>
                 <section class="project-panel" id="p-nyhealth" aria-labelledby="p-nyhealth-title" hidden>
+                    <div class="panel-cover" aria-hidden="true"></div>
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
                     <div class="panel-body"><p class="panel-kicker"><span lang="en">NY State Department of Health · 2021</span><span lang="es">Departamento de Salud del Estado de NY · 2021</span></p><h3 class="panel-title" id="p-nyhealth-title" tabindex="-1"><span lang="en">One digital pass, and a conversation to help people use it.</span><span lang="es">Un pase digital, y una conversación para ayudar a usarlo.</span></h3><p class="panel-lede"><span lang="en">A unified digital health pass on a blockchain-based platform, supported by a conversational assistant.</span><span lang="es">Un pase de salud digital unificado sobre una plataforma basada en blockchain, con apoyo de un asistente conversacional.</span></p><dl class="panel-meta"><div><dt><span lang="en">Role</span><span lang="es">Rol</span></dt><dd><span lang="en">Product &amp; Service Designer, IBM</span><span lang="es">Diseñador de producto y servicios, IBM</span></dd></div><div><dt><span lang="en">Scope</span><span lang="es">Alcance</span></dt><dd><span lang="en">Digital pass, virtual assistant</span><span lang="es">Pase digital, asistente virtual</span></dd></div></dl><figure class="panel-flow"><ol style="--cols: 3"><li><h4><span lang="en">Platform</span><span lang="es">Plataforma</span></h4><ul><li><span lang="en">Blockchain-based</span><span lang="es">Basada en blockchain</span></li><li><span lang="en">Digital health credentials</span><span lang="es">Credenciales digitales de salud</span></li></ul></li><li><h4><span lang="en">The pass</span><span lang="es">El pase</span></h4><ul><li><span lang="en">One unified digital pass</span><span lang="es">Un solo pase digital unificado</span></li></ul></li><li><h4><span lang="en">The assistant</span><span lang="es">El asistente</span></h4><ul><li><span lang="en">Conversational help with getting and using the pass</span><span lang="es">Ayuda conversacional para obtener y usar el pase</span></li></ul></li></ol><figcaption><span lang="en">Simplified for publication.</span><span lang="es">Simplificado para publicación.</span></figcaption></figure></div>
                 </section>
@@ -1687,6 +1743,7 @@
                     </div>
                 </a>
                 <section class="project-panel" id="p-confidential-b" aria-labelledby="p-confidential-b-title" hidden>
+                    <div class="panel-cover" aria-hidden="true"></div>
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
                     <div class="panel-body"><p class="panel-kicker"><span lang="en">Confidential · 2017–2019</span><span lang="es">Confidencial · 2017–2019</span></p><h3 class="panel-title" id="p-confidential-b-title" tabindex="-1"><span lang="en">A conversational banking assistant.</span><span lang="es">Un asistente bancario conversacional.</span></h3><p class="panel-lede"><span lang="en">Voice and text banking conversations for a bank in Mexico.</span><span lang="es">Conversaciones bancarias por voz y texto para un banco en México.</span></p></div>
                     <form class="pricing-gate panel-gate" data-unlock novalidate>
@@ -1721,6 +1778,7 @@
                     </div>
                 </a>
                 <section class="project-panel" id="p-walmart" aria-labelledby="p-walmart-title" hidden>
+                    <div class="panel-cover" aria-hidden="true"></div>
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
                     <div class="panel-body"><p class="panel-kicker">Walmart LATAM · 2019</p><h3 class="panel-title" id="p-walmart-title" tabindex="-1"><span lang="en">One HR change, three countries.</span><span lang="es">Un cambio de RR. HH., tres países.</span></h3><p class="panel-lede"><span lang="en">Discovery and service design for an HR transformation across Mexico, Brazil and Argentina.</span><span lang="es">Discovery y diseño de servicios para una transformación de RR. HH. en México, Brasil y Argentina.</span></p><dl class="panel-meta"><div><dt><span lang="en">Team</span><span lang="es">Equipo</span></dt><dd><span lang="en">Six designers</span><span lang="es">Seis diseñadores</span></dd></div><div><dt><span lang="en">Scope</span><span lang="es">Alcance</span></dt><dd><span lang="en">Discovery and design</span><span lang="es">Discovery y diseño</span></dd></div></dl><figure class="panel-flow"><ol style="--cols: 3"><li><h4><span lang="en">Countries</span><span lang="es">Países</span><span class="flow-count">3</span></h4><ul><li><span lang="en">Mexico</span><span lang="es">México</span></li><li><span lang="en">Brazil</span><span lang="es">Brasil</span></li><li>Argentina</li></ul></li><li><h4>Discovery</h4><ul><li><span lang="en">Collaborative mapping in Mural</span><span lang="es">Mapeo colaborativo en Mural</span></li></ul></li><li><h4><span lang="en">Design</span><span lang="es">Diseño</span></h4><ul><li><span lang="en">Service design</span><span lang="es">Diseño de servicios</span></li><li><span lang="en">Deliverables in InDesign</span><span lang="es">Entregables en InDesign</span></li></ul></li></ol></figure></div>
                 </section>
@@ -2062,6 +2120,15 @@
 
             cards.forEach(function (card, i) {
                 card.style.viewTransitionName = 'project-' + i;
+                // One image per project: the cover reuses the card's.
+                var img = card.querySelector('.project-image');
+                var cover = document.getElementById(card.getAttribute('data-project')).querySelector('.panel-cover');
+                if (img && cover) {
+                    cover.innerHTML = img.innerHTML;
+                    var bg = img.getAttribute('style');
+                    if (bg) cover.setAttribute('style', bg);
+                    if (img.classList.contains('project-image--locked')) cover.classList.add('project-image--locked');
+                }
             });
 
             function cardFor(panel) { return grid.querySelector('[data-project="' + panel.id + '"]'); }

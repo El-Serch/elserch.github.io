@@ -2398,6 +2398,7 @@
             color: var(--text);
         }
 
+        html[data-view="system"] .sys-intro.is-collapsed,
         html[data-view="system"] .sys-intro.is-closed {
             display: none;
         }
@@ -4197,7 +4198,18 @@
 
             btn.addEventListener('click', function () {
                 var on = root.getAttribute('data-view') !== 'system';
-                if (reduce || !document.startViewTransition) { apply(on); return; }
+                // Both views must line up during the reveal, so the challenge
+                // card (system view only) folds away first when leaving, and
+                // unfolds only after the reveal when arriving.
+                var intro = window.__sysIntro;
+                if (!on && intro) intro.collapse(!reduce).then(function () { switchView(on); });
+                else { if (on && intro) intro.collapse(false); switchView(on); }
+            });
+
+            function switchView(on) {
+                var intro = window.__sysIntro;
+                function after() { if (on && intro) intro.expand(!reduce); }
+                if (reduce || !document.startViewTransition) { apply(on); after(); return; }
                 // Reveal the new view as a circle growing from the button.
                 var r = btn.getBoundingClientRect();
                 var x = r.left + r.width / 2, y = r.top + r.height / 2;
@@ -4208,8 +4220,8 @@
                     root.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
                         { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' });
                 });
-                vt.finished.then(function () { root.classList.remove('vt-view'); }, function () { root.classList.remove('vt-view'); });
-            });
+                vt.finished.then(function () { root.classList.remove('vt-view'); after(); }, function () { root.classList.remove('vt-view'); after(); });
+            }
 
             try { if (new URLSearchParams(location.search).get('view') === 'system') apply(true); } catch (e) {}
         })();
@@ -4598,6 +4610,59 @@
                     'Pasa el cursor por un paso para iluminar sus controles; haz clic para ir ahí. Regresa a la vista humana para ver tu versión; Restablecer, en la barra de arriba, devuelve la mía. Dura hasta que cierres esta pestaña.') + '</p>' +
                 '';
             document.body.insertBefore(intro, document.body.firstChild);
+
+            // Fold / unfold the card, keeping the reader's place on the page.
+            function fullHeight() {
+                var cs = getComputedStyle(intro);
+                return intro.offsetHeight + parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
+            }
+            function noAnchor() {
+                var el = document.documentElement;
+                el.style.overflowAnchor = 'none';
+                document.body.style.overflowAnchor = 'none';
+                setTimeout(function () { el.style.overflowAnchor = ''; document.body.style.overflowAnchor = ''; }, 1500);
+            }
+            window.__sysIntro = {
+                collapse: function (animate) {
+                    return new Promise(function (done) {
+                        if (intro.classList.contains('is-collapsed') || getComputedStyle(intro).display === 'none') {
+                            intro.classList.add('is-collapsed');
+                            return done();
+                        }
+                        var r = intro.getBoundingClientRect();
+                        if (!animate || r.bottom <= 0) {
+                            var h = fullHeight();
+                            // we hold the position ourselves; the browser's scroll
+                            // anchoring would do it a second time (Chrome, Firefox)
+                            noAnchor();
+                            intro.classList.add('is-collapsed');
+                            if (r.bottom <= 0) window.scrollTo({ top: window.pageYOffset - h, behavior: 'instant' }); // it was above the fold: hold position
+                            return done();
+                        }
+                        var cs = getComputedStyle(intro);
+                        var anim = intro.animate([
+                            { height: intro.offsetHeight + 'px', marginTop: cs.marginTop, paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, opacity: 1, overflow: 'hidden' },
+                            { height: '0px', marginTop: '0px', paddingTop: '0px', paddingBottom: '0px', borderTopWidth: '0px', borderBottomWidth: '0px', opacity: 0, overflow: 'hidden' }
+                        ], { duration: 320, easing: 'cubic-bezier(0.4, 0, 1, 1)' });
+                        anim.onfinish = function () { intro.classList.add('is-collapsed'); done(); };
+                    });
+                },
+                expand: function (animate) {
+                    if (!intro.classList.contains('is-collapsed')) return;
+                    noAnchor();
+                    intro.classList.remove('is-collapsed');
+                    var r = intro.getBoundingClientRect();
+                    if (!animate || r.bottom <= 0) {
+                        if (r.bottom <= 0) window.scrollTo({ top: window.pageYOffset + fullHeight(), behavior: 'instant' }); // above the fold: hold position
+                        return;
+                    }
+                    var cs = getComputedStyle(intro);
+                    intro.animate([
+                        { height: '0px', marginTop: '0px', paddingTop: '0px', paddingBottom: '0px', borderTopWidth: '0px', borderBottomWidth: '0px', opacity: 0, overflow: 'hidden' },
+                        { height: intro.offsetHeight + 'px', marginTop: cs.marginTop, paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, opacity: 1, overflow: 'hidden' }
+                    ], { duration: 420, easing: 'cubic-bezier(0, 0, 0.2, 1)' });
+                }
+            };
 
             function hintSel(h) {
                 if (h === 'drag') return '.sys-drag';

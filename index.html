@@ -1362,14 +1362,87 @@
         .panel-stats strong {
             display: block;
             color: var(--primary);
-            font-size: 2.2rem;
+            font-size: clamp(1.35rem, 0.9rem + 2.4vw, 2.2rem);
             line-height: 1.1;
             letter-spacing: -0.02em;
+            white-space: nowrap;
         }
 
         .panel-stats span {
             color: var(--text-light);
             font-size: 0.92rem;
+        }
+
+        .project-image--shot {
+            background: #f4f5f9;
+        }
+
+        .project-image--shot img,
+        .panel-cover img {
+            object-position: top center;
+        }
+
+        .panel-note {
+            max-width: 46rem;
+            margin-top: 0.75rem;
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        .panel-shots {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+            margin-top: 1rem;
+            align-items: start;
+        }
+
+        .panel-shots figure {
+            margin: 0;
+        }
+
+        .panel-shots a {
+            display: block;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #f4f5f9;
+        }
+
+        .panel-shots img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.3s ease;
+        }
+
+        @media (hover: hover) {
+            .panel-shots a:hover img {
+                transform: scale(1.03);
+            }
+        }
+
+        .panel-shots figcaption {
+            margin-top: 0.55rem;
+            color: var(--text-light);
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
+        .panel-fine {
+            margin-top: 0.75rem;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 760px) {
+            .panel-shots {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
         }
 
         .panel-gate {
@@ -3272,26 +3345,26 @@
             <div class="projects-grid">
                 <!-- Project 1: Scotiabank -->
                 <a href="scotiabank-case-study.html" class="project-card" data-project="p-scotiabank" aria-controls="p-scotiabank" aria-expanded="false">
-                    <div class="project-image">SB</div>
+                    <div class="project-image project-image--shot"><img src="assets/projects/scotiabank/cover.jpg" alt="" width="1600" height="495" loading="lazy" decoding="async"></div>
                     <div class="project-content">
                         <div class="project-header">
                             <h3 class="project-title">Scotiabank</h3>
                             <span class="project-year"><span lang="en">2022–Present</span><span lang="es">2022–actualidad</span></span>
                         </div>
                         <span class="project-type"><span lang="en">Enterprise Banking Platform</span><span lang="es">Plataforma de banca empresarial</span></span>
-                        <p class="project-description"><span lang="en">Multi-country corporate and commercial online platform spanning Canada, USA, Mexico, Colombia, Chile, and Peru. Led research, service design, and product definition for standardized platform rollout.</span><span lang="es">Plataforma en línea corporativa y comercial en Canadá, Estados Unidos, México, Colombia, Chile y Perú. Lideré la investigación, el diseño de servicios y la definición de producto para un despliegue estandarizado.</span></p>
+                        <p class="project-description"><span lang="en">Corporate payments platform. One intent-first experience over four file channels, tested with 45 corporate clients: task completion from 60% to 95%.</span><span lang="es">Plataforma de pagos corporativos. Una experiencia centrada en la intención sobre cuatro canales de archivos, probada con 45 clientes corporativos: la tasa de tareas completadas pasó de 60% a 95%.</span></p>
                         <div class="project-tags">
                             <span class="tag"><span lang="en">Enterprise UX</span><span lang="es">UX empresarial</span></span>
+                            <span class="tag"><span lang="en">Payments</span><span lang="es">Pagos</span></span>
                             <span class="tag"><span lang="en">Service Design</span><span lang="es">Diseño de servicios</span></span>
-                            <span class="tag"><span lang="en">Multi-country</span><span lang="es">Multipaís</span></span>
-                            <span class="tag"><span lang="en">Banking</span><span lang="es">Banca</span></span>
+                            <span class="tag"><span lang="en">User Research</span><span lang="es">Investigación</span></span>
                         </div>
                     </div>
                 </a>
                 <section class="project-panel" id="p-scotiabank" aria-labelledby="p-scotiabank-title" hidden>
                     <div class="panel-cover" aria-hidden="true"></div>
                     <div class="panel-bar"><button class="panel-close" type="button" data-close><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg><span><span lang="en">Collapse</span><span lang="es">Contraer</span></span></button></div>
-                    <div class="panel-body"><p class="panel-kicker"><span lang="en">Scotiabank · ScotiaConnect · 2022–present</span><span lang="es">Scotiabank · ScotiaConnect · 2022–actualidad</span></p><h3 class="panel-title" id="p-scotiabank-title" tabindex="-1"><span lang="en">Six markets. Multiple legacy platforms. One corporate banking experience.</span><span lang="es">Seis mercados. Múltiples plataformas heredadas. Una sola experiencia de banca corporativa.</span></h3><p class="panel-lede"><span lang="en">Standardizing the file-based services corporate clients use to send payments and data.</span><span lang="es">Estandarizar los servicios de archivos que usan los clientes corporativos para enviar pagos y datos.</span></p><dl class="panel-meta"><div><dt><span lang="en">Role</span><span lang="es">Rol</span></dt><dd><span lang="en">Product Designer, IBM</span><span lang="es">Diseñador de producto, IBM</span></dd></div><div><dt><span lang="en">Teams</span><span lang="es">Equipos</span></dt><dd><span lang="en">Four product teams</span><span lang="es">Cuatro equipos de producto</span></dd></div><div><dt><span lang="en">Markets</span><span lang="es">Mercados</span></dt><dd>CA · US · MX · CO · CL · PE</dd></div></dl><figure class="panel-flow"><ol style="--cols: 4"><li><h4><span lang="en">Markets</span><span lang="es">Mercados</span><span class="flow-count">6</span></h4><ul><li>Canada</li><li>United States</li><li>Mexico</li><li>Colombia</li><li>Chile</li><li>Peru</li></ul></li><li><h4><span lang="en">Channels</span><span lang="es">Canales</span><span class="flow-count">2</span></h4><ul><li>Web (ScotiaConnect)</li><li>Host-to-host</li></ul></li><li><h4><span lang="en">File services</span><span lang="es">Servicios de archivos</span><span class="flow-count">4</span></h4><ul><li>H2H</li><li>H2W</li><li>File Transfer</li><li>File Upload</li></ul></li><li><h4><span lang="en">File lifecycle</span><span lang="es">Ciclo del archivo</span></h4><ul><li><span lang="en">Submit</span><span lang="es">Envío</span></li><li><span lang="en">Validate</span><span lang="es">Validación</span></li><li><span lang="en">Approve</span><span lang="es">Aprobación</span></li><li><span lang="en">Process</span><span lang="es">Procesamiento</span></li><li><span lang="en">Report</span><span lang="es">Reporte</span></li></ul></li></ol><figcaption><span lang="en">Simplified for publication.</span><span lang="es">Simplificado para publicación.</span></figcaption></figure><div class="panel-block"><h4 class="panel-label"><span lang="en">Key decisions</span><span lang="es">Decisiones clave</span></h4><ol class="panel-decisions"><li><span class="panel-num">01</span><strong><span lang="en">One model for four file services</span><span lang="es">Un modelo para cuatro servicios de archivos</span></strong><span><span lang="en">H2H, H2W, File Transfer and File Upload defined on one shared lifecycle and vocabulary.</span><span lang="es">H2H, H2W, File Transfer y File Upload definidos sobre un mismo ciclo de vida y vocabulario.</span></span></li><li><span class="panel-num">02</span><strong><span lang="en">Benchmark before standardizing</span><span lang="es">Benchmark antes de estandarizar</span></strong><span><span lang="en">17 banking and payments platforms reviewed first, to separate market expectations from local constraints.</span><span lang="es">17 plataformas bancarias y de pagos revisadas primero, para separar lo que el mercado espera de las restricciones locales.</span></span></li><li><span class="panel-num">03</span><strong><span lang="en">Four phases instead of nine steps</span><span lang="es">Cuatro fases en lugar de nueve pasos</span></strong><span><span lang="en">A nine-step design process consolidated into a reusable playbook: Scouting, Planning, Delivery, Learning.</span><span lang="es">Un proceso de nueve pasos consolidado en un playbook reutilizable: Scouting, Planning, Delivery, Learning.</span></span></li></ol></div><ul class="panel-stats"><li><strong>4</strong><span><span lang="en">file services on one standard</span><span lang="es">servicios de archivos en un estándar</span></span></li><li><strong>6</strong><span><span lang="en">markets on one platform</span><span lang="es">mercados en una plataforma</span></span></li><li><strong>17</strong><span><span lang="en">platforms benchmarked</span><span lang="es">plataformas analizadas</span></span></li><li><strong>9 → 4</strong><span><span lang="en">process steps to playbook phases</span><span lang="es">pasos del proceso a fases del playbook</span></span></li></ul></div>
+                    <div class="panel-body"><p class="panel-kicker"><span lang="en">Scotiabank · ScotiaConnect · 2022–present</span><span lang="es">Scotiabank · ScotiaConnect · 2022–actualidad</span></p><h3 class="panel-title" id="p-scotiabank-title" tabindex="-1"><span lang="en">Four channels. One question: what do you want to upload today?</span><span lang="es">Cuatro canales. Una pregunta: ¿qué quieres subir hoy?</span></h3><p class="panel-lede"><span lang="en">Corporate clients send payments through four file channels, each with its own rules. I designed one experience on top of all of them.</span><span lang="es">Los clientes corporativos envían pagos por cuatro canales de archivos, cada uno con sus propias reglas. Diseñé una sola experiencia encima de todos.</span></p><dl class="panel-meta"><div><dt><span lang="en">Role</span><span lang="es">Rol</span></dt><dd><span lang="en">Product Designer, IBM</span><span lang="es">Diseñador de producto, IBM</span></dd></div><div><dt><span lang="en">Teams</span><span lang="es">Equipos</span></dt><dd><span lang="en">5 Scrum cells</span><span lang="es">5 células Scrum</span></dd></div><div><dt><span lang="en">Research</span><span lang="es">Investigación</span></dt><dd>US · CA · MX · CL</dd></div><div><dt><span lang="en">Launch</span><span lang="es">Lanzamiento</span></dt><dd><span lang="en">Mexico and US, 2028</span><span lang="es">México y EE. UU., 2028</span></dd></div></dl><figure class="panel-flow"><ol style="--cols: 3"><li><h4><span lang="en">Channels</span><span lang="es">Canales</span><span class="flow-count">4</span></h4><ul><li>H2H</li><li>H2W</li><li>File Transfer</li><li>File Upload</li></ul></li><li><h4><span lang="en">One entry point</span><span lang="es">Una sola entrada</span></h4><ul><li><span lang="en">“What do you want to upload today?”</span><span lang="es">“¿Qué quieres subir hoy?”</span></li><li><span lang="en">Sent and received, in one place</span><span lang="es">Enviados y recibidos, en un solo lugar</span></li><li><span lang="en">One approval flow</span><span lang="es">Un solo flujo de aprobación</span></li><li><span lang="en">Roles: creator · authorizer · auditor</span><span lang="es">Roles: creador · autorizador · auditor</span></li></ul></li><li><h4><span lang="en">File lifecycle</span><span lang="es">Ciclo del archivo</span><span class="flow-count">7</span></h4><ul><li><span lang="en">Ingestion</span><span lang="es">Ingesta</span></li><li><span lang="en">Validation</span><span lang="es">Validación</span></li><li><span lang="en">Authorization</span><span lang="es">Autorización</span></li><li><span lang="en">Processing</span><span lang="es">Procesamiento</span></li><li><span lang="en">Status</span><span lang="es">Estatus</span></li><li><span lang="en">Reporting</span><span lang="es">Reportes</span></li><li><span lang="en">Audit</span><span lang="es">Auditoría</span></li></ul></li></ol><figcaption><span lang="en">Simplified for publication.</span><span lang="es">Simplificado para publicación.</span></figcaption></figure><div class="panel-block"><h4 class="panel-label"><span lang="en">Key decisions</span><span lang="es">Decisiones clave</span></h4><ol class="panel-decisions"><li><span class="panel-num">01</span><strong><span lang="en">Intent first, not method first</span><span lang="es">Primero la intención, no el método</span></strong><span><span lang="en">Clients want to upload a file, not learn four methods and their caveats. One entry point replaced the choice of channel.</span><span lang="es">Los clientes quieren subir un archivo, no aprender cuatro métodos y sus letras pequeñas. Una sola entrada reemplazó la elección de canal.</span></span></li><li><span class="panel-num">02</span><strong><span lang="en">One lifecycle for every channel</span><span lang="es">Un ciclo de vida para todos los canales</span></strong><span><span lang="en">Instead of designing each service as its own feature, I designed the stages a file goes through once, so every channel gets the same status, approval and audit trail.</span><span lang="es">En lugar de diseñar cada servicio como una función aparte, diseñé una vez las etapas por las que pasa un archivo, para que todos los canales tengan el mismo estatus, aprobación y registro de auditoría.</span></span></li><li><span class="panel-num">03</span><strong><span lang="en">Built on the entitlement module</span><span lang="es">Construido sobre el módulo de permisos</span></strong><span><span lang="en">ScotiaConnect’s strongest feature already controls who can do what. Every channel now runs through it: the client’s admin sets the approvers and the creator, authorizer and auditor roles in one place.</span><span lang="es">La mayor fortaleza de ScotiaConnect ya controla quién puede hacer qué. Ahora todos los canales pasan por ahí: el administrador del cliente define en un solo lugar a los aprobadores y los roles de creador, autorizador y auditor.</span></span></li></ol></div><div class="panel-block"><h4 class="panel-label"><span lang="en">What testing changed</span><span lang="es">Lo que cambió con las pruebas</span></h4><p class="panel-note"><span lang="en">An A/B test of two prototypes with 45 corporate clients (5 moderated sessions, 40 unmoderated) in the US, Canada, Mexico and Chile. Between the first and the second, editing a file moved from a confusing multiple selection to an action on each row, and each file got a clear status instead of a generic “received”.</span><span lang="es">Una prueba A/B de dos prototipos con 45 clientes corporativos (5 sesiones moderadas y 40 no moderadas) en Estados Unidos, Canadá, México y Chile. Del primero al segundo, editar un archivo pasó de una selección múltiple confusa a una acción en cada fila, y cada archivo obtuvo un estatus claro en lugar de un “recibido” genérico.</span></p></div><ul class="panel-stats"><li><strong>60% → 95%</strong><span><span lang="en">task completion, first vs second prototype</span><span lang="es">tareas completadas, primer vs segundo prototipo</span></span></li><li><strong>28 → 13 min</strong><span><span lang="en">to complete the flow, same test</span><span lang="es">para completar el flujo, misma prueba</span></span></li><li><strong>4 → 1</strong><span><span lang="en">channels into one experience</span><span lang="es">canales en una sola experiencia</span></span></li><li><strong>17</strong><span><span lang="en">platforms benchmarked first</span><span lang="es">plataformas analizadas antes</span></span></li></ul><div class="panel-block"><h4 class="panel-label"><span lang="en">Screens</span><span lang="es">Pantallas</span></h4><div class="panel-shots"><figure><a href="assets/projects/scotiabank/dashboard.jpg" target="_blank" rel="noopener"><img src="assets/projects/scotiabank/dashboard.jpg" width="1200" height="1243" loading="lazy" decoding="async" alt="Sent and received: every file’s status at a glance, approve or reject on the row."></a><figcaption><span lang="en">Sent and received: every file’s status at a glance, approve or reject on the row.</span><span lang="es">Enviados y recibidos: el estatus de cada archivo de un vistazo; aprobar o rechazar en la fila.</span></figcaption></figure><figure><a href="assets/projects/scotiabank/transfer-details.jpg" target="_blank" rel="noopener"><img src="assets/projects/scotiabank/transfer-details.jpg" width="1200" height="1403" loading="lazy" decoding="async" alt="Upload confirmed, waiting for approval."></a><figcaption><span lang="en">Upload confirmed, waiting for approval.</span><span lang="es">Archivo cargado, en espera de aprobación.</span></figcaption></figure><figure><a href="assets/projects/scotiabank/authorization-flow.jpg" target="_blank" rel="noopener"><img src="assets/projects/scotiabank/authorization-flow.jpg" width="1200" height="1544" loading="lazy" decoding="async" alt="Audit log: creation, authorization and the bank’s response, per file."></a><figcaption><span lang="en">Audit log: creation, authorization and the bank’s response, per file.</span><span lang="es">Registro de auditoría: creación, autorización y respuesta del banco, por archivo.</span></figcaption></figure></div><p class="panel-fine"><span lang="en">Prototype screens with dummy data.</span><span lang="es">Pantallas de prototipo con datos ficticios.</span></p></div></div>
                 </section>
 
                 <!-- Project 2: confidential, under NDA — full case study is encrypted in confidential-a.html -->
@@ -4068,6 +4141,7 @@
                 { sel: '.project-panel', kind: 'part', c: 'comp', en: 'Panel · expanded project, replaces its card', es: 'Panel · proyecto abierto, reemplaza su tarjeta' },
                 { sel: '.panel-flow', kind: 'part', c: 'comp', en: 'Diagram · the project as a flow', es: 'Diagrama · el proyecto como flujo' },
                 { sel: '.panel-decisions', kind: 'part', c: 'comp', en: 'Decisions · 3, one line each', es: 'Decisiones · 3, una línea cada una' },
+                { sel: '.panel-shots', kind: 'part', c: 'data', en: 'Screens · prototype, dummy data', es: 'Pantallas · prototipo, datos ficticios' },
                 { sel: '.panel-gate', kind: 'part', c: 'const', en: 'Lock · AES-GCM, opens in place', es: 'Candado · AES-GCM, abre aquí mismo' },
                 { sel: '#pricing', kind: 'section', c: 'sec', en: 'Section · Pricing — 3 tiers, locked', es: 'Sección · Precios — 3 niveles, bajo llave' },
                 { sel: '.pricing-tease', kind: 'part', c: 'comp', en: 'Teaser · dummy prices, real scope', es: 'Adelanto · precios ficticios, alcance real' },

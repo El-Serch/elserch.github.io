@@ -10,12 +10,12 @@ Static HTML and CSS, served by GitHub Pages. No build step, no framework, no pac
 
 ```
 index.html                    Homepage: hero, about, skills, project grid, experience, pricing (locked in place), contact
-scotiabank-case-study.html    Corporate & commercial banking platform (2022–present)
-nyhealth-case-study.html      Health Pass + virtual assistant (2021)
-walmart-case-study.html       LATAM HR change management (2019)
+scotiabank-case-study.html    Redirect to index.html#p-scotiabank (old page quarantined)
+nyhealth-case-study.html      Redirect to index.html#p-nyhealth (old page quarantined)
+walmart-case-study.html       Redirect to index.html#p-walmart (old page quarantined)
 pricing.html                  Password-protected: scope options and pricing   (generated, do not edit)
 confidential-a.html           Password-protected: project under NDA           (generated, do not edit)
-confidential-b.html           Password-protected: project under NDA           (generated, do not edit)
+confidential-b.html           Redirect to index.html#p-confidential-b (old page quarantined)
 assets/elserch-logo.svg       Logo mark — also the favicon
 CNAME                         Custom domain for GitHub Pages
 ```
@@ -34,7 +34,7 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 
 ## Editing
 
-**The case studies are placeholder copy.** Every case study was drafted with plausible but invented detail — team sizes, interview counts, timelines, quotes. Replace before sharing the links widely. The homepage cards and the one-pager content are real.
+**Old case studies are quarantined.** The first case-study pages were drafted with invented detail (team sizes, interview counts, percentages). On 2026-10-09 they were moved to the private repo's `quarantine/` folder and replaced here by redirects to each project's homepage panel. A page comes back only once its project content is approved. The homepage panels are the source of truth.
 
 **Image slots are marked.** Each case study has `<div class="image-placeholder">` blocks with a caption saying what belongs there. Swap the whole div for an `<img>` when you have the asset.
 

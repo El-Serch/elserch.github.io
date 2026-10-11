@@ -1096,7 +1096,7 @@
         }
 
         /* The open project is a raised sheet: its own surface, a soft shadow and
-           a top edge in the project's colour, so it stands apart from the page. */
+           a magenta top edge, so it stands apart from the page. */
         .project-panel {
             --panel-pad: clamp(1.25rem, 3vw, 2.5rem);
             grid-column: 1 / -1;
@@ -1118,7 +1118,7 @@
             position: absolute;
             inset: 0 0 auto;
             height: 5px;
-            background: var(--panel-accent, var(--accent));
+            background: #e456ad; /* El Serch magenta */
         }
 
         /* system view tags sit just outside the panel's edge */
@@ -4202,9 +4202,6 @@
                     cover.innerHTML = img.innerHTML;
                     var bg = img.getAttribute('style');
                     if (bg) cover.setAttribute('style', bg);
-                    // the panel's top edge takes the project's colour
-                    var m = bg && bg.match(/background:\s*([^;]+)/);
-                    if (m) cover.parentNode.style.setProperty('--panel-accent', m[1].trim());
                     if (img.classList.contains('project-image--locked')) cover.classList.add('project-image--locked');
                 }
             });

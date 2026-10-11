@@ -1,6 +1,6 @@
 # elserch.github.io
 
-Personal portfolio and online CV for Sergio "El Serch" Inurreta — Product & Service Designer.
+Personal portfolio and online CV for Sergio "El Serch" Inurreta — Product & Cognitive Designer.
 
 **Live at [elserch.com](https://www.elserch.com)**
 

@@ -1490,6 +1490,29 @@
             }
         }
 
+        /* side screens swap into the main slot when clicked */
+        .panel-shots figure:not(:first-child) a {
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        @media (hover: hover) {
+            .panel-shots figure:not(:first-child) a:hover {
+                border-color: var(--accent);
+                box-shadow: 0 12px 30px -14px rgba(15, 23, 42, 0.45);
+            }
+        }
+
+        .panel-shots figure:not(:first-child) a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        ::view-transition-group(*.shot) {
+            animation-duration: 0.45s;
+            animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+
         .panel-shots figcaption {
             margin-top: 0.55rem;
             color: var(--text-light);
@@ -4088,6 +4111,51 @@
             var start = /^#p-/.test(location.hash) && document.getElementById(location.hash.slice(1));
             go(start && start.classList.contains('project-panel') ? start : document.getElementById('p-scotiabank'));
             if (start) start.scrollIntoView();
+        })();
+
+        /* --------------------------------------------------------- screens
+           In a project's screens, the first is the main one. Clicking a side
+           screen swaps it into the main slot; clicking the main one opens the
+           full image. */
+        (function () {
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function lang() { return document.documentElement.getAttribute('lang') === 'es' ? 'es' : 'en'; }
+            var LABEL = { en: 'Show this screen larger', es: 'Ver esta pantalla en grande' };
+            function label(box) {
+                [].forEach.call(box.querySelectorAll('figure'), function (f, i) {
+                    var a = f.querySelector('a');
+                    if (!a) return;
+                    if (i === 0) { a.removeAttribute('aria-label'); a.removeAttribute('role'); }
+                    else { a.setAttribute('aria-label', LABEL[lang()] + ': ' + (f.querySelector('img') || {}).alt); a.setAttribute('role', 'button'); }
+                });
+            }
+            [].forEach.call(document.querySelectorAll('.panel-shots'), label);
+            new MutationObserver(function () { [].forEach.call(document.querySelectorAll('.panel-shots'), label); })
+                .observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+            document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('.panel-shots figure:not(:first-child) a');
+                if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+                e.preventDefault();
+                var fig = a.closest('figure'), box = fig.parentNode, main = box.firstElementChild;
+                var figs = [].slice.call(box.children);
+                function swap() {
+                    // the clicked screen takes the main slot; the old main takes its place
+                    var mark = document.createComment('');
+                    box.replaceChild(mark, fig);
+                    box.insertBefore(fig, main);
+                    box.replaceChild(main, mark);
+                    label(box);
+                }
+                var supports = document.startViewTransition && !reduce;
+                if (!supports) { swap(); fig.querySelector('a').focus({ preventScroll: true }); return; }
+                figs.forEach(function (f, i) { f.style.viewTransitionName = 'shot-' + i; f.style.viewTransitionClass = 'shot'; });
+                var t = document.startViewTransition(swap);
+                t.finished.finally(function () {
+                    figs.forEach(function (f) { f.style.viewTransitionName = ''; f.style.viewTransitionClass = ''; });
+                    fig.querySelector('a').focus({ preventScroll: true });
+                });
+            });
         })();
 
         /* --------------------------------------------------------- contact form

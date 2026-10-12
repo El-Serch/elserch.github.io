@@ -58,6 +58,8 @@ Each card is an `<a class="project-card" data-project="p-<id>">` followed by its
 
 **Screens.** `.panel-shots` holds `<figure>`s, each with an `<a href>` to the full image, an `<img>` and a `<figcaption>`. They show as browser windows: the first large, the rest stacked beside it. Clicking a side screen swaps it into the main slot; clicking the main one opens it full size in a modal over a blurred page (Esc, the close button or a click outside closes it). Captions double as the accessible names and follow the language toggle.
 
+**Video.** A `<figure class="panel-video">` holds a `<video controls muted playsinline preload="none" poster="…">` with an MP4 source; nothing downloads until someone presses play. Compress first (e.g. `ffmpeg -i in.mp4 -an -vf scale=1280:-2 -c:v libx264 -crf 27 -movflags +faststart out.mp4`) and keep files well under 25 MB.
+
 **Images.** Put them in `assets/projects/<project>/`. For the card cover, replace the initials in `.project-image` with `<img>` (remove the inline gradient). Screens can be any size; about 1200px wide is plenty. Only publish screens with dummy data.
 
 ### Content rule

@@ -1430,6 +1430,23 @@
             object-position: top center;
         }
 
+        /* a white diagram: keep the whole loop in view, centred */
+        .project-image--diagram,
+        .panel-cover.project-image--diagram {
+            background: #ffffff;
+        }
+
+        /* card: the loop itself, large; open panel: the whole diagram */
+        .project-image--diagram img {
+            object-fit: cover;
+            object-position: 54% 50%;
+            padding: 0.75rem 0;
+        }
+
+        .panel-cover.project-image--diagram img {
+            object-fit: contain;
+        }
+
         .project-image--diagram svg {
             display: block;
             width: 100%;
@@ -3617,7 +3634,7 @@
 
                 <!-- Project 2: confidential, under NDA — full case study is encrypted in confidential-a.html -->
                 <a href="index.html#p-playbook" class="project-card" data-project="p-playbook" aria-controls="p-playbook" aria-expanded="false">
-                    <div class="project-image project-image--diagram" style="background: linear-gradient(135deg, #0f766e 0%, #4338ca 100%);"><svg class="pb-loop" viewBox="0 0 800 230" preserveAspectRatio="xMidYMid meet" aria-hidden="true" font-family="inherit"><rect x="32" y="78" width="156" height="56" rx="28" fill="rgba(255,255,255,.14)" stroke="#fff" stroke-width="2"/><text x="110" y="114" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="0" fill="#fff">Explore</text><path d="M192 106 H223" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M216 100 L223 106 L216 112" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="225" y="78" width="156" height="56" rx="28" fill="rgba(255,255,255,.14)" stroke="#fff" stroke-width="2"/><text x="303" y="114" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="0" fill="#fff">Shape</text><path d="M385 106 H416" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M409 100 L416 106 L409 112" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="419" y="78" width="156" height="56" rx="28" fill="rgba(255,255,255,.14)" stroke="#fff" stroke-width="2"/><text x="497" y="114" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="0" fill="#fff">Build</text><path d="M579 106 H610" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M603 100 L610 106 L603 112" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="612" y="78" width="156" height="56" rx="28" fill="rgba(255,255,255,.14)" stroke="#fff" stroke-width="2"/><text x="690" y="114" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="0" fill="#fff">Learn</text><path d="M690 136 C690 205 110 205 110 142" stroke="#fff" stroke-opacity=".75" stroke-width="2" stroke-dasharray="6 6" fill="none"/><path d="M103 150 L110 140 L117 150" stroke="#fff" stroke-opacity=".75" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="project-image project-image--diagram"><img src="assets/projects/playbook/cover.png" alt="" width="2400" height="577" loading="lazy" decoding="async"></div>
                     <div class="project-content">
                         <div class="project-header">
                             <h3 class="project-title">Designer Playbook</h3>
@@ -4203,6 +4220,7 @@
                     var bg = img.getAttribute('style');
                     if (bg) cover.setAttribute('style', bg);
                     if (img.classList.contains('project-image--locked')) cover.classList.add('project-image--locked');
+                    if (img.classList.contains('project-image--diagram')) cover.classList.add('project-image--diagram');
                 }
             });
 

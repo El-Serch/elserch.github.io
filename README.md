@@ -88,7 +88,7 @@ Visitors unlock with one shared password (AES-GCM, key derived with PBKDF2-SHA25
 
 ## Contact form
 
-The form posts to [Web3Forms](https://web3forms.com), which emails the message with the visitor's address as reply-to. The access key in the page is meant to be public. hCaptcha guards against spam.
+The form posts to [Web3Forms](https://web3forms.com), which emails the message with the visitor's address as reply-to. The access key in the page is meant to be public. hCaptcha guards against spam, and its script loads only when a visitor first focuses or taps the form, so a visit that doesn't use the form makes no request to Web3Forms or hCaptcha. A note under the form says so: the site sets no cookies and has no tracking; hCaptcha may set its own.
 
 A reason switch (role / project / other) changes the fields: a project adds a budget in MXN and a timeline with start and end dates, with inline errors for an end before the start or a date in the past.
 

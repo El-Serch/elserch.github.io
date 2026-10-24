@@ -2130,6 +2130,31 @@
             font-size: 0.85rem;
         }
 
+        .cf-privacy {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+            max-width: 40rem;
+            margin-top: 1.25rem;
+            padding-top: 0.9rem;
+            border-top: 1px dashed var(--border);
+            color: var(--text-light);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .cf-privacy svg {
+            flex: none;
+            width: 1rem;
+            height: 1rem;
+            margin-top: 0.12rem;
+            color: #e456ad;
+        }
+
+        .cf-privacy strong {
+            color: var(--secondary);
+        }
+
         .cf-error {
             margin-top: 0.75rem;
             color: var(--danger);
@@ -3991,6 +4016,7 @@
                 </div>
                 <p class="cf-error" data-role="invalid" role="alert" hidden><span lang="en">Please add your name, a valid email and a message.</span><span lang="es">Agrega tu nombre, un correo válido y un mensaje.</span></p>
                 <p class="cf-error" data-role="failed" role="alert" hidden><span lang="en">That didn't go through. Please try again, or write to <a href="mailto:soy@elserch.com">soy@elserch.com</a>.</span><span lang="es">No se pudo enviar. Inténtalo de nuevo o escribe a <a href="mailto:soy@elserch.com">soy@elserch.com</a>.</span></p>
+                <p class="cf-privacy"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span><strong><span lang="en">Cookie transparency.</span><span lang="es">Transparencia de cookies.</span></strong> <span lang="en">No cookies or tracking from this site: you’re in control here. When you start writing, the form loads hCaptcha to stop spam, which may set its own cookie.</span><span lang="es">Este sitio no usa cookies ni rastreo: aquí tú tienes el control. Al empezar a escribir, el formulario carga hCaptcha para frenar el spam, que puede usar su propia cookie.</span></span></p>
             </form>
             <div class="cf-done" id="contactDone" tabindex="-1" hidden>
                 <p class="cf-done-title"><span lang="en">Thanks, your message is on its way.</span><span lang="es">Gracias, tu mensaje va en camino.</span></p>
@@ -5605,11 +5631,25 @@
             box.setAttribute('data-theme', dark ? 'dark' : 'light');
             box.setAttribute('data-lang', root.getAttribute('lang') === 'es' ? 'es' : 'en');
             if (window.innerWidth < 380) box.setAttribute('data-size', 'compact');
-            var sc = document.createElement('script');
-            sc.src = 'https://web3forms.com/client/script.js';
-            sc.async = true;
-            sc.defer = true;
-            document.body.appendChild(sc);
+            // Only load it once someone starts on the form, so a visit that
+            // doesn't use the form makes no third-party requests at all.
+            var form = document.getElementById('contactForm');
+            var loaded = false;
+            function load() {
+                if (loaded) return;
+                loaded = true;
+                var sc = document.createElement('script');
+                sc.src = 'https://web3forms.com/client/script.js';
+                sc.async = true;
+                sc.defer = true;
+                document.body.appendChild(sc);
+            }
+            if (form) {
+                form.addEventListener('focusin', load);
+                form.addEventListener('pointerdown', load);
+            } else {
+                load();
+            }
         })();
     </script>
 </body>

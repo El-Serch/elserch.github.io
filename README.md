@@ -17,6 +17,7 @@ scotiabank-case-study.html    Redirect to index.html#p-scotiabank   (old page qu
 nyhealth-case-study.html      Redirect to index.html#p-nyhealth     (old page quarantined)
 walmart-case-study.html       Redirect to index.html#p-walmart      (old page quarantined)
 assets/elserch-logo.svg       Logo mark — also the favicon
+assets/fonts/                 Caveat, the tour's handwriting face (SIL OFL)
 assets/projects/<project>/    Project images: card cover and screens
 CNAME                         Custom domain for GitHub Pages
 ```
@@ -98,7 +99,7 @@ The view toggle in the nav (or `?view=system`) turns the page into a labelled bl
 
 ## First-visit tour
 
-On a first visit a few handwritten notes and arrows (Caveat, loaded from Google Fonts) point at the nav, the view toggle, the language and theme toggles and the main button. They can't be clicked, are hidden from screen readers, and vanish on the first scroll, click or key press. They show once per browser tab; `?tour=1` shows them again.
+On a first visit a few handwritten notes and arrows (Caveat, self-hosted in `assets/fonts/` under the SIL Open Font License) point at the nav, the view toggle, the language and theme toggles and the main button. They can't be clicked, are hidden from screen readers, and vanish on the first scroll, click or key press. They show once per browser tab; `?tour=1` shows them again.
 
 ## Accessibility
 
@@ -112,7 +113,7 @@ On a first visit a few handwritten notes and arrows (Caveat, loaded from Google 
 
 - **Dark mode** follows the OS, with a toggle that overrides it and is remembered. Theme and language are applied in `<head>` before first paint, so there's no flash.
 - **Navigation** is a vertical rail on the right at desktop widths (words become icons on short windows) and a bottom bar below 768px. In system view the section links get drag handles to reorder them.
-- **External requests** are limited to Web3Forms and hCaptcha (contact form) and Google Fonts (the tour's handwriting face). Icons are inline SVG and everything else uses the system font stack.
+- **External requests:** none on a normal visit. Web3Forms and hCaptcha load only once someone uses the contact form. The tour's handwriting face is self-hosted and downloads only when the tour shows; icons are inline SVG and everything else uses the system font stack.
 
 ## License
 

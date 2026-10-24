@@ -115,6 +115,13 @@ On a first visit a few handwritten notes and arrows (Caveat, self-hosted in `ass
 - **Navigation** is a vertical rail on the right at desktop widths (words become icons on short windows) and a bottom bar below 768px. In system view the section links get drag handles to reorder them.
 - **External requests:** none on a normal visit. Web3Forms and hCaptcha load only once someone uses the contact form. The tour's handwriting face is self-hosted and downloads only when the tour shows; icons are inline SVG and everything else uses the system font stack.
 
+## Security
+
+- **No server code.** Static files only, so server-side flaws (PHP and the like) don't apply.
+- **Content Security Policy** (a `<meta>` in each page's head): scripts, frames and connections are limited to this site, Web3Forms and hCaptcha; the locked pages allow nothing external. Add any new outside service there or it will be blocked.
+- **No framing.** GitHub Pages can't send `X-Frame-Options`, so a short script in the head hides the page when it's loaded inside another site's frame.
+- **History.** NDA client names were scrubbed from this repo's history on 2026-10-24; a backup of the old history is in the private repo. Never commit a client name under NDA, in files or commit messages.
+
 ## License
 
 Code is free to borrow. Written content, project material and the logo are © Sergio Inurreta — please don't reuse those.

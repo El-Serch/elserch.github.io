@@ -4474,6 +4474,38 @@
             .project-card--row .project-description { display: none; }
         }
 
+        /* ---------- contact: heading + direct links on the left, form on the right ---------- */
+        @media (min-width: 1000px) {
+            .contact > .container {
+                display: grid;
+                grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+                grid-template-rows: auto auto auto 1fr;
+                column-gap: clamp(2.5rem, 5vw, 5rem);
+                align-items: start;
+            }
+            .contact .section-title { grid-column: 1; grid-row: 1; }
+            .contact .section-subtitle { grid-column: 1; grid-row: 2; margin-bottom: 2.5rem; }
+            .contact .contact-or { grid-column: 1; grid-row: 3; margin-top: 0; }
+            .contact .contact-links {
+                grid-column: 1;
+                grid-row: 4;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+                max-width: 20rem;
+            }
+            .contact .contact-links > * { justify-content: flex-start; }
+            .contact .contact-form,
+            .contact .cf-done {
+                grid-column: 2;
+                grid-row: 1 / span 4;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+        }
+
         /* ---------- small screens ---------- */
         @media (max-width: 900px) {
             .hero { padding: 4.5rem 0 2.5rem; }

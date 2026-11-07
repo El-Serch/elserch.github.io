@@ -3896,15 +3896,29 @@
             transform: translate(-14%, 4%);
         }
 
+        /* A collaborator's cursor. It idles by the logo; on a mouse, it follows
+           yours around the hero, a beat behind (script at the end). */
         .hero-cursor {
             position: absolute;
-            left: 14%;
-            bottom: 16%;
+            left: 0;
+            top: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            will-change: transform;
+        }
+
+        .hero-cursor.is-ready { opacity: 1; }
+
+        .hc-body {
             display: flex;
             align-items: flex-start;
             gap: 2px;
             animation: cursor-drift 9s ease-in-out infinite;
         }
+
+        .hero-cursor.is-following .hc-body { animation-play-state: paused; }
 
         .hero-cursor svg {
             width: 16px;
@@ -4187,7 +4201,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .hero-cursor { animation: none; }
+            .hc-body { animation: none; }
         }
     </style>
     <script>
@@ -4251,6 +4265,7 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <span class="hero-cursor" aria-hidden="true"><span class="hc-body"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 13 1.8-5.2L13.5 7z"/></svg><b>Serch</b></span></span>
         <div class="container hero-grid">
             <div class="hero-copy">
             <p class="hero-name">Sergio "El Serch" Inurreta</p>
@@ -4266,7 +4281,6 @@
                 <span class="frame-label">elserch / hero</span>
                 <span class="hero-orb"></span>
                 <img src="assets/elserch-logo.svg" alt="" class="hero-logo">
-                <span class="hero-cursor"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 13 1.8-5.2L13.5 7z"/></svg><b>Serch</b></span>
             </div>
             <dl class="hero-ticker">
                 <div><dt><span lang="en">Years at IBM</span><span lang="es">Años en IBM</span></dt><dd>9+</dd></div>
@@ -6318,6 +6332,54 @@
             } else {
                 load();
             }
+        })();
+    </script>
+    <script>
+        // "Serch" cursor: idles by the logo, follows a mouse around the hero.
+        (function () {
+            var hero = document.querySelector('.hero');
+            var cur = hero && hero.querySelector('.hero-cursor');
+            var frame = hero && hero.querySelector('.hero-frame');
+            if (!cur || !frame) return;
+            var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+            var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+            var x = 0, y = 0, tx = 0, ty = 0, raf = 0, following = false;
+
+            function home() {
+                var h = hero.getBoundingClientRect(), f = frame.getBoundingClientRect();
+                return { x: f.left - h.left + f.width * 0.14, y: f.top - h.top + f.height * 0.7 };
+            }
+            function place() { cur.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)'; }
+            function tick() {
+                x += (tx - x) * 0.14;
+                y += (ty - y) * 0.14;
+                place();
+                raf = (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) ? requestAnimationFrame(tick) : 0;
+            }
+            function go(nx, ny) {
+                tx = nx; ty = ny;
+                if (still.matches) { x = tx; y = ty; place(); return; }
+                if (!raf) raf = requestAnimationFrame(tick);
+            }
+            function rest() {
+                following = false;
+                cur.classList.remove('is-following');
+                var p = home(); go(p.x, p.y);
+            }
+
+            var p0 = home(); x = tx = p0.x; y = ty = p0.y; place();
+            cur.classList.add('is-ready');
+
+            hero.addEventListener('pointermove', function (e) {
+                if (e.pointerType !== 'mouse' || !fine.matches) return;
+                var h = hero.getBoundingClientRect();
+                if (!following) { following = true; cur.classList.add('is-following'); }
+                // sit just below-right of the real pointer, like someone next to you
+                go(e.clientX - h.left + 14, e.clientY - h.top + 12);
+            });
+            hero.addEventListener('pointerleave', rest);
+            window.addEventListener('resize', function () { if (!following) rest(); });
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!following) rest(); });
         })();
     </script>
 </body>

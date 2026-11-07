@@ -6866,6 +6866,61 @@
             }).observe(grid, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden'] });
         })();
 
+        // Numbers count up when they come into view: "60→95%" rolls from 60 to 95,
+        // "28→13 min" counts down, "9+" from 0, "2016" from 2000. The real values
+        // are in the HTML; this only animates on top (and not at all with reduced motion).
+        (function () {
+            if (!('IntersectionObserver' in window)) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var SEL = '.hero-ticker dd, .stat-number, .panel-stats strong';
+            function plan(el) {
+                var text = el.textContent;
+                var nums = text.match(/\d+/g);
+                if (!nums || el.children.length) return null;
+                var last = nums.length - 1;
+                var to = parseInt(nums[last], 10);
+                var from = nums.length > 1 && /→/.test(text) ? parseInt(nums[0], 10)
+                    : to >= 1900 ? to - 16 : 0;
+                if (from === to) return null;
+                // split around the number being animated
+                var re = /\d+/g, m, i = 0, at = -1;
+                while ((m = re.exec(text))) { if (i === last) { at = m.index; break; } i++; }
+                return { before: text.slice(0, at), after: text.slice(at + nums[last].length), from: from, to: to, final: text };
+            }
+            function show(el, p, v) { el.textContent = p.before + v + p.after; }
+            function play(el) {
+                var p = el._count; if (!p) return;
+                var start = performance.now(), dur = 1100 + Math.min(600, Math.abs(p.to - p.from) * 12);
+                (function tick(now) {
+                    var k = Math.min(1, (now - start) / dur);
+                    var e = 1 - Math.pow(1 - k, 3);
+                    show(el, p, Math.round(p.from + (p.to - p.from) * e));
+                    if (k < 1) requestAnimationFrame(tick); else el.textContent = p.final;
+                })(start);
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (!e.isIntersecting) return;
+                    io.unobserve(e.target);
+                    // the hero ticker is on screen at load: give the eye a moment first
+                    setTimeout(play.bind(null, e.target), e.target.closest('.hero') ? 500 : 80);
+                });
+            }, { threshold: 0.6 });
+            function arm() {
+                [].forEach.call(document.querySelectorAll(SEL), function (el) {
+                    if (el._count !== undefined) return;
+                    el._count = plan(el);
+                    if (!el._count) return;
+                    el.style.fontVariantNumeric = 'tabular-nums';
+                    show(el, el._count, el._count.from);
+                    io.observe(el);
+                });
+            }
+            arm();
+            // panels unlocked later (NDA) bring their own numbers
+            new MutationObserver(arm).observe(document.getElementById('portfolio') || document.body, { childList: true, subtree: true });
+        })();
+
         // Workflows draw themselves as they scroll into view.
         (function () {
             if (!('IntersectionObserver' in window)) return;

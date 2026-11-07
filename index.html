@@ -6335,7 +6335,10 @@
         })();
     </script>
     <script>
-        // "Serch" cursor: idles by the logo, follows a mouse around the hero.
+        // "Serch" cursor: idles by the logo; on a mouse it hangs around yours
+        // like someone sharing the file. A spring chases a target that circles
+        // the pointer on a wobbly orbit: close while you move, wandering
+        // further when you stop.
         (function () {
             var hero = document.querySelector('.hero');
             var cur = hero && hero.querySelector('.hero-cursor');
@@ -6343,43 +6346,90 @@
             if (!cur || !frame) return;
             var still = window.matchMedia('(prefers-reduced-motion: reduce)');
             var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
-            var x = 0, y = 0, tx = 0, ty = 0, raf = 0, following = false;
 
-            function home() {
+            var x = 0, y = 0, vx = 0, vy = 0;      // Serch
+            var px = 0, py = 0, spd = 0;           // the visitor's pointer
+            var hx = 0, hy = 0;                    // home, by the logo
+            var mode = 'home', raf = 0, last = 0, t = Math.random() * 100, roam = 0;
+
+            function setHome() {
                 var h = hero.getBoundingClientRect(), f = frame.getBoundingClientRect();
-                return { x: f.left - h.left + f.width * 0.14, y: f.top - h.top + f.height * 0.7 };
+                hx = f.left - h.left + f.width * 0.14;
+                hy = f.top - h.top + f.height * 0.7;
             }
             function place() { cur.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)'; }
-            function tick() {
-                x += (tx - x) * 0.14;
-                y += (ty - y) * 0.14;
-                place();
-                raf = (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) ? requestAnimationFrame(tick) : 0;
-            }
-            function go(nx, ny) {
-                tx = nx; ty = ny;
-                if (still.matches) { x = tx; y = ty; place(); return; }
-                if (!raf) raf = requestAnimationFrame(tick);
-            }
-            function rest() {
-                following = false;
-                cur.classList.remove('is-following');
-                var p = home(); go(p.x, p.y);
-            }
 
-            var p0 = home(); x = tx = p0.x; y = ty = p0.y; place();
+            function frameStep(now) {
+                var dt = Math.min(0.05, (now - (last || now)) / 1000);
+                last = now;
+                t += dt;
+                var tx, ty, k, damp;
+                if (mode === 'follow') {
+                    // calm down -> roam further; move fast -> stay close
+                    spd *= 0.9;
+                    roam += ((spd < 2 ? 1 : 0) - roam) * dt * 0.8;
+                    var r = 34 + 22 * roam + 9 * Math.sin(t * 1.7) + 6 * Math.sin(t * 3.1 + 1);
+                    var ang = t * (0.7 + 0.5 * roam) + 0.8 * Math.sin(t * 0.43);
+                    var ox = Math.cos(ang) * r * 1.35 + 6;
+                    var oy = Math.sin(ang) * r * 0.85 + 14;
+                    // never park on top of the visitor's own arrow
+                    var len = Math.hypot(ox, oy) || 1;
+                    if (len < 34) { ox *= 34 / len; oy *= 34 / len; }
+                    tx = px + ox; ty = py + oy;
+                    k = 7; damp = 5.2;
+                    // and if the spring swings through it, nudge out of the way
+                    var dx = x - px, dy = y - py, d = Math.hypot(dx, dy) || 1;
+                    if (d < 26) { vx += dx / d * 900 * dt; vy += dy / d * 900 * dt; }
+                } else {
+                    tx = hx; ty = hy; k = 5; damp = 4.6;
+                }
+                // damped spring (a little overshoot, like a hand on a trackpad)
+                vx += ((tx - x) * k * k - vx * damp * 1.0) * dt;
+                vy += ((ty - y) * k * k - vy * damp * 1.0) * dt;
+                x += vx * dt;
+                y += vy * dt;
+                place();
+                var settled = mode === 'home' && Math.abs(tx - x) < 0.4 && Math.abs(ty - y) < 0.4 && Math.abs(vx) + Math.abs(vy) < 2;
+                if (settled) {
+                    x = tx; y = ty; vx = vy = 0; place();
+                    cur.classList.remove('is-following');
+                    raf = 0; last = 0;
+                } else {
+                    raf = requestAnimationFrame(frameStep);
+                }
+            }
+            function run() { if (!raf && !document.hidden) raf = requestAnimationFrame(frameStep); }
+
+            setHome(); x = hx; y = hy; place();
             cur.classList.add('is-ready');
 
             hero.addEventListener('pointermove', function (e) {
                 if (e.pointerType !== 'mouse' || !fine.matches) return;
                 var h = hero.getBoundingClientRect();
-                if (!following) { following = true; cur.classList.add('is-following'); }
-                // sit just below-right of the real pointer, like someone next to you
-                go(e.clientX - h.left + 14, e.clientY - h.top + 12);
+                var nx = e.clientX - h.left, ny = e.clientY - h.top;
+                spd = Math.max(spd, Math.hypot(nx - px, ny - py));
+                px = nx; py = ny;
+                if (still.matches) {
+                    // no motion: just sit beside the pointer
+                    x = px + 16; y = py + 14; place();
+                    cur.classList.add('is-following');
+                    return;
+                }
+                if (mode !== 'follow') { mode = 'follow'; roam = 0; cur.classList.add('is-following'); }
+                run();
             });
-            hero.addEventListener('pointerleave', rest);
-            window.addEventListener('resize', function () { if (!following) rest(); });
-            if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!following) rest(); });
+            hero.addEventListener('pointerleave', function () {
+                mode = 'home';
+                setHome();
+                if (still.matches) { x = hx; y = hy; place(); cur.classList.remove('is-following'); return; }
+                run();
+            });
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) { cancelAnimationFrame(raf); raf = 0; last = 0; }
+                else if (mode === 'follow') run();
+            });
+            window.addEventListener('resize', function () { setHome(); if (mode === 'home') { x = hx; y = hy; place(); } });
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setHome(); if (mode === 'home') { x = hx; y = hy; place(); } });
         })();
     </script>
 </body>

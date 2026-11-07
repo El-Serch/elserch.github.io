@@ -10,6 +10,7 @@ Static HTML, CSS and a little vanilla JavaScript, served by GitHub Pages. No bui
 
 ```
 index.html                    The whole site: hero, about, projects, pricing (locked in place), contact
+404.html                      Page-not-found page (GitHub Pages serves it for any missing path)
 pricing.html                  Password-protected: scope options and pricing   (generated, do not edit)
 confidential-a.html           Password-protected: project under NDA           (generated, do not edit)
 confidential-b.html           Redirect to index.html#p-confidential-b (old page quarantined)
@@ -17,6 +18,7 @@ scotiabank-case-study.html    Redirect to index.html#p-scotiabank   (old page qu
 nyhealth-case-study.html      Redirect to index.html#p-nyhealth     (old page quarantined)
 walmart-case-study.html       Redirect to index.html#p-walmart      (old page quarantined)
 assets/elserch-logo.svg       Logo mark — also the favicon
+assets/og-image.png           Link-preview image (1200×630) for LinkedIn, WhatsApp, Slack…
 assets/fonts/                 Self-hosted fonts (SIL OFL): Inter Tight (headings), Geist Mono (labels), Caveat (tour)
 assets/projects/<project>/    Project images: card cover and screens
 CNAME                         Custom domain for GitHub Pages

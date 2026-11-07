@@ -17,7 +17,7 @@ scotiabank-case-study.html    Redirect to index.html#p-scotiabank   (old page qu
 nyhealth-case-study.html      Redirect to index.html#p-nyhealth     (old page quarantined)
 walmart-case-study.html       Redirect to index.html#p-walmart      (old page quarantined)
 assets/elserch-logo.svg       Logo mark — also the favicon
-assets/fonts/                 Caveat, the tour's handwriting face (SIL OFL)
+assets/fonts/                 Self-hosted fonts (SIL OFL): Inter Tight (headings), Geist Mono (labels), Caveat (tour)
 assets/projects/<project>/    Project images: card cover and screens
 CNAME                         Custom domain for GitHub Pages
 ```
